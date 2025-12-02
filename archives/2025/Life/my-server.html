@@ -1,0 +1,508 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <script>
+    (function() {
+      try {
+        // 1. 优先从 localStorage 获取用户保存的主题
+        var savedTheme = localStorage.getItem('theme');
+        
+        // 2. 如果没有保存的主题，则检查系统偏好
+        var theme = savedTheme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        
+        // 3. 将主题属性应用到 <html> 元素上
+        //    在 <head> 中执行时，<body> 可能还不存在，所以操作 <html> 更安全
+        if (theme === 'dark') {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      } catch (e) {
+        // 如果发生错误，则不执行任何操作，让主脚本来处理
+      }
+    })();
+  </script>
+  
+  <!-- 提示浏览器颜色的 meta 标签 -->
+  <meta name="color-scheme" content="light dark">
+  <!-- Mastodon 验证 -->
+  <meta name="fediverse:creator" content="@illlights@anisaga.life">
+  
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>别折腾服务器啦 [ 喑光絮语 ]</title>
+
+  <link rel="icon" href="/img/favicon.ico">
+
+
+    <meta name="author" content="illlights">
+
+
+    <meta name="subtitle" content="illlights blog">
+
+
+    <meta name="Description" content="刚刚脱离高级趣味，所以博客不想太复杂了">
+
+
+    <meta name="keywords" content=",blog, comments, entertainment">
+
+
+  <link rel="alternate" href="/atom.xml " title="喑光絮语" type="application/atom+xml">
+
+
+  
+    <link rel="stylesheet" href="/css/main.css">
+  
+
+<!-- hexo injector head_end start --><style>/* 布局样式 */
+.hexo-tips-layout {
+    margin: 0.5rem 0;
+    padding: 0.5rem 1.5rem;
+    border-radius: 8px;
+    border: 1px solid;
+    border-left-width: 6px;
+    display: flex;
+    align-items: center;
+    transition: transform 0.3s ease;
+    min-width: 2rem;
+    height:auto;
+    overflow-x: auto; 
+    overflow-y: hidden; 
+}
+
+.hexo-tips-layout:hover {
+    transform: translateX(5px);
+}
+
+.hexo-tips-layout .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    font-size: clamp(2em, 2vw, 3em);
+    min-width: 2rem;
+    scale:1.5;
+    transition: transform 0.3s ease;
+}
+
+.hexo-tips-layout:hover .icon {
+    transform: scale(1.3);
+}
+
+.hexo-tips-layout .content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+.hexo-tips-layout:hover .content {
+    transform: translateX(3px);
+}
+
+/* 响应式调整 */
+@media screen and (max-width: 768px) {
+    .hexo-tips-layout {
+        padding: 1rem;
+    }
+}
+
+/* 为每种类型的提示框添加主题样式 */
+[class^="tips-style-"] {
+    --tips-light-bg: #fff; /* 默认值 */
+    --tips-dark-bg: #333;  /* 默认值 */
+    --tips-border: #000;   /* 默认值 */
+}
+
+/* 主题样式规则 */
+[class^="hexo-tips-"] {
+    border-color: var(--tips-border);
+}
+
+[class^="hexo-tips-"] .icon {
+    color: var(--tips-border);
+}
+
+/* 1. 手动暗色模式优先 */
+html.dark [class^="hexo-tips-"] {
+    background-color: var(--tips-dark-bg);
+}
+
+/* 2. 系统暗色模式其次 */
+@media (prefers-color-scheme: dark) {
+    html:not(.light) [class^="hexo-tips-"] {
+        background-color: var(--tips-dark-bg);
+    }
+}
+
+/* 3. 亮色模式最后 */
+html:not(.dark) [class^="hexo-tips-"],
+html.light [class^="hexo-tips-"] {
+    background-color: var(--tips-light-bg);
+}</style><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+<body class="notransition">
+  <!-- <script defer>
+    // 延迟移除 notransition 类，确保初始主题设置完成
+    setTimeout(() => document.body.classList.remove("notransition"), 75);
+  </script> -->
+  <div class="navbar" role="navigation">
+    <nav class="menu">
+      <input type="checkbox" id="menu-trigger" class="menu-trigger" />
+      <label for="menu-trigger">
+        <span class="menu-icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 512 512"
+          >
+            <path
+              d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z"
+            />
+          </svg>
+        </span>
+      </label>
+      <a id="mode">
+        <svg
+          class="mode-sunny"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>LIGHT</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+        <svg
+          class="mode-moon"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>DARK</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+      </a>
+      <div class="trigger">
+        <div class="trigger-container">
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/"> 主页</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/moments/"> 动态</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/archives/"> 文章</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/friends/"> 友链</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " target="_blank" rel="noopener" href="https://www.illlights.com"> 关于</a>
+          
+        </div>
+      </div>
+    </nav>
+  </div>
+  <button id="toTopBtn"><i class="fa-solid fa-hand-point-up " ></i></button>
+<!-- <button id="toggleButton"><i class="fa-solid fa-chart-bar " ></i></button> -->
+<div id="overlay" class="overlay glass-wrapper overlay-bg">
+  <div class="content">
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%88%91%E7%9A%84%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BB%AC"><span class="toc-text">我的服务器们</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Vultr"><span class="toc-text">Vultr</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%98%BF%E9%87%8C%E4%BA%91%E3%80%81%E8%85%BE%E8%AE%AF%E4%BA%91%E2%80%A6"><span class="toc-text">阿里云、腾讯云…</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%80%E5%A7%8B%E5%BB%89%E4%BB%B7-VPS-%E7%9A%84%E6%97%85%E7%A8%8B"><span class="toc-text">开始廉价 VPS 的旅程</span></a></li></ol></li></ol>
+    <button id="closeButton"><i class="fa-solid fa-circle-xmark"></i></button>
+  </div>
+</div>
+<div class="wrapper post">
+  <head>
+    <!-- 引入 Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  </head>
+
+
+
+  <main class="page-content" aria-label="Content">
+    <div class="glass-wrapper main-content">
+      <header class="header">
+        
+          <div class="tags">
+            <a href="/tags/Website/" class="tag"># Website</a><a href="/tags/Linux/" class="tag"># Linux</a><a href="/tags/Server/" class="tag"># Server</a>
+          </div>
+        
+          <h1 class="header-title" itemprop="headline">别折腾服务器啦</h1>
+          <div class="post-meta">
+            最后更新: <time>11月 05, 2025</time>
+            作者: <span itemprop="author">
+              <span itemprop="name">illlights</span>
+            </span>
+            字数: <span class="post-count">1.8k</span>
+            预计阅读时间: <span class="post-count">6min</span> 
+          </div>       
+      </header>
+          <div class="page-content"><p>服务器，就是服务用的电脑。网站就是其中的一种服务，大多数动态网站需要一台服务器作为资源提供方，所以几乎我的网站入门就是购置一台服务器。</p>
+<p>“购置”，显然是要钱的。像其他东西一样，于是钱多钱少又能分出很多登记的服务。可惜我是属于钱少的那一类，只能让大家看看没钱会怎么折腾。</p>
+<p>当然，也没厂商来给我打广告，否则就不会没钱了。</p>
+<h2 id="我的服务器们"><a href="#我的服务器们" class="headerlink" title="我的服务器们"></a>我的服务器们</h2><h3 id="Vultr"><a href="#Vultr" class="headerlink" title="Vultr"></a>Vultr</h3><p>如果没用过 Linux，服务器的使用需要专门学习（如果日常在用 Linux，大概也有好几台服务器了吧），所以买一台按时计费的服务器用来入门是我觉得比较合适的选择。我的第一个 IDC 便是这其中广告打得最多的 <a target="_blank" rel="noopener" href="https://www.vultr.com/">Vultr</a>，仅仅看小时的价格似乎非常便宜！</p>
+<p><img src="https://ooo.0x0.ooo/2025/09/19/OlS7QF.png" alt="Vultr Share CPU Prices"></p>
+<p>可惜这就是买服务器的第一课，服务器不能看小时计价，毕竟服务器 90% 的时间都是“没用”的，只有不到 1% 的时间通过 ssh 连接，不到 9% 的时间在为用户提供访问。</p>
+<p>开了一两个月的 Vultr 就再没动过了。白给充了余额。</p>
+<p><img src="https://ooo.0x0.ooo/2025/09/19/OlSN36.png" alt="我的账户余额"></p>
+<h3 id="阿里云、腾讯云…"><a href="#阿里云、腾讯云…" class="headerlink" title="阿里云、腾讯云…"></a>阿里云、腾讯云…</h3><p>国内厂商的总称。其实国内的服务器都比较类似，有一个共同的特点——贵！特别是宽带贵。</p>
+<p>还有一个特点，老用户只能买贵的，新用户倒是有不少优惠。我通过学生优惠拿到的 1C2G 服务器，CNY90 一年。离谱的是宽带只给了 5M，传一张图片需要好几秒！</p>
+<p>国内服务器还有一些缺点：搭建网站需要实名备案，邮局端口 25 往往是禁用状态。</p>
+<p>总之，优惠期结束我也没再使用国内服务。程序麻烦，价格麻烦。</p>
+<h3 id="开始廉价-VPS-的旅程"><a href="#开始廉价-VPS-的旅程" class="headerlink" title="开始廉价 VPS 的旅程"></a>开始廉价 VPS 的旅程</h3><p>时间来到我进入大学，虽然还是没钱买独立服务器，但是有更多时间挑选“性价比”高的机器了。</p>
+<p>不过现在仔细考虑一下，所谓“性价比”其实只是用大量的搜索时间和得到的信息来换取折扣，只不过从“钱换服务器”变成了“少一点点的钱+大量的时间换服务器”。是否值得确实是见仁见智。</p>
+<p>我的第一台 Budget VPS 是 <a target="_blank" rel="noopener" href="https://www.racknerd.com/">Racknerd</a> 的机器，年付 USD 12.88，配置和阿里云机器差不多 —— 但是有 1Gbps 宽带！对比前两个服务，怎么想都是赚。</p>
+<p><img src="https://ooo.0x0.ooo/2025/09/20/Ol00Jl.png" alt="Racknerd VPS"></p>
+<p>实际使用起来也很不错，就是硬盘给的很小：类似的 Budget VPS 一般只给到 20GB SSD，装完系统再用几个月，system log就差不多把磁盘塞满了。</p>
+<p>所以作为补充，下一台服务器我比较看重硬盘大小。恰巧碰上 <a target="_blank" rel="noopener" href="https://app.cloudcone.com/?ref=13076">CloudCone</a> 闪购优惠，入手了年付 14.99 USD 2C2G120GB 的机器。价格合适，储存足够，尽管是 HDD+SSD 混合储存，对于我来说并不需要太高 IO 速度，没有发现 IO 瓶颈。</p>
+<p>现在这台机器作为自用服务器，放些密码管理、账单记录、WebDAV 什么的绰绰有余。</p>
+<p><img src="https://ooo.0x0.ooo/2025/09/20/Ol0Cvx.png" alt="CloudCone VPS"></p>
+<p>这么多服务器，是不是该收手了？并没有，因为我注册了个 <a target="_blank" rel="noopener" href="https://www.nodeseek.com/">NodeSeek</a> 论坛，开始为了 Budget 而 Budget。</p>
+<p>第一个从论坛中购入的机器是 <a target="_blank" rel="noopener" href="https://netjett.com/store/vservers">NetJett</a> 的 Code0 折扣机。配置性价比非常高！</p>
+<p><img src="https://ooo.0x0.ooo/2025/09/20/Ol0wcj.png" alt="NetJett"></p>
+<p>然后…买来第二个月就出硬盘故障，现在还没恢复…<del>正在申请退款</del>已经退款。</p>
+<p>看吧，服务器三角定理：Price, Stable, Size 不可能同时存在。</p>
+<p>对了，说起灵车，还有这台 C1V 的“稳定灵车”，运行是正常运行，就是什么都不干负载跑到 20 以上（这是台 2 核的机器）。导致我都不想放这家的链接…</p>
+<p>（这是什么都没干的负载曲线图，甚至没有刻意找时机截取，写的时候一打开就是这）</p>
+<p><img src="https://ooo.0x0.ooo/2025/09/20/OlcaNU.png" alt="C1V Load Average"></p>
+<p>所以我决定加一点点 Price 来换 Stable，在 <a target="_blank" rel="noopener" href="https://hostdzire.com/">HostDZire</a> 入手了 Leaseweb 年付 24 USD 4C6G，还买了两台！下单刚不久，不过看起来挺稳定，一台已经成为所有公开 Web 服务的主服务器，另一台作为远程 Linux 自己用。  </p>
+<p><img src="https://ooo.0x0.ooo/2025/09/20/Olcquv.png" alt="HostDZire"></p>
+<p>现在主要服务的服务器都有所安置，可以开始玩不稳定的服务器，顺便玩一玩优化线路。</p>
+<p>最先看上的是 Zouter 的香港流媒体解锁机器，开业特惠 109 每年，香港国际互联 BGP。国人运营，所以中文工单、符合中国使用需求（比如流媒体解锁、国内部分优化），各种需求处理的也非常及时。</p>
+<p>可惜共享 1Gbps 宽带买的人太多，而且香港本身网络就不太稳定，某些时候网络用起来卡卡的。</p>
+<p><img src="https://cdn.nodeimage.com/i/Xx4fprZyJU5h4qm6kixxxJ60ODRj24mr.webp" alt="Zouter HK 配置"></p>
+<p>线路当然不能只有一个区域，正好赶上绿云 12 周年优惠，入手了一台大硬盘+较好线路低价机器。这台我觉得是所有机器里性价比最高的（如果1T硬盘能用上的话），不过机器开到这里所有业务都已经分配好，结果是这台机器一点没用，光放着看看探针。</p>
+<p><img src="https://cdn.nodeimage.com/i/PorcRnXCZ9x2WQIhYzFaPblXN8MnaFPk.webp" alt="绿云"></p>
+<p>大多数的主机厂商都有非常低价的活动机器，往往是在开业、周年庆、（欧美厂商）黑五和重大节日，不用看普通标价的高昂价格。但是追着活动购买有一个坏处，活动机器往往是年付或更高的付款周期，但是多个厂商多个活动在一年内会给出多次价格，这就导致活动机数量不断增加。</p>
+<p>典型的例子就是这两台：</p>
+<p><img src="https://cdn.nodeimage.com/i/zXdrXHUOhNTpXllUKyEISL0gnLeHqzNT.webp" alt="狐蒂云周年庆"></p>
+<p>国内实名，近乎 oneman，随时跑路。但是这个价格这个配置，几乎等于白送，于是我虽然用不上还是抢了~ 买回来之后，没有任何其他业务需要部署，也实在用不上这么高的性能，只好在云端跑跑 ffmpeg，假装用一用 CPU。</p>
+<p>这么一番折腾下来，我的列表最后就变成这样：</p>
+<p><img src="https://cdn.nodeimage.com/i/OwD3lqqj3O8Kk10HeGgqe6LEBaF5PFT5.webp" alt="服务器列表"></p>
+<p>服务器太多啦！很多都没有用上，到期了退一点吧 —— 可惜在这上面浪费的时间可退不了。</p>
+<p>所以说，“性价比”其实只是用大量的搜索时间和得到的信息来换取折扣，就算拿到了“性价比”高的机器自己又用不上，还有的机器因为价格低需要更多的时间来维护，这点“性价比”值得这么多时间吗？</p>
+<p>这些服务器成本算下来，每个月需要 CNY 103，而我真正需要的服务不过是一个 WebDAV 存放 Zotero 的文件同步、一个个人主页、一个 Typecho 博客。好像，最后不仅没有省钱，反而浪费了更多的钱？</p>
+<p>所以说，别折腾服务器了，有这些时间不如学学技术，技术能力提升之后需要用到服务器的时候再买也不迟。</p>
+</div>          
+          <nav class="post-nav">
+    
+    
+    <a class="post-nav-item post-nav-next" href="/archives/2025/Life/hello-world.html">
+      <div class="nav-arrow">OLDER&nbsp;&gt;</div>
+      <span class="post-title">Hello World Again</span>
+    </a>
+    
+  </nav>
+          <div class="dis">
+    
+        
+    <script src='//cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js'></script>
+    <div id="waline" class="glass-wrapper waline-container"></div>
+    <script>
+        window.onload = function () {
+            new Waline({
+                el: '#waline',
+                path: location.pathname,
+                avatarCDN: 'https://sdn.geekzu.org/avatar/',
+                serverURL: 'https://comments-blog.illlights.com/',
+                avatar: 'monsterid',
+                placeholder: "封闭的文字无法成长。"
+            });
+        };
+    </script>
+
+
+    
+</div>
+    </div>
+   </main>
+</div>
+
+  <footer class="footer">
+    <small class="footer_copyright">
+      <div id="bottom-inner">
+        © Site by illlights<br>
+        <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a> &
+        <a target="_blank" rel="noopener" href="https://github.com/RichardTang2003/hexo-theme-Klise-glassy">Klise-glassy</a>
+        <br>
+        始于2021.
+        
+      </div>
+    </small>
+  </footer>
+  
+  
+
+    
+      <script src="/js/main.js"></script>
+    
+  
+  <script>
+    window.FPConfig = {
+      delay: 0,
+      ignoreKeywords: [],
+      maxRPS: 3,
+      hoverDelay: 50,
+    };
+  </script>
+  <!-- <script defer src="https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script> -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // 当 DOM 内容加载完成后，为 body 添加 'loaded' 类
+      document.body.classList.add('loaded');
+    });
+  </script>
+</body>
+</html>

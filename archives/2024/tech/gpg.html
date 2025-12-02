@@ -1,0 +1,571 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <script>
+    (function() {
+      try {
+        // 1. 优先从 localStorage 获取用户保存的主题
+        var savedTheme = localStorage.getItem('theme');
+        
+        // 2. 如果没有保存的主题，则检查系统偏好
+        var theme = savedTheme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        
+        // 3. 将主题属性应用到 <html> 元素上
+        //    在 <head> 中执行时，<body> 可能还不存在，所以操作 <html> 更安全
+        if (theme === 'dark') {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      } catch (e) {
+        // 如果发生错误，则不执行任何操作，让主脚本来处理
+      }
+    })();
+  </script>
+  
+  <!-- 提示浏览器颜色的 meta 标签 -->
+  <meta name="color-scheme" content="light dark">
+  <!-- Mastodon 验证 -->
+  <meta name="fediverse:creator" content="@illlights@anisaga.life">
+  
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>写给那个没什么人下载的 PGP 签名文件 [ 喑光絮语 ]</title>
+
+  <link rel="icon" href="/img/favicon.ico">
+
+
+    <meta name="author" content="illlights">
+
+
+    <meta name="subtitle" content="illlights blog">
+
+
+    <meta name="Description" content="刚刚脱离高级趣味，所以博客不想太复杂了">
+
+
+    <meta name="keywords" content=",blog, comments, entertainment">
+
+
+  <link rel="alternate" href="/atom.xml " title="喑光絮语" type="application/atom+xml">
+
+
+  
+    <link rel="stylesheet" href="/css/main.css">
+  
+
+<!-- hexo injector head_end start --><style>/* 布局样式 */
+.hexo-tips-layout {
+    margin: 0.5rem 0;
+    padding: 0.5rem 1.5rem;
+    border-radius: 8px;
+    border: 1px solid;
+    border-left-width: 6px;
+    display: flex;
+    align-items: center;
+    transition: transform 0.3s ease;
+    min-width: 2rem;
+    height:auto;
+    overflow-x: auto; 
+    overflow-y: hidden; 
+}
+
+.hexo-tips-layout:hover {
+    transform: translateX(5px);
+}
+
+.hexo-tips-layout .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    font-size: clamp(2em, 2vw, 3em);
+    min-width: 2rem;
+    scale:1.5;
+    transition: transform 0.3s ease;
+}
+
+.hexo-tips-layout:hover .icon {
+    transform: scale(1.3);
+}
+
+.hexo-tips-layout .content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+.hexo-tips-layout:hover .content {
+    transform: translateX(3px);
+}
+
+/* 响应式调整 */
+@media screen and (max-width: 768px) {
+    .hexo-tips-layout {
+        padding: 1rem;
+    }
+}
+
+/* 为每种类型的提示框添加主题样式 */
+[class^="tips-style-"] {
+    --tips-light-bg: #fff; /* 默认值 */
+    --tips-dark-bg: #333;  /* 默认值 */
+    --tips-border: #000;   /* 默认值 */
+}
+
+/* 主题样式规则 */
+[class^="hexo-tips-"] {
+    border-color: var(--tips-border);
+}
+
+[class^="hexo-tips-"] .icon {
+    color: var(--tips-border);
+}
+
+/* 1. 手动暗色模式优先 */
+html.dark [class^="hexo-tips-"] {
+    background-color: var(--tips-dark-bg);
+}
+
+/* 2. 系统暗色模式其次 */
+@media (prefers-color-scheme: dark) {
+    html:not(.light) [class^="hexo-tips-"] {
+        background-color: var(--tips-dark-bg);
+    }
+}
+
+/* 3. 亮色模式最后 */
+html:not(.dark) [class^="hexo-tips-"],
+html.light [class^="hexo-tips-"] {
+    background-color: var(--tips-light-bg);
+}</style><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+<body class="notransition">
+  <!-- <script defer>
+    // 延迟移除 notransition 类，确保初始主题设置完成
+    setTimeout(() => document.body.classList.remove("notransition"), 75);
+  </script> -->
+  <div class="navbar" role="navigation">
+    <nav class="menu">
+      <input type="checkbox" id="menu-trigger" class="menu-trigger" />
+      <label for="menu-trigger">
+        <span class="menu-icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 512 512"
+          >
+            <path
+              d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z"
+            />
+          </svg>
+        </span>
+      </label>
+      <a id="mode">
+        <svg
+          class="mode-sunny"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>LIGHT</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+        <svg
+          class="mode-moon"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>DARK</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+      </a>
+      <div class="trigger">
+        <div class="trigger-container">
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/"> 主页</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/moments/"> 动态</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/archives/"> 文章</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/friends/"> 友链</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " target="_blank" rel="noopener" href="https://www.illlights.com"> 关于</a>
+          
+        </div>
+      </div>
+    </nav>
+  </div>
+  <button id="toTopBtn"><i class="fa-solid fa-hand-point-up " ></i></button>
+<!-- <button id="toggleButton"><i class="fa-solid fa-chart-bar " ></i></button> -->
+<div id="overlay" class="overlay glass-wrapper overlay-bg">
+  <div class="content">
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D"><span class="toc-text">数字签名</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BF%85%E9%A1%BB%E8%A6%81%E4%BA%86%E8%A7%A3%E7%9A%84%E6%8A%80%E6%9C%AF%E7%BB%86%E8%8A%82"><span class="toc-text">必须要了解的技术细节</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%A8%E4%B8%80%E7%94%A8-PGP-%E7%AD%BE%E5%90%8D%E6%96%87%E4%BB%B6%E5%90%A7"><span class="toc-text">用一用 PGP 签名文件吧</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E8%87%AA%E5%B7%B1%E5%88%9B%E5%BB%BA%E6%95%B0%E5%AD%97%E8%BA%AB%E4%BB%BD"><span class="toc-text">为自己创建数字身份</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E5%AF%86%E9%92%A5%E5%AF%B9"><span class="toc-text">创建密钥对</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E5%AD%90%E5%AF%86%E9%92%A5"><span class="toc-text">生成子密钥</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%87%E4%BB%BD%E5%AF%86%E9%92%A5"><span class="toc-text">备份密钥</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%A1%E4%BB%BB%E5%85%B6%E4%BB%96%E5%85%AC%E9%92%A5"><span class="toc-text">信任其他公钥</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AD%BE%E5%8F%91%E8%87%AA%E5%B7%B1%E7%9A%84%E6%96%87%E4%BB%B6"><span class="toc-text">签发自己的文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D%EF%BC%8C%E9%99%A4%E4%BA%86%E9%BA%BB%E7%83%A6%E8%BF%98%E6%9C%89%E4%BB%80%E4%B9%88%E7%94%A8%EF%BC%9F"><span class="toc-text">数字签名，除了麻烦还有什么用？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-text">参考资料</span></a></li></ol>
+    <button id="closeButton"><i class="fa-solid fa-circle-xmark"></i></button>
+  </div>
+</div>
+<div class="wrapper post">
+  <head>
+    <!-- 引入 Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  </head>
+
+
+
+  <main class="page-content" aria-label="Content">
+    <div class="glass-wrapper main-content">
+      <header class="header">
+        
+          <div class="tags">
+            <a href="/tags/%E5%AF%86%E7%A0%81%E5%AD%A6/" class="tag"># 密码学</a><a href="/tags/Linux/" class="tag"># Linux</a>
+          </div>
+        
+          <h1 class="header-title" itemprop="headline">写给那个没什么人下载的 PGP 签名文件</h1>
+          <div class="post-meta">
+            最后更新: <time>Jun 19, 2025</time>
+            作者: <span itemprop="author">
+              <span itemprop="name">illlights</span>
+            </span>
+            字数: <span class="post-count">3.6k</span>
+            预计阅读时间: <span class="post-count">14min</span> 
+          </div>       
+      </header>
+          <div class="page-content"><p>​	如果你恰巧按照<a target="_blank" rel="noopener" href="https://archlinux.org/">官方 Wiki</a> 安装过 Arch Linux，不难看到<a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/Installation_guide#Pre-installation">官方指南中下载后第一步</a>是 Verify signature，验证签名。上面要你另外下载一个 sig 文件，还要安装奇奇怪怪的 <a target="_blank" rel="noopener" href="https://www.gnupg.org/">gpg 程序</a>，然后用长长的指令得到长长的结果，什么都看不懂。</p>
+<p>​	结果是：大部分博客写的教程都跳过了这一步验证，大部分人也不会验证签名。😐</p>
+<p>​	想要介绍 PGP 签名，我们先要讲讲<strong>签名</strong>有什么用。</p>
+<h2 id="数字签名"><a href="#数字签名" class="headerlink" title="数字签名"></a>数字签名</h2><p>​	数字签名，理所当然，就是以数字形式存在的签名。当初发明数字签名的人认为签名具有以下几个功能：</p>
+<ul>
+<li>验证发送者身份：确认发送者确实是他声称的身份。</li>
+<li>完整性：文件&#x2F;邮件传输过程中未被更改。</li>
+<li>不可否认：发送者不可否认已发送的文件&#x2F;邮件。</li>
+</ul>
+<p>​	用人话讲，数字签名主要有三个功能：验证签名后，我能保证这个<strong>文件是签名者发送的原始文件（未经篡改）</strong>，且<strong>签名者不能否认</strong>他发给我这个文件了。</p>
+<p>​	往往在互联网中用的最多的是前一个功能——验证文件是签名者发送的原始文件。</p>
+<h2 id="必须要了解的技术细节"><a href="#必须要了解的技术细节" class="headerlink" title="必须要了解的技术细节"></a>必须要了解的技术细节</h2><p>​	为了让没什么人看的密码学内容简单一些，我只解释一些常见的名词。</p>
+<p>​	现代加密方式分对称式加密和非对称式加密，对称简单理解就是密钥的对称，对称式加密两方的密钥相同（但是密钥交换不在保护范围内），非对称式加密两方密钥不同（更方便交换密钥），分为<strong>私钥</strong>和<strong>公钥</strong>。良好的密码系统要求<strong>私钥只由签名者管理</strong>，<strong>公钥分发</strong>给验证签名的人。</p>
+<p>​	PGP 规定的签名和验证流程如下图。</p>
+<p><img src="https://ooo.0x0.ooo/2024/07/31/ORIBPU.png" alt="签名和验证过程"></p>
+<p>​	看不懂没关系，只需要知道<strong>签名需要私钥，验证需要公钥</strong>。</p>
+<h2 id="用一用-PGP-签名文件吧"><a href="#用一用-PGP-签名文件吧" class="headerlink" title="用一用 PGP 签名文件吧"></a>用一用 PGP 签名文件吧</h2><p>​	回到我们最初的问题，作为做不出什么知道分享的东西的死宅，还是先学会<strong>验证</strong>别人的签名吧。</p>
+<p>​	以 Arch Linux 为例，在<a target="_blank" rel="noopener" href="https://archlinux.org/download/">下载界面</a>提供了 <a target="_blank" rel="noopener" href="https://geo.mirror.pkgbuild.com/iso/2024.07.01/">ISO 文件</a>和对应的 <a target="_blank" rel="noopener" href="https://archlinux.org/iso/2024.07.01/archlinux-2024.07.01-x86_64.iso.sig">SIG 签名文件</a>。ISO 文件在哪里下都可以，但是签名文件必须在信任的地方下载，我们将用签名文件验证 ISO 文件是签名者发出来的原始文件。</p>
+<p>​	现在你的文件夹里有这两个文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">archlinux-2024.07.01-x86_64.iso</span><br><span class="line">archlinux-2024.07.01-x86_64.iso.sig</span><br></pre></td></tr></table></figure>
+
+<p>​	下载系统<a target="_blank" rel="noopener" href="https://www.gnupg.org/download/index.html">对应的 GPG 程序</a>，我们开始验证 ISO 文件的正确性。</p>
+<p>​	首先，要验证数字签名，我们需要签名者的公钥。一些网站在网站上发布公钥，私人也可以线下交换公钥，而 Arch Linux 受众群体大，直接通过密钥服务器发布公钥。</p>
+<p>​	使用 <a target="_blank" rel="noopener" href="https://gpg4win.org/download.html">Gpg4win</a> 图形界面可以查找密钥服务器上的公钥，也可以导入公钥文件，很简单，点一点就好。对应的命令行也就是导入个文件或者输入名字搜索。</p>
+<p><img src="https://ooo.0x0.ooo/2024/07/31/ORITlY.png" alt="搜索公钥"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 从文件导入</span></span><br><span class="line">gpg --import [密钥文件]</span><br><span class="line"><span class="comment"># 从公钥服务器导入</span></span><br><span class="line">gpg --auto-key-locate clear,wkd -v --locate-external-key pierre@archlinux.org</span><br></pre></td></tr></table></figure>
+
+<p>​	导入后可以在界面里看到公钥的相关内容：</p>
+<p><img src="https://ooo.0x0.ooo/2024/07/31/ORIiu1.png" alt="导入内容"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">gpg -k --keyid-format long</span><br><span class="line"><span class="comment"># 输出内容</span></span><br><span class="line"><span class="comment">#[keyboxd]</span></span><br><span class="line"><span class="comment">#---------</span></span><br><span class="line"><span class="comment">#pub   ed25519/76A5EF9054449A5C 2022-10-31 [SC] [expires: 2037-10-27]</span></span><br><span class="line"><span class="comment">#      3E80CA1A8B89F69CBA57D98A76A5EF9054449A5C</span></span><br><span class="line"><span class="comment">#uid                 [ unknown] Pierre Schmitz &lt;pierre@archlinux.org&gt;</span></span><br><span class="line"><span class="comment">#sub   ed25519/D6D13C45BFCFBAFD 2022-10-31 [A] [expires: 2037-10-27]</span></span><br><span class="line"><span class="comment">#sub   cv25519/7F56ADE50CA3D899 2022-10-31 [E] [expires: 2037-10-27]</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#pub   rsa2048/7F2D434B9741E8AC 2011-04-10 [SC]</span></span><br><span class="line"><span class="comment">#      4AA4767BBC9C4B1D18AE28B77F2D434B9741E8AC</span></span><br><span class="line"><span class="comment">#uid                 [ unknown] Pierre Schmitz &lt;pierre@archlinux.org&gt;</span></span><br><span class="line"><span class="comment">#sub   rsa2048/E9B9D36A54211796 2011-04-10 [E]</span></span><br></pre></td></tr></table></figure>
+
+<p>​	然后就可以验证文件了</p>
+<p><img src="https://ooo.0x0.ooo/2024/07/31/ORI1zI.png" alt="验证 ISO 文件"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">gpg --verify .\archlinux-2024.07.01-x86_64.iso.sig</span><br><span class="line"><span class="comment">#gpg: assuming signed data in &#x27;.\\archlinux-2024.07.01-x86_64.iso&#x27;</span></span><br><span class="line"><span class="comment">#gpg: Signature made 07/02/24 02:11:25 China Standard Time</span></span><br><span class="line"><span class="comment">#gpg:                using EDDSA key 3E80CA1A8B89F69CBA57D98A76A5EF9054449A5C</span></span><br><span class="line"><span class="comment">#gpg:                issuer &quot;pierre@archlinux.org&quot;</span></span><br><span class="line"><span class="comment">#gpg: Good signature from &quot;Pierre Schmitz &lt;pierre@archlinux.org&gt;&quot; [unknown]</span></span><br><span class="line"><span class="comment">#gpg: WARNING: The key&#x27;s User ID is not certified with a trusted signature!</span></span><br><span class="line"><span class="comment">#gpg:          There is no indication that the signature belongs to the owner.</span></span><br><span class="line"><span class="comment">#Primary key fingerprint: 3E80 CA1A 8B89 F69C BA57  D98A 76A5 EF90 5444 9A5C</span></span><br></pre></td></tr></table></figure>
+
+<p>​	如果使用命令行，GPG会明确的告诉你签名是正确的，但是公钥没有没验证，在 <a target="_blank" rel="noopener" href="https://gpg4win.org/download.html">Gpg4win</a> 图形界面中则是直接提示 Error：</p>
+<p><img src="https://ooo.0x0.ooo/2024/07/31/ORI7PD.png" alt="错误提示：The used key is not certified by you or any trusted person."></p>
+<p>​	为了信任这个公钥，我们要先创建我们自己的私钥，用自己的私钥信任别人的公钥，这一步实际上是要求人工确认公钥交换的可靠性。</p>
+<h2 id="为自己创建数字身份"><a href="#为自己创建数字身份" class="headerlink" title="为自己创建数字身份"></a>为自己创建数字身份</h2><h3 id="创建密钥对"><a href="#创建密钥对" class="headerlink" title="创建密钥对"></a>创建密钥对</h3><p>​	图形化界面跟着流程默认走就好了，基本就是设置名字和邮箱。在 Advance 设置里同样有命令行的对应参数设置，如加密算法、过期时间等等。</p>
+<p>​	特别说一句，<strong>有效期是公钥的有效期</strong>，私钥可以随时签发公钥，不会过期。如果私钥丢失或泄露，除了使用吊销凭证，就只能等待公钥过期，如果设置了永不过期就好好备份私钥吧。</p>
+<p><img src="https://ooo.0x0.ooo/2024/07/31/ORIN9F.png" alt="创建密钥对"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># step 0 </span></span><br><span class="line">gpg --full-gen-key</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># step 1</span></span><br><span class="line">gpg (GnuPG) 2.2.20; Copyright (C) 2020 Free Software Foundation, Inc.</span><br><span class="line">This is free software: you are free to change and redistribute it.</span><br><span class="line">There is NO WARRANTY, to the extent permitted by law.</span><br><span class="line"></span><br><span class="line">Please <span class="keyword">select</span> what kind of key you want:</span><br><span class="line">   (1) RSA and RSA</span><br><span class="line">   (2) DSA and Elgamal</span><br><span class="line">   (3) DSA (sign only)</span><br><span class="line">   (4) RSA (sign only)</span><br><span class="line">  (14) Existing key from card</span><br><span class="line">Your selection? 1</span><br><span class="line"><span class="comment"># 选择加密算法</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># step 2</span></span><br><span class="line">RSA keys may be between 1024 and 4096 bits long.</span><br><span class="line">What keysize <span class="keyword">do</span> you want? (3072)</span><br><span class="line"><span class="comment"># 此处输入你希望的密钥长度， RSA的不应低于2048 bits，当然输入的数字越大越安全，相应的，加解密的速度也会更慢</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># step 3</span></span><br><span class="line">Please specify how long the key should be valid.</span><br><span class="line">         0 = key does not expire</span><br><span class="line">      &lt;n&gt;  = key expires <span class="keyword">in</span> n days</span><br><span class="line">      &lt;n&gt;w = key expires <span class="keyword">in</span> n weeks</span><br><span class="line">      &lt;n&gt;m = key expires <span class="keyword">in</span> n months</span><br><span class="line">      &lt;n&gt;y = key expires <span class="keyword">in</span> n years</span><br><span class="line">Key is valid <span class="keyword">for</span>? (0)  2y</span><br><span class="line"><span class="comment"># 默认可以选0 ，即永不过期， 这里我选了2y，  因为到期之前随时可以更改你的过期时间，以确保你对此密钥仍拥有控制权</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># step 4</span></span><br><span class="line">Key expires at Wed 11 Jan 2023 05:50:53 PM CST</span><br><span class="line">Is this correct? (y/N) y</span><br><span class="line"><span class="comment">#确定</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># step 5</span></span><br><span class="line">GnuPG needs to construct a user ID to identify your key.</span><br><span class="line"></span><br><span class="line">Real name:  illlights   <span class="comment"># 这里名字可以是网名，可以是任意名字，如果你注重隐私就不要输入自己真名了 </span></span><br><span class="line">Email address: admin@illlights.com  </span><br><span class="line">Comment:     <span class="comment"># 备注可以留空</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 注意了： 这里的邮箱， 如果你不打算使用PGP为你的Git记录认证， 这里其实是可以随便输入的，不需要是你的邮箱， 甚至不需要是一个真实存在的邮箱，只要接受你信息的人知道就行。隐私泄漏问题很严重，你一旦设置了，并且发布到公钥服务器，就永远删不掉了</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># step 6</span></span><br><span class="line">You selected this USER-ID:</span><br><span class="line">    <span class="string">&quot;illlights &lt;admin@illlights.com&gt;&quot;</span></span><br><span class="line"></span><br><span class="line">Change (N)ame, (C)omment, (E)mail or (O)kay/(Q)uit? o</span><br><span class="line"><span class="comment"># 确认无误后输入 o</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># step 7</span></span><br><span class="line">┌──────────────────────────────────────────────────────┐</span><br><span class="line">│ Please enter the passphrase to                       │</span><br><span class="line">│ protect your new key                                 │ </span><br><span class="line">│                                                      │</span><br><span class="line">│ Passphrase: ________________________________________ │</span><br><span class="line">│                                                      │</span><br><span class="line">│       &lt;OK&gt;                              &lt;Cancel&gt;     │</span><br><span class="line">└──────────────────────────────────────────────────────┘</span><br><span class="line"><span class="comment"># 输入一个复杂的密码 并确认</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># step 8</span></span><br><span class="line">We need to generate a lot of random bytes. It is a good idea to perform</span><br><span class="line">some other action (<span class="built_in">type</span> on the keyboard, move the mouse, utilize the</span><br><span class="line">disks) during the prime generation; this gives the random number</span><br><span class="line">generator a better chance to gain enough entropy.</span><br><span class="line"><span class="comment"># 随机移动你的鼠标，越随机你的密钥越安全</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># step 9 大功告成</span></span><br><span class="line">gpg: key 99F583599B7E31F1 marked as ultimately trusted</span><br><span class="line">gpg: revocation certificate stored as <span class="string">&#x27;/root/.gnupg/openpgp-revocs.d/705358AB85366CAB05C0220F99F583599B7E31F1.rev&#x27;</span></span><br><span class="line">public and secret key created and signed.</span><br><span class="line"></span><br><span class="line">pub   rsa3072 2021-01-11 [SC]</span><br><span class="line">      705358AB85366CAB05C0220F99F583599B7E31F1			 <span class="comment"># 你的 key id</span></span><br><span class="line">uid                      illlights &lt;admin@illlights.com&gt;</span><br><span class="line">sub   rsa3072 2021-01-11 [E] 		 <span class="comment"># 这个是自动生成的用于加密的子密钥，E代表Encrypt 加密</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="生成子密钥"><a href="#生成子密钥" class="headerlink" title="生成子密钥"></a>生成子密钥</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># step 0</span></span><br><span class="line">gpg --edit-key illlights <span class="comment"># 或者key id  </span></span><br><span class="line"></span><br><span class="line"><span class="comment"># step 1  进入gpg交互界面</span></span><br><span class="line">addkey</span><br><span class="line"></span><br><span class="line"><span class="comment"># 后面和生成主密钥大同小异</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="备份密钥"><a href="#备份密钥" class="headerlink" title="备份密钥"></a>备份密钥</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">gpg --fingerprint -K --keyid-format long    <span class="comment"># 查看密钥列表</span></span><br><span class="line">gpg -ao public-key.txt --<span class="built_in">export</span> illlights   <span class="comment"># 导出公钥</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 注意这里最后 要带上“!”， 不然会导出全部子密钥</span></span><br><span class="line">gpg  -ao secret-key --export-secret-key 99F583599B7E31F1! <span class="comment"># 导出主私钥，建议secret-key 替换为你的加密设备备份文件的路径，直接导入到设备中</span></span><br><span class="line">gpg  -ao sign-subkey --export-secret-subkeys FDB960B857D397F6! <span class="comment"># 导出有[S]标识、签名用子私钥</span></span><br><span class="line">gpg  -ao encrypt-subkey --export-secret-subkeys 6FE9C71CFED44076! <span class="comment"># 导出有[E]标识、加密用子私钥 ,这里的ID替换为你的子密钥ID</span></span><br></pre></td></tr></table></figure>
+<p>还可以直接在外部存储设备上操作</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gpg --homedir D:/ -ao ...</span><br></pre></td></tr></table></figure>
+
+<h3 id="信任其他公钥"><a href="#信任其他公钥" class="headerlink" title="信任其他公钥"></a>信任其他公钥</h3><p>​	有了自己的密钥对，我们就能信任从别人的公钥了。为了防止公钥遭到篡改，一般我们需要联系对方本人核对公钥的指纹（fingerprint）。</p>
+<p><img src="https://ooo.0x0.ooo/2024/07/31/ORIKdb.png" alt="信任公钥"></p>
+<p>​	在下一个界面里，有这个公钥的指纹信息和姓名邮箱等信息，需要自行核对。对于 Arch Linux 来说，官网上有对于的指纹信息，请在确认一致后再信任公钥。</p>
+<p><img src="https://ooo.0x0.ooo/2024/07/31/ORIvOl.png" alt="自行核对指纹和姓名"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">gpg --edit-key &lt;name&gt; <span class="comment"># 进入 GPG 控制台</span></span><br><span class="line">fpr                   <span class="comment"># 获取指纹信息</span></span><br><span class="line">sign                  <span class="comment"># 信任签名</span></span><br><span class="line">save                  <span class="comment"># 记得保存</span></span><br></pre></td></tr></table></figure>
+
+<p>​	信任公钥之后再去验证，应该就不会有任何报错信息，否则就是文件有问题。</p>
+<p>​	GPG 的信任级别分为以下几个等级：</p>
+<ul>
+<li>Ultimate：绝对信任，只会出现在你自己的密钥上</li>
+<li>Full：完全信任，你相信这个密钥，并信任它可以很好地管理签发密钥。使用这个密钥签名的其他密钥也会受到信任。比如，你完全信任了 小明的密钥，那么由小明签名过的 小美的密钥也会受到信任</li>
+<li>Marginal：相对信任，你相信这个密钥本身，但不确定它签名的密钥是否一定正确。如果一个密钥被至少三个 Marginal 级别的密钥签名，那么该密钥也是可信的</li>
+<li>Never：绝不信任，这个密钥是完全不可信的。这也许以为着密钥的所有者并不能确保它签名的密钥有效，或是该密钥已被泄露因此不再可信</li>
+<li>Unknown：未知，这是密钥的默认信任级别，该级别的密钥不会被信任</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">gpg --edit-key &lt;name&gt; <span class="comment"># 进入 GPG 控制台</span></span><br><span class="line">gpg&gt; trust</span><br><span class="line">Please decide how far you trust this user to correctly verify other <span class="built_in">users</span><span class="string">&#x27; keys</span></span><br><span class="line"><span class="string">(by looking at passports, checking fingerprints from different sources, etc.)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">  1 = I don&#x27;</span>t know or won<span class="string">&#x27;t say &lt;-- 未知</span></span><br><span class="line"><span class="string">  2 = I do NOT trust &lt;-- 绝不信任</span></span><br><span class="line"><span class="string">  3 = I trust marginally &lt;-- 相对信任</span></span><br><span class="line"><span class="string">  4 = I trust fully &lt;-- 完全信任</span></span><br><span class="line"><span class="string">  5 = I trust ultimately &lt;-- 绝对信任</span></span><br><span class="line"><span class="string">  m = back to the main menu &lt;-- 返回</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>​	所有需要输入名字的地方都可以输入对应的以下内容</p>
+<ul>
+<li>密钥 ID（例：5DE3E0509C47EA3CF04A42D34AEE18F83AFDEB23）</li>
+<li>用户名（例：illlights）</li>
+<li>邮箱（例：<a href="mailto:&#x61;&#100;&#109;&#105;&#110;&#x40;&#105;&#108;&#108;&#108;&#x69;&#103;&#x68;&#116;&#115;&#x2e;&#x63;&#111;&#x6d;">admin@illlights.com</a>）</li>
+</ul>
+<h2 id="签发自己的文件"><a href="#签发自己的文件" class="headerlink" title="签发自己的文件"></a>签发自己的文件</h2><p>​	有了数字密钥对，签发文件非常简单。</p>
+<p><img src="https://ooo.0x0.ooo/2024/07/31/ORIgEB.png" alt="为文件签名Step1"></p>
+<p>​	取消 Encrypt 下面的两个选择框就是生成一个签名文件，确认后输入密码即可。</p>
+<p><img src="https://ooo.0x0.ooo/2024/07/31/ORImus.png" alt="取消Encrypt仅签名"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 第一种方式，生成二进制签名文件</span></span><br><span class="line">gpg --sign input.txt  <span class="comment"># 当然也可以加上--output参数</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 第二种方式，生成ASCII格式签名</span></span><br><span class="line">gpg --clearsign input.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 第三种，签名和原文本分开（这种最常用，前两种的签名文件中包含了所有原文本，所以体积会比较大）</span></span><br><span class="line">gpg --armor --detach-sign input.txt  <span class="comment">#不加armor生成会二进制</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>​	为了让接收者能使用 PGP 签名文件验证文件，需要将这四个东西给到接收者：</p>
+<ul>
+<li>文件本身</li>
+<li>签名文件（.sig&#x2F;.asc&#x2F;.gpg）</li>
+<li>公钥</li>
+<li>公钥指纹</li>
+</ul>
+<p>​	指纹是这个信任链的基础，如果是身边的人，用物理方式传递指纹或者在信任公钥的时候在旁边看着；如果是网站管理者，请将指纹放在网站显眼的地方，且保证不会被篡改。</p>
+<h2 id="数字签名，除了麻烦还有什么用？"><a href="#数字签名，除了麻烦还有什么用？" class="headerlink" title="数字签名，除了麻烦还有什么用？"></a>数字签名，除了麻烦还有什么用？</h2><p>​	本站所有签名均使用以下密钥，你可以通过 HTTPS 从我的服务器直接下载公钥文件，<a href="https://blog.illlights.com/download.html#Step3">https://blog.illlights.com/download.html#Step3</a></p>
+<p>​	最后，为什么我们需要数字签名？数字签名这么麻烦，又要专门的软件，又要管理几个密钥。</p>
+<p>​	我认为这关系到<strong>身份的验证权问题</strong>。</p>
+<p>​	这里的身份不是身份证或者护照的那种真实身份，而是指在网络中行为的身份验证，是我们把各种行为统一到一个身份上的必要方法。例如，网络上发布了视频的一个人，要如何在发布第二个视频时说明自己就是之前那个人？</p>
+<p>​	想想我们在日常使用互联网时是如何验证身份的。</p>
+<p>​	在中国，所有的账号管理系统通过手机号验证身份，一个手机号绑定一个账号，我们发了的所有内容都归属于这个手机号的账号之下，而手机号的发放和管理则掌握在运营商手中。也就是说，<strong>我们无法自行证明身份，而是依托于运营商管理的手机号证明身份</strong>。</p>
+<p>​	在国外可以使用电子邮箱验证身份，但更多人使用 Google 或者 Microsoft 提供的邮箱服务，也是通过第三方管理的账户验证身份。</p>
+<p>​	最近 Google、Apple、微信提供的快速登录服务，更是直接摆明大公司希望用户仅仅使用第三方账户验证身份，剥夺用户拥有自主验证身份的途径。</p>
+<p>​	目前最方便且有最大控制权的方式还是<strong>自有域名邮箱验证</strong>（虽然本质上还是找域名机构买身份），国内则不得不用电话号码验证。而 PGP 密钥方式，则是让<strong>签名者能够自主验证身份</strong>，无论是发布到互联网还是私下传输，都可以使用密钥交换验证发布者的身份，但是由于技术难度，使用的人还是太少了。</p>
+<p>​	保留“证明我是我”的权利，就是我们普通人使用 PGP 签名的最好意义。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a target="_blank" rel="noopener" href="https://ulyc.github.io/2021/01/13/2021%E5%B9%B4-%E7%94%A8%E6%9B%B4%E7%8E%B0%E4%BB%A3%E7%9A%84%E6%96%B9%E6%B3%95%E4%BD%BF%E7%94%A8PGP-%E4%B8%8A/">2021年，用更现代的方法使用PGP（上） - C的博客 |UlyC</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.lamgc.moe/2021/02/26/gpg-smart-card-from-installation-to-use-tutorial/">GPG 物理密钥从安装到日常使用 » Lam的闲聊客栈 (lamgc.moe)</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/spirit-ling/p/16451771.html">Git 使用 GPG keys 进行签名 - SpiritLing - 博客园 (cnblogs.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/36810467/git-commit-signing-failed-secret-key-not-available">git commit signing failed: secret key not available - Stack Overflow</a></p>
+</div>          
+          <nav class="post-nav">
+    
+    <a class="post-nav-item post-nav-prev" href="/archives/2024/tech/install-arch-linux.html">
+      <div class="nav-arrow">&lt;&nbsp;NEWER</div>
+      <span class="post-title">Arch Linux 用户的第一课</span>
+    </a>
+    
+    
+    <a class="post-nav-item post-nav-next" href="/archives/2024/games/animation-fantasy-world.html">
+      <div class="nav-arrow">OLDER&nbsp;&gt;</div>
+      <span class="post-title">动漫，幻想与世界</span>
+    </a>
+    
+  </nav>
+          <div class="dis">
+    
+        
+    <script src='//cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js'></script>
+    <div id="waline" class="glass-wrapper waline-container"></div>
+    <script>
+        window.onload = function () {
+            new Waline({
+                el: '#waline',
+                path: location.pathname,
+                avatarCDN: 'https://sdn.geekzu.org/avatar/',
+                serverURL: 'https://comments-blog.illlights.com/',
+                avatar: 'monsterid',
+                placeholder: "封闭的文字无法成长。"
+            });
+        };
+    </script>
+
+
+    
+</div>
+    </div>
+   </main>
+</div>
+
+  <footer class="footer">
+    <small class="footer_copyright">
+      <div id="bottom-inner">
+        © Site by illlights<br>
+        <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a> &
+        <a target="_blank" rel="noopener" href="https://github.com/RichardTang2003/hexo-theme-Klise-glassy">Klise-glassy</a>
+        <br>
+        始于2021.
+        
+      </div>
+    </small>
+  </footer>
+  
+  
+
+    
+      <script src="/js/main.js"></script>
+    
+  
+  <script>
+    window.FPConfig = {
+      delay: 0,
+      ignoreKeywords: [],
+      maxRPS: 3,
+      hoverDelay: 50,
+    };
+  </script>
+  <!-- <script defer src="https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script> -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // 当 DOM 内容加载完成后，为 body 添加 'loaded' 类
+      document.body.classList.add('loaded');
+    });
+  </script>
+</body>
+</html>

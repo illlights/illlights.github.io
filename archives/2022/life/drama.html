@@ -1,0 +1,487 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <script>
+    (function() {
+      try {
+        // 1. 优先从 localStorage 获取用户保存的主题
+        var savedTheme = localStorage.getItem('theme');
+        
+        // 2. 如果没有保存的主题，则检查系统偏好
+        var theme = savedTheme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        
+        // 3. 将主题属性应用到 <html> 元素上
+        //    在 <head> 中执行时，<body> 可能还不存在，所以操作 <html> 更安全
+        if (theme === 'dark') {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      } catch (e) {
+        // 如果发生错误，则不执行任何操作，让主脚本来处理
+      }
+    })();
+  </script>
+  
+  <!-- 提示浏览器颜色的 meta 标签 -->
+  <meta name="color-scheme" content="light dark">
+  <!-- Mastodon 验证 -->
+  <meta name="fediverse:creator" content="@illlights@anisaga.life">
+  
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>玩罢《冥契》，我去看了场舞台剧 [ 喑光絮语 ]</title>
+
+  <link rel="icon" href="/img/favicon.ico">
+
+
+    <meta name="author" content="illlights">
+
+
+    <meta name="subtitle" content="illlights blog">
+
+
+    <meta name="Description" content="刚刚脱离高级趣味，所以博客不想太复杂了">
+
+
+    <meta name="keywords" content=",blog, comments, entertainment">
+
+
+  <link rel="alternate" href="/atom.xml " title="喑光絮语" type="application/atom+xml">
+
+
+  
+    <link rel="stylesheet" href="/css/main.css">
+  
+
+<!-- hexo injector head_end start --><style>/* 布局样式 */
+.hexo-tips-layout {
+    margin: 0.5rem 0;
+    padding: 0.5rem 1.5rem;
+    border-radius: 8px;
+    border: 1px solid;
+    border-left-width: 6px;
+    display: flex;
+    align-items: center;
+    transition: transform 0.3s ease;
+    min-width: 2rem;
+    height:auto;
+    overflow-x: auto; 
+    overflow-y: hidden; 
+}
+
+.hexo-tips-layout:hover {
+    transform: translateX(5px);
+}
+
+.hexo-tips-layout .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    font-size: clamp(2em, 2vw, 3em);
+    min-width: 2rem;
+    scale:1.5;
+    transition: transform 0.3s ease;
+}
+
+.hexo-tips-layout:hover .icon {
+    transform: scale(1.3);
+}
+
+.hexo-tips-layout .content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+.hexo-tips-layout:hover .content {
+    transform: translateX(3px);
+}
+
+/* 响应式调整 */
+@media screen and (max-width: 768px) {
+    .hexo-tips-layout {
+        padding: 1rem;
+    }
+}
+
+/* 为每种类型的提示框添加主题样式 */
+[class^="tips-style-"] {
+    --tips-light-bg: #fff; /* 默认值 */
+    --tips-dark-bg: #333;  /* 默认值 */
+    --tips-border: #000;   /* 默认值 */
+}
+
+/* 主题样式规则 */
+[class^="hexo-tips-"] {
+    border-color: var(--tips-border);
+}
+
+[class^="hexo-tips-"] .icon {
+    color: var(--tips-border);
+}
+
+/* 1. 手动暗色模式优先 */
+html.dark [class^="hexo-tips-"] {
+    background-color: var(--tips-dark-bg);
+}
+
+/* 2. 系统暗色模式其次 */
+@media (prefers-color-scheme: dark) {
+    html:not(.light) [class^="hexo-tips-"] {
+        background-color: var(--tips-dark-bg);
+    }
+}
+
+/* 3. 亮色模式最后 */
+html:not(.dark) [class^="hexo-tips-"],
+html.light [class^="hexo-tips-"] {
+    background-color: var(--tips-light-bg);
+}</style><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+<body class="notransition">
+  <!-- <script defer>
+    // 延迟移除 notransition 类，确保初始主题设置完成
+    setTimeout(() => document.body.classList.remove("notransition"), 75);
+  </script> -->
+  <div class="navbar" role="navigation">
+    <nav class="menu">
+      <input type="checkbox" id="menu-trigger" class="menu-trigger" />
+      <label for="menu-trigger">
+        <span class="menu-icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 512 512"
+          >
+            <path
+              d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z"
+            />
+          </svg>
+        </span>
+      </label>
+      <a id="mode">
+        <svg
+          class="mode-sunny"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>LIGHT</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+        <svg
+          class="mode-moon"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>DARK</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+      </a>
+      <div class="trigger">
+        <div class="trigger-container">
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/"> 主页</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/moments/"> 动态</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/archives/"> 文章</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/friends/"> 友链</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " target="_blank" rel="noopener" href="https://www.illlights.com"> 关于</a>
+          
+        </div>
+      </div>
+    </nav>
+  </div>
+  <button id="toTopBtn"><i class="fa-solid fa-hand-point-up " ></i></button>
+<!-- <button id="toggleButton"><i class="fa-solid fa-chart-bar " ></i></button> -->
+<div id="overlay" class="overlay glass-wrapper overlay-bg">
+  <div class="content">
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8E%E3%80%8A%E5%86%A5%E5%A5%91%E3%80%8B%E5%88%B0%E6%88%8F%E5%89%A7"><span class="toc-text">从《冥契》到戏剧</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%88%8F%E5%89%A7%E6%98%AF%E4%BB%80%E4%B9%88%E6%A0%B7%E7%9A%84"><span class="toc-text">戏剧是什么样的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E3%80%8A%E5%86%A5%E5%A5%91%E3%80%8B%E4%B8%8E%E6%88%8F%E5%89%A7"><span class="toc-text">《冥契》与戏剧</span></a></li></ol>
+    <button id="closeButton"><i class="fa-solid fa-circle-xmark"></i></button>
+  </div>
+</div>
+<div class="wrapper post">
+  <head>
+    <!-- 引入 Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  </head>
+
+
+
+  <main class="page-content" aria-label="Content">
+    <div class="glass-wrapper main-content">
+      <header class="header">
+        
+          <div class="tags">
+            <a href="/tags/galgame/" class="tag"># galgame</a>
+          </div>
+        
+          <h1 class="header-title" itemprop="headline">玩罢《冥契》，我去看了场舞台剧</h1>
+          <div class="post-meta">
+            最后更新: <time>Feb 23, 2025</time>
+            作者: <span itemprop="author">
+              <span itemprop="name">illlights</span>
+            </span>
+            字数: <span class="post-count">1.9k</span>
+            预计阅读时间: <span class="post-count">6min</span> 
+          </div>       
+      </header>
+          <div class="page-content"><blockquote>
+<p>注意：本文并没有完全区分“戏剧”与“舞台剧”两个专有名词，阅读本文时可视为同一个概念。</p>
+</blockquote>
+<h2 id="从《冥契》到戏剧"><a href="#从《冥契》到戏剧" class="headerlink" title="从《冥契》到戏剧"></a>从《冥契》到戏剧</h2><p>《冥契的牧神节》这款galgame个人觉得挺不错，相较于我最近玩的众多gal，《冥契》确实很抓人。无论是前期用戏剧来推动剧情，还是后期的小结局（公演），再到揭示世界观和最后的妹妹剧情。不仅世界观不落俗套，情感线也比较饱满，最后虐妹妹也不错，不会太胃疼也不会毫无感觉。但本作最大的亮点，在我看来是引入了戏剧元素，戏剧元素不仅让前期不会无聊，也在后期世界观方面贡献不小。</p>
+<p>看过一篇《冥契》的评价，作者认为它“更像是看了一场戏剧”。当然，文章中一些观点很不错，《冥契》确实把每位角色都大量描写，主角意识不足，更偏向于“群像”而非galgame，但唯独“像戏剧”这一观点我并不认同。事实上，游戏以戏剧为题材，但游戏远非戏剧。</p>
+<h2 id="戏剧是什么样的"><a href="#戏剧是什么样的" class="headerlink" title="戏剧是什么样的"></a>戏剧是什么样的</h2><p>讲实话，去看场舞台剧的想法确实是冥契给激发出的，但冥契还远远比不上戏剧。</p>
+<p>我看的是场小说改编而来的舞台剧，东野圭吾《虚无的十字架》，买了张最贵的票到第一排，好贵~</p>
+<p><img src="https://ooo.0x0.ooo/2023/03/06/Yecml.jpg" alt="舞台与剧名"></p>
+<p>前面漫长的等待没必要详写。当全场灯光渐渐暗下来，观众的嘈杂声自然消退时，剧场的感觉十分“浓郁”。浓郁很好的形容这种感觉涌上来的程度，恐怕只有置身剧场的前排，眼前只有木制舞台和没有灯光的红色的幕布时才能体会得到。</p>
+<p>而当巨幕缓缓拉开，三两演员身着戏服，抱着盒子静止在舞台中央，四周空荡只留有几个道具，我清晰的感受到：这就是戏剧，是屏幕前无法感受到的戏剧，也是游戏再怎么样也模拟不出来的东西。然后，第一束聚光灯打在主角的身上，这时我又会感叹，原来舞台上的聚光灯真的这么集中了观众的视线，向周围望去，仍是一片黑暗，另外两个演员依旧一动不动。于是这场舞台剧就这样拉开序幕。</p>
+<p>我也不事无巨细描写整个舞台剧的过程了，就说说整个看下来的感受吧。我觉得当代戏剧真正的魅力在于演员本人和角色之间的混合与平衡。要说戏剧的代入感（或者说是“入戏”程度）肯定远不如电影、电视剧、动画之类，这些录制产品的目标都是让整个视频完全不露出马脚——这也很容易做到，电影可以NG重拍，力求场景还原，动画直接画就好，但戏剧这种即时演出的东西在这方面无法做到完美，不过反而成就了戏剧独特特质。</p>
+<p>序幕开始时，“表演感”非常强，可以明显的感知到演员在扮演这一角色——不需要的演员不动，周围只有零星几个道具，几乎没有场景背景，此时演员本人的“占比”比较大。而随着剧情的推进，角色情感不断补充，加上我也逐渐习惯这种需要想象场景的表现形式，代入感越来越强，戏剧角色逐渐替代演员本人，占据了舞台的主导权。等整场表演结束自己回过神来，其实还有点惊讶于为什么这么简单的道具可以让自己有如此强的代入感。从幕布拉开时的舞台实感到高潮阶段的代入感，这是“舞台”和“故事”的混合，也正是戏剧独一无二之处。</p>
+<p>戏剧第二个独特之处，在于表演艺术是每一场都独一无二的。且不说剧本上的改动（好像改剧本挺常见的），演员的状态、当时的情感表现，都是不可复现的要素，因此，对于演员来说，下一场表演永远是最好的一场表演。演员偶尔的吐字不清、道具的一点点问题、灯光的差异也都是独一无二，算是戏剧表演的一点点bargain。而这些失误又会产生”出戏感“，进一步改变”演员与角色“”舞台与故事“之间的较量与平衡。这么说吧，每一场演出都只存在于当下这一刻，只存在于这一小小的剧场中，不会以数字形式永久保存，相较于电影、音乐、绘画等艺术完全可以说是”昙花一现“，但是演员依然在这一场表演中拼尽全力，这难道不是为一种艺术吗？</p>
+<p>前面提到道具很少，但”少“并不代表不”美“。纵观整个舞台，无论是演员精致的着装，还是一些场景的背景布置，再到舞台灯光的处理，都让我不止一次的感受到舞台的美。甚至有的时候我还会直接被聚光灯和背景吸引住，没太注意演员的行动语言，这看似对戏剧有反作用，但对于戏剧艺术这一艺术来说却是更进一步。当然戏剧的场景需要想象，也是这介于电影和书本之间的想象空间让戏剧更耐人寻味。</p>
+<p>戏剧结束，演员全部站上舞台，习惯性的拉手鞠躬后，一一介绍演员。观众们都很惊讶（至少我比较惊讶），原来一个演员要扮演三四个角色，而且在表演过程中我没有一点察觉！只好感叹演员表演水平之高.从合影这事也可以看出，演员们对于每一场戏剧都认定其独一无二，每一次表演都是全新的表演，才要每场表演合影留恋。</p>
+<h2 id="《冥契》与戏剧"><a href="#《冥契》与戏剧" class="headerlink" title="《冥契》与戏剧"></a>《冥契》与戏剧</h2><p>读完上面这一长串看戏剧的想法，基本上能感受到游戏和戏剧本身的差距。如果不能，请自己进一次剧场，那种体验绝对不是文字描述的这么简单。</p>
+<p>我还是认为《冥契》的戏剧主题真的不错，甚至让我产生了”看戏剧“的想法，可以说非常成功。但游戏完全没有”演员“和”角色“的争斗，所有的角色都是虚拟的。不过我觉得能体现这一平衡的角色还真有：架桥琥珀，可惜她的”演员本身“太少了，感觉她整个人生都是一场演戏。</p>
+<p><img src="https://i.imgtg.com/2023/03/06/Yelwa.jpg" alt="架桥琥珀饰演CG"></p>
+<p>此外，游戏的切入视角是”后台视角“，就算是两端演戏的部分也是以幕后人员的视角来看的，这种视角自带劣势——”演员本身“的占比极其大，基本上100%会直接看出来这就是某位女主在演角色（同样我觉得架桥琥珀演杀人狂魔那一段可以算是例外）。和实际上去看戏剧的体验差距真都是非常大。</p>
+<p>最后，虽然这篇文章不是严格意义上的通关点评，更多的是我实际生活的感想，但还是给《冥契的牧神节》打个主观评分吧：5&#x2F;5.</p>
+</div>          
+          <nav class="post-nav">
+    
+    <a class="post-nav-item post-nav-prev" href="/archives/2022/games/new-cyberpunk-edgerunners.html">
+      <div class="nav-arrow">&lt;&nbsp;NEWER</div>
+      <span class="post-title">Cyberpunk: Edgerunners | 如果我们一无所有</span>
+    </a>
+    
+    
+    <a class="post-nav-item post-nav-next" href="/archives/2022/tech/animation-images-api.html">
+      <div class="nav-arrow">OLDER&nbsp;&gt;</div>
+      <span class="post-title">写了个随机CG图的api</span>
+    </a>
+    
+  </nav>
+          <div class="dis">
+    
+        
+    <script src='//cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js'></script>
+    <div id="waline" class="glass-wrapper waline-container"></div>
+    <script>
+        window.onload = function () {
+            new Waline({
+                el: '#waline',
+                path: location.pathname,
+                avatarCDN: 'https://sdn.geekzu.org/avatar/',
+                serverURL: 'https://comments-blog.illlights.com/',
+                avatar: 'monsterid',
+                placeholder: "封闭的文字无法成长。"
+            });
+        };
+    </script>
+
+
+    
+</div>
+    </div>
+   </main>
+</div>
+
+  <footer class="footer">
+    <small class="footer_copyright">
+      <div id="bottom-inner">
+        © Site by illlights<br>
+        <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a> &
+        <a target="_blank" rel="noopener" href="https://github.com/RichardTang2003/hexo-theme-Klise-glassy">Klise-glassy</a>
+        <br>
+        始于2021.
+        
+      </div>
+    </small>
+  </footer>
+  
+  
+
+    
+      <script src="/js/main.js"></script>
+    
+  
+  <script>
+    window.FPConfig = {
+      delay: 0,
+      ignoreKeywords: [],
+      maxRPS: 3,
+      hoverDelay: 50,
+    };
+  </script>
+  <!-- <script defer src="https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script> -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // 当 DOM 内容加载完成后，为 body 添加 'loaded' 类
+      document.body.classList.add('loaded');
+    });
+  </script>
+</body>
+</html>

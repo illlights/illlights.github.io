@@ -1,0 +1,473 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <script>
+    (function() {
+      try {
+        // 1. 优先从 localStorage 获取用户保存的主题
+        var savedTheme = localStorage.getItem('theme');
+        
+        // 2. 如果没有保存的主题，则检查系统偏好
+        var theme = savedTheme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        
+        // 3. 将主题属性应用到 <html> 元素上
+        //    在 <head> 中执行时，<body> 可能还不存在，所以操作 <html> 更安全
+        if (theme === 'dark') {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      } catch (e) {
+        // 如果发生错误，则不执行任何操作，让主脚本来处理
+      }
+    })();
+  </script>
+  
+  <!-- 提示浏览器颜色的 meta 标签 -->
+  <meta name="color-scheme" content="light dark">
+  <!-- Mastodon 验证 -->
+  <meta name="fediverse:creator" content="@illlights@anisaga.life">
+  
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>一周目谈 | 蔚蓝Celeste [ 喑光絮语 ]</title>
+
+  <link rel="icon" href="/img/favicon.ico">
+
+
+    <meta name="author" content="illlights">
+
+
+    <meta name="subtitle" content="illlights blog">
+
+
+    <meta name="Description" content="刚刚脱离高级趣味，所以博客不想太复杂了">
+
+
+    <meta name="keywords" content=",blog, comments, entertainment">
+
+
+  <link rel="alternate" href="/atom.xml " title="喑光絮语" type="application/atom+xml">
+
+
+  
+    <link rel="stylesheet" href="/css/main.css">
+  
+
+<!-- hexo injector head_end start --><style>/* 布局样式 */
+.hexo-tips-layout {
+    margin: 0.5rem 0;
+    padding: 0.5rem 1.5rem;
+    border-radius: 8px;
+    border: 1px solid;
+    border-left-width: 6px;
+    display: flex;
+    align-items: center;
+    transition: transform 0.3s ease;
+    min-width: 2rem;
+    height:auto;
+    overflow-x: auto; 
+    overflow-y: hidden; 
+}
+
+.hexo-tips-layout:hover {
+    transform: translateX(5px);
+}
+
+.hexo-tips-layout .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    font-size: clamp(2em, 2vw, 3em);
+    min-width: 2rem;
+    scale:1.5;
+    transition: transform 0.3s ease;
+}
+
+.hexo-tips-layout:hover .icon {
+    transform: scale(1.3);
+}
+
+.hexo-tips-layout .content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+.hexo-tips-layout:hover .content {
+    transform: translateX(3px);
+}
+
+/* 响应式调整 */
+@media screen and (max-width: 768px) {
+    .hexo-tips-layout {
+        padding: 1rem;
+    }
+}
+
+/* 为每种类型的提示框添加主题样式 */
+[class^="tips-style-"] {
+    --tips-light-bg: #fff; /* 默认值 */
+    --tips-dark-bg: #333;  /* 默认值 */
+    --tips-border: #000;   /* 默认值 */
+}
+
+/* 主题样式规则 */
+[class^="hexo-tips-"] {
+    border-color: var(--tips-border);
+}
+
+[class^="hexo-tips-"] .icon {
+    color: var(--tips-border);
+}
+
+/* 1. 手动暗色模式优先 */
+html.dark [class^="hexo-tips-"] {
+    background-color: var(--tips-dark-bg);
+}
+
+/* 2. 系统暗色模式其次 */
+@media (prefers-color-scheme: dark) {
+    html:not(.light) [class^="hexo-tips-"] {
+        background-color: var(--tips-dark-bg);
+    }
+}
+
+/* 3. 亮色模式最后 */
+html:not(.dark) [class^="hexo-tips-"],
+html.light [class^="hexo-tips-"] {
+    background-color: var(--tips-light-bg);
+}</style><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+<body class="notransition">
+  <!-- <script defer>
+    // 延迟移除 notransition 类，确保初始主题设置完成
+    setTimeout(() => document.body.classList.remove("notransition"), 75);
+  </script> -->
+  <div class="navbar" role="navigation">
+    <nav class="menu">
+      <input type="checkbox" id="menu-trigger" class="menu-trigger" />
+      <label for="menu-trigger">
+        <span class="menu-icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 512 512"
+          >
+            <path
+              d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z"
+            />
+          </svg>
+        </span>
+      </label>
+      <a id="mode">
+        <svg
+          class="mode-sunny"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>LIGHT</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+        <svg
+          class="mode-moon"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>DARK</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+      </a>
+      <div class="trigger">
+        <div class="trigger-container">
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/"> 主页</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/moments/"> 动态</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/archives/"> 文章</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/friends/"> 友链</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " target="_blank" rel="noopener" href="https://www.illlights.com"> 关于</a>
+          
+        </div>
+      </div>
+    </nav>
+  </div>
+  <button id="toTopBtn"><i class="fa-solid fa-hand-point-up " ></i></button>
+<!-- <button id="toggleButton"><i class="fa-solid fa-chart-bar " ></i></button> -->
+<div id="overlay" class="overlay glass-wrapper overlay-bg">
+  <div class="content">
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%AA%E4%BA%BA%E4%BD%93%E9%AA%8C"><span class="toc-text">个人体验</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%85%E5%AE%9E%E7%9A%84%E5%86%85%E5%AE%B9"><span class="toc-text">充实的内容</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%81%E7%95%85%E7%9A%84%E6%93%8D%E4%BD%9C"><span class="toc-text">流畅的操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%B0%E5%AF%8C%E4%B8%94%E9%AB%98%E8%B4%A8%E9%87%8F%E7%9A%84%E5%85%B3%E5%8D%A1%E8%AE%BE%E8%AE%A1"><span class="toc-text">丰富且高质量的关卡设计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8bit%E7%9A%84%E7%9A%AE%E5%9B%8A%E4%B8%8B%EF%BC%8C%E6%98%AF%E5%AF%B9%E7%8E%B0%E4%BB%A3%E7%A4%BE%E4%BC%9A%E7%B2%BE%E7%A5%9E%E4%B8%96%E7%95%8C%E7%9A%84%E6%80%9D%E8%80%83"><span class="toc-text">8bit的皮囊下，是对现代社会精神世界的思考</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%84%E4%BB%B7%EF%BC%885-5%EF%BC%89"><span class="toc-text">评价（5&#x2F;5）</span></a></li></ol>
+    <button id="closeButton"><i class="fa-solid fa-circle-xmark"></i></button>
+  </div>
+</div>
+<div class="wrapper post">
+  <head>
+    <!-- 引入 Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  </head>
+
+
+
+  <main class="page-content" aria-label="Content">
+    <div class="glass-wrapper main-content">
+      <header class="header">
+        
+          <div class="tags">
+            <a href="/tags/%E7%8B%AC%E7%AB%8B%E6%B8%B8%E6%88%8F/" class="tag"># 独立游戏</a>
+          </div>
+        
+          <h1 class="header-title" itemprop="headline">一周目谈 | 蔚蓝Celeste</h1>
+          <div class="post-meta">
+            最后更新: <time>Jul 23, 2022</time>
+            作者: <span itemprop="author">
+              <span itemprop="name">illlights</span>
+            </span>
+            字数: <span class="post-count">1.3k</span>
+            预计阅读时间: <span class="post-count">4min</span> 
+          </div>       
+      </header>
+          <div class="page-content"><h2 id="个人体验"><a href="#个人体验" class="headerlink" title="个人体验"></a>个人体验</h2><p><img src="https://upload.cc/i1/2021/07/20/jzJ7bt.jpg" alt="新手引导"><br>　　蔚蓝（Celeste）是2018年一款优秀独立游戏，一款像素风格的横版跳跃游戏。这款游戏最开始吸引我的是它的美术，虽然是像素风格，但仍然不失独特且精美的画风，甚至像素风格更加强化了这种美感。而真正上手之后，把我留下来的是丰富且精美的关卡设计和十分流畅的操作感受。<br>　　我在2019年买了这款游戏，但由于学业的原因一直没有通关，留了最后两章，这几天外出旅游坐车时间非常长，也就有时间通关了游戏（不含第九章）<br><img src="https://upload.cc/i1/2021/07/20/K4UbLO.jpg" alt="第八章结束画面"></p>
+<h2 id="充实的内容"><a href="#充实的内容" class="headerlink" title="充实的内容"></a>充实的内容</h2><p>　　对于一款独立游戏而言，整个游戏流程非常充实。首先是八章的AB面，每一面大概需要1-2h，PC版有dlc的C面，而且去年免费赠送了第九章。对于120元左右（Switch）的价格，内容绝对是配得上价格的。<br>　　游戏通关流程是先依次通关A面，A面中可以解锁B面，在完成四个B面之后开放第八章，前八章A面通关后开放第九章。</p>
+<h2 id="流畅的操作"><a href="#流畅的操作" class="headerlink" title="流畅的操作"></a>流畅的操作</h2><p>　　先说死亡动画这一点吧，死亡动画十分简短流畅，感觉就像是瞬移回了画面起点，相比与某些同样死的很多的游戏（某狼），完全不会有失误的压迫感，鼓励玩家不断尝试，慢慢地也能顺利通关。即使是未接触过横版跳跃游戏的玩家也可以大胆尝试这款游戏。<br>　　而作为平台跳跃游戏，跳跃肯定是重头戏，蔚蓝的跳跃和移动手感恰到好处，不同于马里奥的滑腻手感和空洞骑士的轻盈感，蔚蓝的手感相对正常但又不失灵活。网络上对它的手感分析很多，但真正体验过才知道什么叫做跟手。<br>　　此外，蔚蓝明显为速通做了优化，很多关卡连跳十分顺利，所以在熟悉操作之后可以尝试连跳，尝试速通解法，往往可以得到更流畅的体验。</p>
+<h2 id="丰富且高质量的关卡设计"><a href="#丰富且高质量的关卡设计" class="headerlink" title="丰富且高质量的关卡设计"></a>丰富且高质量的关卡设计</h2><p>　　蔚蓝的游戏性，可以说是横版跳跃游戏的标杆。虽然操作只有移动、跳跃、冲刺，但结合各种道具和极为丰富的关卡，完全不会有重复感，下面几张截图也只是冰山一角。而B面的游戏难度明显较大（比较劝退，我写这篇文章时也卡在第五章的B面），可以说是娱乐性与挑战性兼具。得益于循序渐进的关卡设计，A面通关相对轻松、B面则充满挑战，可以满足不同玩家的需求。<br><img src="https://upload.cc/i1/2021/07/20/18WLvC.jpg" alt="多种多样1"><br><img src="https://upload.cc/i1/2021/07/20/Tmo4Kx.jpg" alt="多种多样2"><br><img src="https://upload.cc/i1/2021/07/20/7Dy23b.jpg" alt="多种多样3"><br><img src="https://upload.cc/i1/2021/07/20/tAD8qO.jpg" alt="多种多样4"><br><img src="https://upload.cc/i1/2021/07/20/vmzaZb.jpg" alt="多种多样5"></p>
+<h2 id="8bit的皮囊下，是对现代社会精神世界的思考"><a href="#8bit的皮囊下，是对现代社会精神世界的思考" class="headerlink" title="8bit的皮囊下，是对现代社会精神世界的思考"></a>8bit的皮囊下，是对现代社会精神世界的思考</h2><p>　　蔚蓝讲述了一个自我救赎的故事，主角madeline在抑郁症的阴影之下想要独自攀登雪山。在攀登的过程中，madline遇到了另外一个攀登者，遇到了自己的黑暗面，还有数不胜数的困难与无数次的尝试。<br>　　Madeline一开始对山脚的老奶奶说，我要独自攀登这座山，但攀登这座山却不是孤独的。与John的友谊，与自己的和解，遇到山庄的店长的鬼魂，还有蓝色羽毛的小鸟陪伴。最后的结局是，Madeline将攀登中收集的草莓做成草莓蛋糕，老奶奶，John，Madeline，Madeline的黑暗面，甚至是店长的鬼魂，齐聚一堂。我想，让Madeline走出抑郁的不仅仅是登上Celeste，而是友情、亲情和与自己的和解。<br>　　也许体会过抑郁的人很少，madeline有这么一句台词:“就像我沉入深海，任何方向都看不到东西”。尽管没有达到抑郁的程度，但现代的生活，闪这那么些许的曙光，却又能存在多久呢？大多数人还是生活在黑暗之中。这不是一个献给抑郁症患者的游戏，仔细想想，在生活中，我们真的还有友情吗？会不会与自己和解？还是如店长一样执着的死守过去，哪怕只有鬼魂，也还在自我欺骗？<br>　　如果上面的这些你都没有体会过，那也没有关系。这个游戏最让我眼前一亮的是：Madeline“摆脱抑郁症”的目标与玩家“登上山顶”的目标是一致的。在几百次的尝试中，也许会想着放弃，也许会感受到自己的失败与无能，正如抑郁的压迫，正如抑郁症患者对人生的绝望。而当登上山顶、红旗映入眼帘的那一刻，也许真的能感受到Madeline摆脱抑郁的如释重负。</p>
+<h2 id="评价（5-5）"><a href="#评价（5-5）" class="headerlink" title="评价（5&#x2F;5）"></a>评价（5&#x2F;5）</h2><p>　　时至今日，蔚蓝仍不失为一款优秀独立游戏，现在我也十分推荐这款游戏，无论是否接触过横板跳跃游戏，只要对横版跳跃类不抵触，蔚蓝都值得一试。</p>
+</div>          
+          <nav class="post-nav">
+    
+    <a class="post-nav-item post-nav-prev" href="/archives/2021/reading/Koto.html">
+      <div class="nav-arrow">&lt;&nbsp;NEWER</div>
+      <span class="post-title">《古都》鉴赏：缺失情节却依旧完整</span>
+    </a>
+    
+    
+    <a class="post-nav-item post-nav-next" href="/archives/2021/life/waterfowl.html">
+      <div class="nav-arrow">OLDER&nbsp;&gt;</div>
+      <span class="post-title">偶遇水鸟</span>
+    </a>
+    
+  </nav>
+          <div class="dis">
+    
+        
+    <script src='//cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js'></script>
+    <div id="waline" class="glass-wrapper waline-container"></div>
+    <script>
+        window.onload = function () {
+            new Waline({
+                el: '#waline',
+                path: location.pathname,
+                avatarCDN: 'https://sdn.geekzu.org/avatar/',
+                serverURL: 'https://comments-blog.illlights.com/',
+                avatar: 'monsterid',
+                placeholder: "封闭的文字无法成长。"
+            });
+        };
+    </script>
+
+
+    
+</div>
+    </div>
+   </main>
+</div>
+
+  <footer class="footer">
+    <small class="footer_copyright">
+      <div id="bottom-inner">
+        © Site by illlights<br>
+        <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a> &
+        <a target="_blank" rel="noopener" href="https://github.com/RichardTang2003/hexo-theme-Klise-glassy">Klise-glassy</a>
+        <br>
+        始于2021.
+        
+      </div>
+    </small>
+  </footer>
+  
+  
+
+    
+      <script src="/js/main.js"></script>
+    
+  
+  <script>
+    window.FPConfig = {
+      delay: 0,
+      ignoreKeywords: [],
+      maxRPS: 3,
+      hoverDelay: 50,
+    };
+  </script>
+  <!-- <script defer src="https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script> -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // 当 DOM 内容加载完成后，为 body 添加 'loaded' 类
+      document.body.classList.add('loaded');
+    });
+  </script>
+</body>
+</html>

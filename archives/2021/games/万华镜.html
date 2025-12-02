@@ -1,0 +1,517 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <script>
+    (function() {
+      try {
+        // 1. 优先从 localStorage 获取用户保存的主题
+        var savedTheme = localStorage.getItem('theme');
+        
+        // 2. 如果没有保存的主题，则检查系统偏好
+        var theme = savedTheme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        
+        // 3. 将主题属性应用到 <html> 元素上
+        //    在 <head> 中执行时，<body> 可能还不存在，所以操作 <html> 更安全
+        if (theme === 'dark') {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      } catch (e) {
+        // 如果发生错误，则不执行任何操作，让主脚本来处理
+      }
+    })();
+  </script>
+  
+  <!-- 提示浏览器颜色的 meta 标签 -->
+  <meta name="color-scheme" content="light dark">
+  <!-- Mastodon 验证 -->
+  <meta name="fediverse:creator" content="@illlights@anisaga.life">
+  
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>一周目谈 | 拔作背后的深邃内核：借万华镜终章引出的一些思考 [ 喑光絮语 ]</title>
+
+  <link rel="icon" href="/img/favicon.ico">
+
+
+    <meta name="author" content="illlights">
+
+
+    <meta name="subtitle" content="illlights blog">
+
+
+    <meta name="Description" content="刚刚脱离高级趣味，所以博客不想太复杂了">
+
+
+    <meta name="keywords" content=",blog, comments, entertainment">
+
+
+  <link rel="alternate" href="/atom.xml " title="喑光絮语" type="application/atom+xml">
+
+
+  
+    <link rel="stylesheet" href="/css/main.css">
+  
+
+<!-- hexo injector head_end start --><style>/* 布局样式 */
+.hexo-tips-layout {
+    margin: 0.5rem 0;
+    padding: 0.5rem 1.5rem;
+    border-radius: 8px;
+    border: 1px solid;
+    border-left-width: 6px;
+    display: flex;
+    align-items: center;
+    transition: transform 0.3s ease;
+    min-width: 2rem;
+    height:auto;
+    overflow-x: auto; 
+    overflow-y: hidden; 
+}
+
+.hexo-tips-layout:hover {
+    transform: translateX(5px);
+}
+
+.hexo-tips-layout .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    font-size: clamp(2em, 2vw, 3em);
+    min-width: 2rem;
+    scale:1.5;
+    transition: transform 0.3s ease;
+}
+
+.hexo-tips-layout:hover .icon {
+    transform: scale(1.3);
+}
+
+.hexo-tips-layout .content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+.hexo-tips-layout:hover .content {
+    transform: translateX(3px);
+}
+
+/* 响应式调整 */
+@media screen and (max-width: 768px) {
+    .hexo-tips-layout {
+        padding: 1rem;
+    }
+}
+
+/* 为每种类型的提示框添加主题样式 */
+[class^="tips-style-"] {
+    --tips-light-bg: #fff; /* 默认值 */
+    --tips-dark-bg: #333;  /* 默认值 */
+    --tips-border: #000;   /* 默认值 */
+}
+
+/* 主题样式规则 */
+[class^="hexo-tips-"] {
+    border-color: var(--tips-border);
+}
+
+[class^="hexo-tips-"] .icon {
+    color: var(--tips-border);
+}
+
+/* 1. 手动暗色模式优先 */
+html.dark [class^="hexo-tips-"] {
+    background-color: var(--tips-dark-bg);
+}
+
+/* 2. 系统暗色模式其次 */
+@media (prefers-color-scheme: dark) {
+    html:not(.light) [class^="hexo-tips-"] {
+        background-color: var(--tips-dark-bg);
+    }
+}
+
+/* 3. 亮色模式最后 */
+html:not(.dark) [class^="hexo-tips-"],
+html.light [class^="hexo-tips-"] {
+    background-color: var(--tips-light-bg);
+}</style><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+<body class="notransition">
+  <!-- <script defer>
+    // 延迟移除 notransition 类，确保初始主题设置完成
+    setTimeout(() => document.body.classList.remove("notransition"), 75);
+  </script> -->
+  <div class="navbar" role="navigation">
+    <nav class="menu">
+      <input type="checkbox" id="menu-trigger" class="menu-trigger" />
+      <label for="menu-trigger">
+        <span class="menu-icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 512 512"
+          >
+            <path
+              d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z"
+            />
+          </svg>
+        </span>
+      </label>
+      <a id="mode">
+        <svg
+          class="mode-sunny"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>LIGHT</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+        <svg
+          class="mode-moon"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>DARK</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+      </a>
+      <div class="trigger">
+        <div class="trigger-container">
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/"> 主页</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/moments/"> 动态</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/archives/"> 文章</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/friends/"> 友链</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " target="_blank" rel="noopener" href="https://www.illlights.com"> 关于</a>
+          
+        </div>
+      </div>
+    </nav>
+  </div>
+  <button id="toTopBtn"><i class="fa-solid fa-hand-point-up " ></i></button>
+<!-- <button id="toggleButton"><i class="fa-solid fa-chart-bar " ></i></button> -->
+<div id="overlay" class="overlay glass-wrapper overlay-bg">
+  <div class="content">
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E%E7%81%B5%E9%AD%82"><span class="toc-text">关于灵魂</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BC%BA%E8%A1%8C%E6%89%93%E7%A0%B4%E7%AC%AC%E5%9B%9B%E9%9D%A2%E5%A2%99%E7%9A%84%E6%80%9D%E8%80%83"><span class="toc-text">强行打破第四面墙的思考</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%96%87%E5%8C%96%E4%BC%A0%E6%92%AD"><span class="toc-text">文化传播</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-text">参考资料</span></a></li></ol>
+    <button id="closeButton"><i class="fa-solid fa-circle-xmark"></i></button>
+  </div>
+</div>
+<div class="wrapper post">
+  <head>
+    <!-- 引入 Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  </head>
+
+
+
+  <main class="page-content" aria-label="Content">
+    <div class="glass-wrapper main-content">
+      <header class="header">
+        
+          <div class="tags">
+            <a href="/tags/galgame/" class="tag"># galgame</a><a href="/tags/%E4%BD%9B%E6%95%99/" class="tag"># 佛教</a>
+          </div>
+        
+          <h1 class="header-title" itemprop="headline">一周目谈 | 拔作背后的深邃内核：借万华镜终章引出的一些思考</h1>
+          <div class="post-meta">
+            最后更新: <time>Feb 18, 2025</time>
+            作者: <span itemprop="author">
+              <span itemprop="name">illlights</span>
+            </span>
+            字数: <span class="post-count">3.2k</span>
+            预计阅读时间: <span class="post-count">10min</span> 
+          </div>       
+      </header>
+          <div class="page-content"><p><strong>写在前面：这篇文章看起来会非常枯燥，要是没这个耐心还是别看这篇了吧，不然你会以为我博客都是些这样的稀奇古怪的东西。</strong></p>
+<p><strong>本文不含任何形式的违法内容，请放心阅读，也请阿里云不要随便给我掉备案！</strong></p>
+<p>　　一直在犹豫要不要发这篇文章，毕竟万华镜是专门做18+内容的游戏，在已经备案的网站上堂而皇之的发不是很好，而且没有接触过万华镜的人看了想去玩就更加不好了，回来还要骂我传播色情内容或者对我另眼相看。但是我又不得不承认，万华镜终章的深度即使放在整个游戏圈里（不限于galgame）都是数一数二的，所以我还是想写出来。希望读者如果从未接触过万华镜系列，请不要一时兴起去玩这部游戏，毕竟这种做法在中国大陆地区属于违法行为。也请你暂且抛开对18+的偏见，先来读读我的见解。</p>
+<h1 id="关于灵魂"><a href="#关于灵魂" class="headerlink" title="关于灵魂"></a>关于灵魂</h1><p>　　在机核上看到一篇很专业的文章<a target="_blank" rel="noopener" href="https://www.gcores.com/articles/124831">《爱欲托生，因果流转：&lt;美少女万华镜&gt;的日本佛教世界观》</a>，最初只打算写一点游戏的表象，主要写我自己的想法，但是读完之后发现万华镜还真有些东西可以挖掘，所以还是结合起来写了，下面的引用大部分来自于这篇文章，已经事先与作者取得联系。</p>
+<p><img src="https://imgcdn.illlights.com/tang2003/pics/raw/master/pics/Screenshot_20210807-123258.jpg" alt="作者的授权"></p>
+<p>　　首先来看看万华镜的佛教世界观：（<a target="_blank" rel="noopener" href="https://gl.ali213.net/html/2020-6/440133.html">详细剧情可以看这篇文章，不看也问题不大</a>）</p>
+<blockquote>
+<p>　　本作的副标题《理与迷宫之少女》中的“迷宫”，便是指生死轮回，这一点在游戏后期从莲华的口中得到了印证。<br>　　那么“理”对应什么呢？游戏中莲华反复提到这个“理”，主角夏彦想到的是宋明理学所讲的“天理”，也就是宇宙的根本法则。汉译佛经并没有用到“理”这个字去翻译什么概念。我认为游戏中这个“理”也指的是<strong>轮回之理</strong>。<br>　　莲华作为“理”的执行人，所做的就是对亡者的供养。“供养”原本的意思是对佛、法、僧三宝的供奉，以表示虔敬。而汉传佛教常说的对亡者的供养，本质是一种慰灵行为，让死者放下对这一世的执着，早日转生。莲华所做的便是慰灵，以确保一个生命逝去后新的生命会诞生，也就是在确保生死轮回的正常运转。<br>　　本作故事发生的根源便是对轮回之理的反抗：白狐的爱人被卷入部族斗争中遇害，于是白狐便要打破“理”而成为超越轮回的存在——神。然而在佛教世界观中，神也是不能逃脱轮回的，而除了觉悟（成佛）之外不可能脱离轮回。于是最终白狐还是在怨恨中死去了。</p>
+</blockquote>
+<p>　　<del>现在假设我们被莲华的灵力洗脑了，认为转世和灵魂是存在的</del></p>
+<p>　　现在我们先跳出唯物主义的框架，不管是否正确，假设灵魂是存在的且存在转世。但是深受唯物主义的熏陶，我还是不禁想问：那什么是灵魂？或者灵魂存在于哪里？（所以说还是那种被划掉的方法比较现实）</p>
+<p>　　这个问题我其实很早就想过了，我之前的答案是：假设真的存在转世，“灵魂”应当由记忆而生，或者是“自我存在于记忆之中”。</p>
+<p>　　毕竟假定转世存在，身体的意义不大，而且身体就代表了“我”这个结论很不让人信服：首先身体是由细胞组成的，细胞是会凋亡、不断更新的，有种<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%BF%92%E4%BF%AE%E6%96%AF%E4%B9%8B%E8%88%B9/19890027">忒修斯之船</a>悖论的感觉；再说仅仅拿身体代表“我”，不就是否定了思维的重要性？这我是绝对不能接受的。而思维本身并不能代表“我”，笛卡尔也只是认为思考证明“我”的存在，并没有“思维就是自我”这种意思。</p>
+<p>　　仔细一想，记忆是“我”的本体这个结论非常诱人，“我”是什么不好回答，但“我的性格”却能抓住一点尾巴，而“我”的性格是记忆塑造的，一般来说“我是谁”这个问题也是用记忆来回答的，所以要说灵魂存在于记忆中也不是不行，至少我是能接受的。至于记忆的衰退这个问题，我的答案比较接近机器学习算法的“循环神经网络”：记忆不能完整保存很久，但可以通过附加到之后的记忆中，以某种特定的方式影响“我”。也就是说我虽然记不得记忆的内容了，但是它并没有消失，通过某种特殊的方式（如叠加到后面的记忆或者存放在潜意识中）对“我”产生影响。在机器学习里实现方式是参数的不断叠加，人我就不知道了。</p>
+<p>　　记忆代表了我，这很合理，这么多年我都把自己说服了。这个结论还可以延申出很多有意思的东西，比如只要保有前世的记忆，那前世的“我”就还活着。欸，这个就是问题所在了，我一直没有在这个方面多想，但是直到我玩了万华镜才发现，即使“我”有“我”的记忆，“你”有“你”的记忆，转世之后，“我”就不是原来那个“我”了，你也不是原来那个“你”了。因为游戏中最后男主和莲华转世之后相遇，虽然作者想尽办法让转世的莲华和之前的比较相似（发色、声音、脸、性格，基本上就是长大的莲华），但是在我看来违和感非常强，加上“转世”这个设定，我仍然认为莲华和男主已经死了。</p>
+<p>　　况且二次元作品对各种设定的宽容性都比较大，很多现实里接受不了的设定在游戏里都可以接受，那么如果在游戏都有很强的违和感，要是现实真的是这样，能让人接受新的“我”还是“我”吗？</p>
+<p>　　在自行证伪之后，我现在比较倾向于取消主义，即“自我”“灵魂”这些词并没有对应的东西，只不过是一种底层语言的描述。而且“自我”本身就不是一个固定的东西，“我”是不断变化的，而这种变化对于自己和周围的人来说很微小，所以“我”才一直是“我”，“你”才一直是“你”。</p>
+<p>　　这个观点就和之前那篇文章的作者有些相恰了，也认为万华镜的世界观里“我”是在不断变化的：</p>
+<blockquote>
+<p>　　佛教最初就是反对婆罗门教的灵魂不灭说的，所以将灵魂当成轮回主体的派别都跑偏了。但佛教可以承认有灵魂，只是不承认有永恒不变的灵魂。即使有灵魂，它仍然是无常的、终会消亡的。佛教研究家吕澂打了个比方：就像一支蜡烛上的火传给另一支蜡烛，既不能说下一支蜡烛上的火就是前一支上的火，又不能说两者是无关的。由此薪火相传，轮回的始终是火，但这火并不是同一团。在唯识学派那里，这火便是阿赖耶识。<br>　　《万华镜》中的情节是完全符合上述观点的。进入True End的关键就是在百世华使主角夏彦回忆起前世彦一的记忆后，问夏彦的名字时，夏彦要回答自己仍然是夏彦，而不是前一世彦一。这一世和前一世已是不同的人了。没有一个恒常不变的“我”，而并不是“我”不存在，这就是“无我”。最后夏彦和莲华来到生死境界的时候，莲华说，他们的灵魂最终会被吸入彼岸并分解，成为新的灵魂的养料。灵魂消散，但这一世的所作所为、一切记忆都记录在阿赖耶识里。这实在是符合佛教的轮回观。</p>
+</blockquote>
+<p>　　当然，上面这部分你完全可以当做我玩游戏玩傻了在这里说胡话。</p>
+<p>　　不过如果你对这个话题（神经科学）感兴趣的话，可以看一些专业的文章，比如：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/384574582">https://zhuanlan.zhihu.com/p/384574582</a></p>
+<p>　　我是写完本文之后看到的，所以也就没有引用了。但是让我很惊喜的是我的观点竟然和这位科学家的观点有略微的重合!（当然这也不代表这个观点就是对的）</p>
+<h1 id="强行打破第四面墙的思考"><a href="#强行打破第四面墙的思考" class="headerlink" title="强行打破第四面墙的思考"></a>强行打破第四面墙的思考</h1><p>　　这是万华镜5选项的其中一部分，可以看到Happy Ending（HE）前面有三个完全一样的选项让玩家去Bad Ending（BE)。当然我这种单线通关玩家肯定不会选到BE，只是看到这个BE的时候有些感触。</p>
+<p><img src="https://imgcdn.illlights.com/tang2003/pics/raw/master/pics/2c6816.png" alt="万华镜5结局走向"></p>
+<p>　　BE和前面的非主线结局大概意思就是男主离开了莲华，渐渐地淡忘了她，莲华消失了，我们遗忘了。</p>
+<p>　　我也玩过不少galgame，让我感动的也不占少数，毕竟这是我一直玩galgame的动力。但是很明显，之前让我感动的那些主角的确都消失了，被我遗忘了。</p>
+<p>　　不免让人怀疑，这多次重复的选项会不会是作者的哀叹：万华镜系列结束了，也会马上被玩家们遗忘？</p>
+<p>　　游戏在接近末尾时写道：</p>
+<p>!!!</p>
+<p align="center">生——是一道无法逃避的痛苦枷锁</p>
+<p align="center">死——是人生最后的一丝安宁</p>
+<p align="center">真理往往丑陋　荣华也始终默默消散</p>
+<p align="center">人世间的浮华宛如泡沫 　宛如万华镜</p>
+<p align="center">将人生沉溺于　那仅仅只有一瞬间的欲望中</p>
+!!!
+
+<p>　　或许我们不必上升到生死这样宏大的主题，对一个游戏的感动、对一个人的感情，是不是就好比万华镜，只因一瞬间的欲望而起，却始终默默消散？</p>
+<h1 id="文化传播"><a href="#文化传播" class="headerlink" title="文化传播"></a>文化传播</h1><p>　　《爱欲托生，因果流转：&lt;美少女万华镜&gt;的日本佛教世界观》的作者写到：</p>
+<blockquote>
+<p>　　作为一个“小黄油”，却蕴含如此丰富和深刻的佛法，我甚至怀疑作者是佛教徒（监督的署名就叫“六道轮回”）。</p>
+</blockquote>
+<p>　　万华镜中含有的佛教元素粗略看来就有不少：封面的石蒜、莲华（华同花）、 妖狐野干、“理”、轮回与业报、万华镜内部的彼岸（ “生与死的境界”是个时间流逝几近暂停的异空间，莲华说，其名“波罗蜜多”。）</p>
+<p>　　这的确是一种文化软传播的绝佳方式（当然和国别没有关系，汉传佛教和日式佛教差别没有国家的差异那么大，一定要说也只是宗教的传播）可能通关之后完全不知道这就是佛教观点，但当玩家接触佛教时，总会有些许的熟悉，或许还能想起万华镜的片段的情节，也更容易接受。</p>
+<p>　　优秀的文化传播方式值得国产游戏、IP产业学习，不只是起个中国人都看不懂但是看起来很厉害的名字这么简单，也不只是拿个中国古代故事往游戏里一套就是传播文化，更加不是用个中国故事的人物就成了国产游戏的希望。有深度有意蕴却不过于显摆的文化传播，是国产游戏需要思考的方向。</p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p>1.《爱欲托生，因果流转：&lt;美少女万华镜&gt;的日本佛教世界观》：<a target="_blank" rel="noopener" href="https://www.gcores.com/articles/124831">https://www.gcores.com/articles/124831</a></p>
+<p>2.知乎问答《「我」和「大脑」的区别是什么？究竟是「我」控制着「大脑」，还是「大脑」控制着「我」？》：<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/27335897/answer/36508628">https://www.zhihu.com/question/27335897/answer/36508628</a></p>
+<p>3.美少女万华镜-理与迷宫的少女-中文官网：<a target="_blank" rel="noopener" href="https://bishojomangekyo.com/">https://bishojomangekyo.com/</a></p>
+<p>4.一些很久之前看到的现在已经找不到的知乎问答（我也很想找到，大概是用通俗的语言和比喻把神经科学的主流观点讲了一遍）</p>
+</div>          
+          <nav class="post-nav">
+    
+    <a class="post-nav-item post-nav-prev" href="/archives/2021/life/ddos.html">
+      <div class="nav-arrow">&lt;&nbsp;NEWER</div>
+      <span class="post-title">DDoS</span>
+    </a>
+    
+    
+    <a class="post-nav-item post-nav-next" href="/archives/2021/games/lastrun.html">
+      <div class="nav-arrow">OLDER&nbsp;&gt;</div>
+      <span class="post-title">第一次购买游戏数字版原声集（爱上火车Last Run原声集分享）</span>
+    </a>
+    
+  </nav>
+          <div class="dis">
+    
+        
+    <script src='//cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js'></script>
+    <div id="waline" class="glass-wrapper waline-container"></div>
+    <script>
+        window.onload = function () {
+            new Waline({
+                el: '#waline',
+                path: location.pathname,
+                avatarCDN: 'https://sdn.geekzu.org/avatar/',
+                serverURL: 'https://comments-blog.illlights.com/',
+                avatar: 'monsterid',
+                placeholder: "封闭的文字无法成长。"
+            });
+        };
+    </script>
+
+
+    
+</div>
+    </div>
+   </main>
+</div>
+
+  <footer class="footer">
+    <small class="footer_copyright">
+      <div id="bottom-inner">
+        © Site by illlights<br>
+        <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a> &
+        <a target="_blank" rel="noopener" href="https://github.com/RichardTang2003/hexo-theme-Klise-glassy">Klise-glassy</a>
+        <br>
+        始于2021.
+        
+      </div>
+    </small>
+  </footer>
+  
+  
+
+    
+      <script src="/js/main.js"></script>
+    
+  
+  <script>
+    window.FPConfig = {
+      delay: 0,
+      ignoreKeywords: [],
+      maxRPS: 3,
+      hoverDelay: 50,
+    };
+  </script>
+  <!-- <script defer src="https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script> -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // 当 DOM 内容加载完成后，为 body 添加 'loaded' 类
+      document.body.classList.add('loaded');
+    });
+  </script>
+</body>
+</html>

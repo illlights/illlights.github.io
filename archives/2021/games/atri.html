@@ -1,0 +1,476 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <script>
+    (function() {
+      try {
+        // 1. 优先从 localStorage 获取用户保存的主题
+        var savedTheme = localStorage.getItem('theme');
+        
+        // 2. 如果没有保存的主题，则检查系统偏好
+        var theme = savedTheme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        
+        // 3. 将主题属性应用到 <html> 元素上
+        //    在 <head> 中执行时，<body> 可能还不存在，所以操作 <html> 更安全
+        if (theme === 'dark') {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      } catch (e) {
+        // 如果发生错误，则不执行任何操作，让主脚本来处理
+      }
+    })();
+  </script>
+  
+  <!-- 提示浏览器颜色的 meta 标签 -->
+  <meta name="color-scheme" content="light dark">
+  <!-- Mastodon 验证 -->
+  <meta name="fediverse:creator" content="@illlights@anisaga.life">
+  
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>一周目谈 | ATRI:不仅是一款优秀的游戏（附游戏提取CG和原声带） [ 喑光絮语 ]</title>
+
+  <link rel="icon" href="/img/favicon.ico">
+
+
+    <meta name="author" content="illlights">
+
+
+    <meta name="subtitle" content="illlights blog">
+
+
+    <meta name="Description" content="刚刚脱离高级趣味，所以博客不想太复杂了">
+
+
+    <meta name="keywords" content=",blog, comments, entertainment">
+
+
+  <link rel="alternate" href="/atom.xml " title="喑光絮语" type="application/atom+xml">
+
+
+  
+    <link rel="stylesheet" href="/css/main.css">
+  
+
+<!-- hexo injector head_end start --><style>/* 布局样式 */
+.hexo-tips-layout {
+    margin: 0.5rem 0;
+    padding: 0.5rem 1.5rem;
+    border-radius: 8px;
+    border: 1px solid;
+    border-left-width: 6px;
+    display: flex;
+    align-items: center;
+    transition: transform 0.3s ease;
+    min-width: 2rem;
+    height:auto;
+    overflow-x: auto; 
+    overflow-y: hidden; 
+}
+
+.hexo-tips-layout:hover {
+    transform: translateX(5px);
+}
+
+.hexo-tips-layout .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    font-size: clamp(2em, 2vw, 3em);
+    min-width: 2rem;
+    scale:1.5;
+    transition: transform 0.3s ease;
+}
+
+.hexo-tips-layout:hover .icon {
+    transform: scale(1.3);
+}
+
+.hexo-tips-layout .content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+.hexo-tips-layout:hover .content {
+    transform: translateX(3px);
+}
+
+/* 响应式调整 */
+@media screen and (max-width: 768px) {
+    .hexo-tips-layout {
+        padding: 1rem;
+    }
+}
+
+/* 为每种类型的提示框添加主题样式 */
+[class^="tips-style-"] {
+    --tips-light-bg: #fff; /* 默认值 */
+    --tips-dark-bg: #333;  /* 默认值 */
+    --tips-border: #000;   /* 默认值 */
+}
+
+/* 主题样式规则 */
+[class^="hexo-tips-"] {
+    border-color: var(--tips-border);
+}
+
+[class^="hexo-tips-"] .icon {
+    color: var(--tips-border);
+}
+
+/* 1. 手动暗色模式优先 */
+html.dark [class^="hexo-tips-"] {
+    background-color: var(--tips-dark-bg);
+}
+
+/* 2. 系统暗色模式其次 */
+@media (prefers-color-scheme: dark) {
+    html:not(.light) [class^="hexo-tips-"] {
+        background-color: var(--tips-dark-bg);
+    }
+}
+
+/* 3. 亮色模式最后 */
+html:not(.dark) [class^="hexo-tips-"],
+html.light [class^="hexo-tips-"] {
+    background-color: var(--tips-light-bg);
+}</style><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+<body class="notransition">
+  <!-- <script defer>
+    // 延迟移除 notransition 类，确保初始主题设置完成
+    setTimeout(() => document.body.classList.remove("notransition"), 75);
+  </script> -->
+  <div class="navbar" role="navigation">
+    <nav class="menu">
+      <input type="checkbox" id="menu-trigger" class="menu-trigger" />
+      <label for="menu-trigger">
+        <span class="menu-icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 512 512"
+          >
+            <path
+              d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z"
+            />
+          </svg>
+        </span>
+      </label>
+      <a id="mode">
+        <svg
+          class="mode-sunny"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>LIGHT</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+        <svg
+          class="mode-moon"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>DARK</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+      </a>
+      <div class="trigger">
+        <div class="trigger-container">
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/"> 主页</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/moments/"> 动态</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/archives/"> 文章</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/friends/"> 友链</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " target="_blank" rel="noopener" href="https://www.illlights.com"> 关于</a>
+          
+        </div>
+      </div>
+    </nav>
+  </div>
+  <button id="toTopBtn"><i class="fa-solid fa-hand-point-up " ></i></button>
+<!-- <button id="toggleButton"><i class="fa-solid fa-chart-bar " ></i></button> -->
+<div id="overlay" class="overlay glass-wrapper overlay-bg">
+  <div class="content">
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%B8%E9%81%87"><span class="toc-text">相遇</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9D%E8%A7%81"><span class="toc-text">初见</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%A7%E6%83%85%E4%B8%8E%E5%BC%95%E5%AF%BC"><span class="toc-text">剧情与引导</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%98%E7%A7%80%E7%9A%84%E6%83%85%E7%BB%AA%E6%8E%A7%E5%88%B6"><span class="toc-text">优秀的情绪控制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E7%8E%B0%E5%AE%9E%E4%B8%96%E7%95%8C%E7%9A%84%E6%8E%A2%E8%AE%A8"><span class="toc-text">对现实世界的探讨</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E8%AF%AD%EF%BC%883-5%EF%BC%89"><span class="toc-text">结语（3&#x2F;5）</span></a></li></ol>
+    <button id="closeButton"><i class="fa-solid fa-circle-xmark"></i></button>
+  </div>
+</div>
+<div class="wrapper post">
+  <head>
+    <!-- 引入 Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  </head>
+
+
+
+  <main class="page-content" aria-label="Content">
+    <div class="glass-wrapper main-content">
+      <header class="header">
+        
+          <div class="tags">
+            <a href="/tags/AI/" class="tag"># AI</a><a href="/tags/galgame/" class="tag"># galgame</a><a href="/tags/%E8%B5%84%E6%BA%90/" class="tag"># 资源</a>
+          </div>
+        
+          <h1 class="header-title" itemprop="headline">一周目谈 | ATRI:不仅是一款优秀的游戏（附游戏提取CG和原声带）</h1>
+          <div class="post-meta">
+            最后更新: <time>Aug 02, 2024</time>
+            作者: <span itemprop="author">
+              <span itemprop="name">illlights</span>
+            </span>
+            字数: <span class="post-count">1.5k</span>
+            预计阅读时间: <span class="post-count">4min</span> 
+          </div>       
+      </header>
+          <div class="page-content"><blockquote>
+<p>文章已经过时，所有图片和资源均已失效。</p>
+</blockquote>
+<h2 id="相遇"><a href="#相遇" class="headerlink" title="相遇"></a>相遇</h2><p>　　最早是在知乎上看到了它，而在steam上买下这个游戏是2021年6月25日00:13，说来也巧，6月24日它15周年半价出售，6月25日3:00之后steam夏促半价出售，能卡在这三个小时内原价购买也是很难得的。但是它的确值得这七十多的原价（也许吧）。<br><img src="https://www.tupians.top/imgs/2021/07/cfe8079148e6a185.png" alt="ATRI"></p>
+<h2 id="初见"><a href="#初见" class="headerlink" title="初见"></a>初见</h2><p>　　ATRI的开头绝对谈不上惊艳，甚至比较平淡，galgame很普遍的离奇的相遇，末世主题很普通的背景，很普遍的画得很好看的女主……在我游玩的前四个小时，基本就是男主丧、女主撒糖，可以说没有很多看点（我不是很喜欢看纯爱）。我一度怀疑知乎千赞推荐的“第九艺术”作品就这个水平？不过，字里行间还是可以看出作者在酝酿着什么，层层埋下的伏笔、女主的不明身份、女主坚持的倒计时等等，都在昭示着转折的到来。</p>
+<p><strong>下面的内容含有大量剧透，如果你对这部作品感兴趣还是自己先体验吧！！！</strong></p>
+<h2 id="剧情与引导"><a href="#剧情与引导" class="headerlink" title="剧情与引导"></a>剧情与引导</h2><p>　　在通关了HE之后，我终究还是被这部作品的故事线所折服。可以说前面一半时间做了大量铺垫，从男主的身世到女主的处境，看起来很零碎，但在最后串成了一条线，而这条线成形时，玩家不免大吃一惊：亚托莉居然是男主母亲的机器人、是小男主的初恋、是救下男主的人，母亲在生命的最后将主人权限转交给了男主。<br><img src="https://www.tupians.top/imgs/2021/07/28f4cb35f40950df.png"><br>　　当然，还有另外一条线，关于亚托莉有没有“心”。刚遇见时亚托莉便十分喜欢男主，无论是行为还是情感表现都表明她是有感情的，但这里其实有些许可疑，为什么她刚刚见面就喜欢上男主呢？（其实我玩的时候没有察觉到）在剧情中段时就呼应了这个伏笔：亚托莉没有情感，喜欢与行为都是AI为了使主人满意而模拟的，也就是没有“心”。<br>　　故事线推进到了这里，情节的转折已经足够让人醍醐灌顶，但是追完四季Rick and Morty，我基本上还只是小吃一惊，甚至猜到了后面肯定又是一个反转。没错，最后果然揭示了亚托莉是有“心”的，只不过因为命令而认为自己没有情感，程序掩盖了情感。其实这里能顺利推断出反转得益于游戏优秀的引导，首先是亚托莉前一段的表现，玩家很难相信她没有情感这个事实（但证据确凿又不得不相信），还有很多细节的刻画和隐藏的伏笔揭露出她的端倪，当然还得益于玩家自身的意愿，我也很希望亚托莉是有情感的。在两次反转中，前面的伏笔一一回收，大量的伏笔进一步提高了故事真实性。</p>
+<h2 id="优秀的情绪控制"><a href="#优秀的情绪控制" class="headerlink" title="优秀的情绪控制"></a>优秀的情绪控制</h2><p>　　为ATRI加分的，还有它优秀的玩家情绪调控。刚打捞上来的亚托莉就要被卖掉，上来就加剧了绝境的气氛和对她的怜惜。到结尾的天台暴力场景这种怜惜的情感达到顶峰，说实话我是一顿连按鼠标过的这一段，情绪控制可见一斑。而得救之后的失而复得之感也为结尾的离别消除了几分伤感。这样的例子还有不少，而优秀情绪控制的效果是，后半段让玩家忍不住一口气通关（大概6h），结尾不会太甜也不至于太刀，HE的留白也恰到好处。（我没有通BE和TE，看了一些介绍，个人更喜欢HE的结尾）<br><img src="https://www.tupians.top/imgs/2021/07/0ad41a9b86bbeca8.png" alt="HE结尾CG"></p>
+<h2 id="对现实世界的探讨"><a href="#对现实世界的探讨" class="headerlink" title="对现实世界的探讨"></a>对现实世界的探讨</h2><p>　　以上这些，可以说足以成就一个优秀的游戏。但之所以称之为“艺术”，还要归功于这部游戏对现实世界的思考与探究。既然是人工智能主题，对“情感”的探讨就不能少，本作给出的答案是：我们不知道情感源于何处，那就要相信AI是有情感的。先不论正确与否，这的确是一个让人眼前一亮的答案。还有一些更有哲理性的探讨，比如“之所以会悲伤，正是因为曾经很快乐”，这部作品还涵盖了很多类似的探讨和哲理，我也不一一列举了。</p>
+<h2 id="结语（3-5）"><a href="#结语（3-5）" class="headerlink" title="结语（3&#x2F;5）"></a>结语（3&#x2F;5）</h2><p>　　ATRI是一款优秀的galgame，甚至想要跳出游戏，称之为艺术也不为过。但仍然受限于galgame的载体，游戏性比较低，甚至总共只有三个选项，基本就像在看动漫（据说要动漫化了）。<br>　　我在网上找到了一位gal爱好者分享的CD转录的原声集，原文使用了CC BY-NC-SA 4.0 CN协议，按协议要求的版权信息在文章最下方，本文内容全部原创，使用相同协议。原声集和我提取的CG资源一同放在了文末。
+　　</p>
+<p>P.S.我本就不是很喜欢在博客里面放图片，而且为了网页加载速度，页面里的图片都经过了压缩，CG提取图片可以在这里下载：<br>（请先阅读<a href="https://blog.illlights.com/download.html">下载说明</a>，点击下载则默认您已阅读）</p>
+<p>阿里云盘下载CG图片:<a target="_blank" rel="noopener" href="https://www.aliyundrive.com/s/83kssKxQvDi">https://www.aliyundrive.com/s/83kssKxQvDi</a></p>
+<p>资源发布文章链接：<a target="_blank" rel="noopener" href="https://blog.h2aoi.work/2020/atriostgame/">https://blog.h2aoi.work/2020/atriostgame/</a></p>
+</div>          
+          <nav class="post-nav">
+    
+    <a class="post-nav-item post-nav-prev" href="/archives/2021/life/selfconscious.html">
+      <div class="nav-arrow">&lt;&nbsp;NEWER</div>
+      <span class="post-title">自我意识</span>
+    </a>
+    
+    
+  </nav>
+          <div class="dis">
+    
+        
+    <script src='//cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js'></script>
+    <div id="waline" class="glass-wrapper waline-container"></div>
+    <script>
+        window.onload = function () {
+            new Waline({
+                el: '#waline',
+                path: location.pathname,
+                avatarCDN: 'https://sdn.geekzu.org/avatar/',
+                serverURL: 'https://comments-blog.illlights.com/',
+                avatar: 'monsterid',
+                placeholder: "封闭的文字无法成长。"
+            });
+        };
+    </script>
+
+
+    
+</div>
+    </div>
+   </main>
+</div>
+
+  <footer class="footer">
+    <small class="footer_copyright">
+      <div id="bottom-inner">
+        © Site by illlights<br>
+        <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a> &
+        <a target="_blank" rel="noopener" href="https://github.com/RichardTang2003/hexo-theme-Klise-glassy">Klise-glassy</a>
+        <br>
+        始于2021.
+        
+      </div>
+    </small>
+  </footer>
+  
+  
+
+    
+      <script src="/js/main.js"></script>
+    
+  
+  <script>
+    window.FPConfig = {
+      delay: 0,
+      ignoreKeywords: [],
+      maxRPS: 3,
+      hoverDelay: 50,
+    };
+  </script>
+  <!-- <script defer src="https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script> -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // 当 DOM 内容加载完成后，为 body 添加 'loaded' 类
+      document.body.classList.add('loaded');
+    });
+  </script>
+</body>
+</html>

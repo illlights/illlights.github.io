@@ -1,0 +1,495 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <script>
+    (function() {
+      try {
+        // 1. 优先从 localStorage 获取用户保存的主题
+        var savedTheme = localStorage.getItem('theme');
+        
+        // 2. 如果没有保存的主题，则检查系统偏好
+        var theme = savedTheme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        
+        // 3. 将主题属性应用到 <html> 元素上
+        //    在 <head> 中执行时，<body> 可能还不存在，所以操作 <html> 更安全
+        if (theme === 'dark') {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      } catch (e) {
+        // 如果发生错误，则不执行任何操作，让主脚本来处理
+      }
+    })();
+  </script>
+  
+  <!-- 提示浏览器颜色的 meta 标签 -->
+  <meta name="color-scheme" content="light dark">
+  <!-- Mastodon 验证 -->
+  <meta name="fediverse:creator" content="@illlights@anisaga.life">
+  
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>原神：当恶龙战胜恶龙 [ 喑光絮语 ]</title>
+
+  <link rel="icon" href="/img/favicon.ico">
+
+
+    <meta name="author" content="illlights">
+
+
+    <meta name="subtitle" content="illlights blog">
+
+
+    <meta name="Description" content="刚刚脱离高级趣味，所以博客不想太复杂了">
+
+
+    <meta name="keywords" content=",blog, comments, entertainment">
+
+
+  <link rel="alternate" href="/atom.xml " title="喑光絮语" type="application/atom+xml">
+
+
+  
+    <link rel="stylesheet" href="/css/main.css">
+  
+
+<!-- hexo injector head_end start --><style>/* 布局样式 */
+.hexo-tips-layout {
+    margin: 0.5rem 0;
+    padding: 0.5rem 1.5rem;
+    border-radius: 8px;
+    border: 1px solid;
+    border-left-width: 6px;
+    display: flex;
+    align-items: center;
+    transition: transform 0.3s ease;
+    min-width: 2rem;
+    height:auto;
+    overflow-x: auto; 
+    overflow-y: hidden; 
+}
+
+.hexo-tips-layout:hover {
+    transform: translateX(5px);
+}
+
+.hexo-tips-layout .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    font-size: clamp(2em, 2vw, 3em);
+    min-width: 2rem;
+    scale:1.5;
+    transition: transform 0.3s ease;
+}
+
+.hexo-tips-layout:hover .icon {
+    transform: scale(1.3);
+}
+
+.hexo-tips-layout .content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+.hexo-tips-layout:hover .content {
+    transform: translateX(3px);
+}
+
+/* 响应式调整 */
+@media screen and (max-width: 768px) {
+    .hexo-tips-layout {
+        padding: 1rem;
+    }
+}
+
+/* 为每种类型的提示框添加主题样式 */
+[class^="tips-style-"] {
+    --tips-light-bg: #fff; /* 默认值 */
+    --tips-dark-bg: #333;  /* 默认值 */
+    --tips-border: #000;   /* 默认值 */
+}
+
+/* 主题样式规则 */
+[class^="hexo-tips-"] {
+    border-color: var(--tips-border);
+}
+
+[class^="hexo-tips-"] .icon {
+    color: var(--tips-border);
+}
+
+/* 1. 手动暗色模式优先 */
+html.dark [class^="hexo-tips-"] {
+    background-color: var(--tips-dark-bg);
+}
+
+/* 2. 系统暗色模式其次 */
+@media (prefers-color-scheme: dark) {
+    html:not(.light) [class^="hexo-tips-"] {
+        background-color: var(--tips-dark-bg);
+    }
+}
+
+/* 3. 亮色模式最后 */
+html:not(.dark) [class^="hexo-tips-"],
+html.light [class^="hexo-tips-"] {
+    background-color: var(--tips-light-bg);
+}</style><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+<body class="notransition">
+  <!-- <script defer>
+    // 延迟移除 notransition 类，确保初始主题设置完成
+    setTimeout(() => document.body.classList.remove("notransition"), 75);
+  </script> -->
+  <div class="navbar" role="navigation">
+    <nav class="menu">
+      <input type="checkbox" id="menu-trigger" class="menu-trigger" />
+      <label for="menu-trigger">
+        <span class="menu-icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 512 512"
+          >
+            <path
+              d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z"
+            />
+          </svg>
+        </span>
+      </label>
+      <a id="mode">
+        <svg
+          class="mode-sunny"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>LIGHT</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+        <svg
+          class="mode-moon"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>DARK</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+      </a>
+      <div class="trigger">
+        <div class="trigger-container">
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/"> 主页</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/moments/"> 动态</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/archives/"> 文章</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/friends/"> 友链</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " target="_blank" rel="noopener" href="https://www.illlights.com"> 关于</a>
+          
+        </div>
+      </div>
+    </nav>
+  </div>
+  <button id="toTopBtn"><i class="fa-solid fa-hand-point-up " ></i></button>
+<!-- <button id="toggleButton"><i class="fa-solid fa-chart-bar " ></i></button> -->
+<div id="overlay" class="overlay glass-wrapper overlay-bg">
+  <div class="content">
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%A0%E4%BB%A5%E6%8A%84%E8%A2%AD%E5%90%8D%E4%B9%89%E7%9A%84%E5%89%8D%E5%A5%8F%E6%9B%B2"><span class="toc-text">冠以抄袭名义的前奏曲</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A3%B0%E5%90%8D%E5%9C%A8%E5%A4%96"><span class="toc-text">声名在外</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%A7%E5%8E%82%E7%9A%84%E6%94%AF%E6%8C%81"><span class="toc-text">大厂的支持</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%88%90%E5%8A%9F%E7%9A%84%E5%95%86%E4%B8%9A%E6%93%8D%E4%BD%9C"><span class="toc-text">成功的商业操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E5%8C%96%E8%BE%93%E5%87%BA%EF%BC%9F"><span class="toc-text">文化输出？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BD%E4%BA%A7%E6%B8%B8%E6%88%8F%E7%9A%84%E7%A0%B4%E5%B1%80%E8%80%85"><span class="toc-text">国产游戏的破局者</span></a></li></ol>
+    <button id="closeButton"><i class="fa-solid fa-circle-xmark"></i></button>
+  </div>
+</div>
+<div class="wrapper post">
+  <head>
+    <!-- 引入 Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  </head>
+
+
+
+  <main class="page-content" aria-label="Content">
+    <div class="glass-wrapper main-content">
+      <header class="header">
+        
+          <div class="tags">
+            <a href="/tags/%E5%9B%BD%E4%BA%A7%E6%B8%B8%E6%88%8F/" class="tag"># 国产游戏</a>
+          </div>
+        
+          <h1 class="header-title" itemprop="headline">原神：当恶龙战胜恶龙</h1>
+          <div class="post-meta">
+            最后更新: <time>Aug 26, 2021</time>
+            作者: <span itemprop="author">
+              <span itemprop="name">illlights</span>
+            </span>
+            字数: <span class="post-count">2.8k</span>
+            预计阅读时间: <span class="post-count">9min</span> 
+          </div>       
+      </header>
+          <div class="page-content"><p>编者按：都说勇士终将变成恶龙，那挑战者本身就是恶龙又会怎么样？</p>
+<p>　　其实原神这款游戏我根本没有下载过，但是最近原神在国外的知名度愈发提高，我想借机梳理一下原神这款游戏并不长的游戏史。我本人是NS用户，对原神这种F2P(free to play)游戏并不是很喜欢，不过一路“关注“过来，我对原神和米哈游的态度也发生了很大的改变。</p>
+<h3 id="冠以抄袭名义的前奏曲"><a href="#冠以抄袭名义的前奏曲" class="headerlink" title="冠以抄袭名义的前奏曲"></a>冠以抄袭名义的前奏曲</h3><blockquote>
+<p>正式发布之前，米哈游于2018年发布游戏的漫画《原神PROJECT》，并在Crunchyroll上连载。而在2019年1月，米哈游接受东方新闻的采访，透露了《原神》的消息。游戏首次于2019年E3电子娱乐展上正式宣布。第一次的封闭测试于6月21日开始。<br>(来自维基百科）</p>
+</blockquote>
+<p>　　游戏最早发布内测是在2019年6月，那时候我野吹游戏总时长还没有100小时，仍然一心扑在塞尔达上，当然对当时的情况记忆犹新。不过我还是找了些数据来佐证当时的讨论。<br><img src="https://imgcdn.illlights.com/tang2003/pics/raw/master/pics/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202021-07-30%20132925.jpg" alt="2019年6月左右关于原神的搜索数据"><br><img src="https://imgcdn.illlights.com/tang2003/pics/raw/master/pics/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202021-07-30%20133030.jpg" alt="2019年6月左右关于原神的搜索数据"><br>　　这是限定时间为2019年6月到7月的百度搜索结果，不难看出，和“原神”这个词和“抄袭塞尔达”基本上离不开，我当时肯定是站队塞尔达的，还记得那时候还在知乎上调侃了一句：<br><img src="https://imgcdn.illlights.com/tang2003/pics/raw/master/pics/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202021-07-30%20134335.jpg" alt="我在知乎上的回答"><br>（那个支持是后来改的，那个时候选的肯定是反对）<br>　　从现在来看，这些争论很重要吗？其实对我们这些主机玩家来说并不重要，但是对于米哈游来说的确非常重要。毕竟这是免费的“广告商”：其实米哈游对于主机玩家并不会非常重视，毕竟大部分主机玩家都是被买断制宠惯了，F2P游戏的支付能力不强，至少我接触买断制游戏后基本上就没有给什么游戏充钱了。但是原神初期的声量，几乎就是靠“抄袭塞尔达”撑上去的，甚至还几次登上热搜，不得不说是主机玩家们为原神打了个高曝光率的广告。<br>　　对于没怎么接触过主机的玩家来说（在中国是绝大多数人），看到热搜上一款新的游戏抄袭一款不认识的游戏和我有什么关系？但是既然前面这个游戏是一款免费的游戏，为什么不试一试呢？这样广告效应就起来了，加上相较于国内其它游戏比较优秀的场景和美术，用户自然就多了起来。<br>这是原神故事的前奏，是一个商业操弄着蹭热度的开始。</p>
+<h3 id="声名在外"><a href="#声名在外" class="headerlink" title="声名在外"></a>声名在外</h3><p>　　相对于国内剑拔弩张的对峙氛围，原神在国外的风评就很有意思。一样，我先选几张2019年6月的谷歌搜索结果（本来想搜一下twitter但是twitter没有选择时间的功能）<br><img src="https://imgcdn.illlights.com/tang2003/pics/raw/master/pics/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202021-07-30%20152117.jpg" alt="Googlesearch2019.6"><br><img src="https://imgcdn.illlights.com/tang2003/pics/raw/master/pics/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202021-07-30%20152137.jpg" alt="Googlesearch2019.6"><br>　　如果你不太能看懂英文也没关系，大部分都是在客观介绍这个游戏，比较有意思的是第一张图最下面一条，用词是”Zelda inspired”（由塞尔达启发的），第二张图最后一条直接是“Zelda: Breath of the Wild is now on PC”（荒野之息可以在电脑上玩了！），虽说有标题党的嫌疑，但是的确说明国外对“原神抄袭”这个事并不是特别批判。我觉得原因可以有三种情况，这个可能性大家自己掂量：</p>
+<ol>
+<li>米哈游买通国外机构，而国外民众对原神的关注度不高</li>
+<li>国外原神的“抄袭”并不过分</li>
+<li>国内的“抄袭”舆论是米哈游故意炒作</li>
+</ol>
+<p>　　而到了游戏发售后，情况就更加神奇了：<br><img src="https://imgcdn.illlights.com/tang2003/pics/raw/master/pics/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202021-07-30%20154714.jpg" alt="googlesearch2020to2021"><br>　　这第一篇文章非常夸张（虽然作者好像是中文名），好家伙，直接写”Genshin Impact was a landmark game for 2020, and for global awareness of Chinese-developed video games.”（译为：原神是2020游戏的里程碑，提高了世界对中国游戏的意识）这是什么话，虽然不是什么专业评测，但随随便便吧landmark这个词用出来也太夸张了，下面还有网友留言：</p>
+<blockquote>
+<p>I’ve been waiting for it to finally come to the Switch, but from everything that I’ve heard it sounds like the game has only gotten more grindy&#x2F;micro-transaction focused since launch, which is unfortunate.<br>我一直在等待它最终登陆Switch平台 ，但从我所了解来看，好像自发布以来这个游戏变得更加粗糙，而且专门搞内购，很不好。</p>
+</blockquote>
+<p>　　先不说这篇文章的作者，这个评论者明显是switch用户，但是仍然很期待原神（至少原来很期待）？这时候我不得不承认，国外对原神的评价很高各大游戏媒体的评分也比较高：</p>
+<blockquote>
+<p>Metacritic：iOS：82&#x2F;100[54]PC：84&#x2F;100[55]PS4：81&#x2F;100[56]<br>Destructoid7.5&#x2F;10；Game Informer9.25&#x2F;10；GameSpot7&#x2F;10；HardcoreGamer4&#x2F;5；IGN9&#x2F;10；PC Gamer美国84&#x2F;10；</p>
+</blockquote>
+<h3 id="大厂的支持"><a href="#大厂的支持" class="headerlink" title="大厂的支持"></a>大厂的支持</h3><p>　　我要说的“大厂”，肯定是索尼了，首先是CHINA JOY的闹剧,但这还不算什么，毕竟是索尼中国的行为，和索尼关系不会太大。但是也能一定程度代表索尼总部的意思，说明索尼看好原神。<br><img src="https://imgcdn.illlights.com/tang2003/pics/raw/master/pics/df6673f16b9144879cd3466fdcac1241.png" alt="chinajoy 2020"><br>　　目前原神在主机市场也是只登陆了PS5，被调侃成”护航大作“。<br>　　但是最近看到的这条twitter就不得了了，索尼直接把第一方大IP地平线给原神做联名！！首先这肯定是索尼总部那边批过的，毕竟这一流IP的授权不是想用就用的。而且这还是我第一次看到索尼授权地平线IP，夸张程度可想而知。<br><img src="https://imgcdn.illlights.com/tang2003/pics/raw/master/pics/IMG_20210730_124723.jpg" alt="原神联名地平线"><br>　　我推测索尼和米哈游“合作”还是任天堂的功劳。索尼和任天堂常年不合，现在索尼逮到个“抄袭塞尔达”的游戏，这不得搞好关系？加上米哈游在国内的热度绝对大于PlayStation，这一波合作既是和任天堂对着干也是蹭热度做宣传，恐怕地平线的联名也是因为地平线新作要出了来中国做个宣传。米哈游这边当然高兴啊，PS在国外这知名度，给原神做海外推广还不容易吗？<br>原神至今没上NS，恐怕和这也有关系。</p>
+<h3 id="成功的商业操作"><a href="#成功的商业操作" class="headerlink" title="成功的商业操作"></a>成功的商业操作</h3><p>　　说了这么多关于“口碑”“名气”的东西，说到原神总还绕不过一个问题：赚钱。<br>　　米哈游算是中小厂，对于原神恐怕也算是孤注一掷，而前面所说的操作不管是不是有意为之，这一波闹剧和合作肯定给原神带来了不小的收益。从商业的角度来看，原神是成功的，不仅做成了一款国内的游戏，还能在国外大量盈利。</p>
+<blockquote>
+<p>2021年03月25日Sensor Tower数据透露，自2020年9月底上线以来，《原神》手游在六个月内的收入（不包含国内安卓渠道在内）已经累计超过了10亿美元。这也意味着，《原神》成功打破了纪录，成为最快突破10亿美元大关的手游。收入分布上，《原神》移动端收入最高的市场是中国iOS，贡献了3.02亿美元，占移动端总收入的29.5%。日本市场排名第2，贡献了2.78亿美元，占27.2%。美国市场排名第3，约1.89亿美元，占18.5%。</p>
+</blockquote>
+<h3 id="文化输出？"><a href="#文化输出？" class="headerlink" title="文化输出？"></a>文化输出？</h3><p>　　最近美国有人包下好莱坞的古老酒店给原神的人物过生日，一些网友提到了文化输出，我觉得不太对。二次元文化并不是中国的元素，怎么能说是输出？那除了二次元文化这款游戏还有什么？好看的女孩子？好看的女孩子也算是文化输出？总之我觉得文化输出这档事还是得看后面的《黑神话悟空》。不过原神还算是宣传了中国的游戏行业，让中国游戏第一次登上世界展台。<br>　　不过商务部是认定了米哈游这波文化输出，搞了个什么文化出口重点企业，恐怕也是现阶段游戏行业并没有非常突出的本土文化，姑且把这“拿来文化”也作为文化输出。</p>
+<h3 id="国产游戏的破局者"><a href="#国产游戏的破局者" class="headerlink" title="国产游戏的破局者"></a>国产游戏的破局者</h3><p>　　很抱歉我没有查到具体的资料，但是据我所知，腾讯和网易最新的游戏计划开始对标原神。投入大量经历在美术和设定上，这在国产游戏市场上我还是第一次见。也就是说，原神以一己之力把国产游戏往3A的方向拉了一点点。想想腾讯以前都在干什么事？王者荣耀和和平精英哪个是原创的？真的有美术、音乐这些东西吗？可以说原神这下是打破了国产游戏的僵局。<br>　　不过我们也可以看到米哈游还是在这方面做了不少让步，不想《黑神话》那么激进。首先f2p的模式没有改变，其实开放世界f2p是很难做的，但是原神仍然选择f2p。首先是f2p盈利空间的确大很多，但我认为更重要的是因为国内手游玩家的付费意识：我知道很多人仍然觉得“游戏为什么要钱？”，这么久的手游市场也适应了f2p的模式，毕竟是免费玩嘛，为什么不玩一玩（doge）。所以这一个让步应该是米哈游做的一个权衡，在商业和游戏中取平衡点。<br>　　第二个让步就是更新制。还是那《黑神话》做对比吧，黑神话是硬着头皮来想要打造3A买断制，但现实是至今仍未发布。而原神搭好了基本的世界观之后就直接上线，虽然一开始故事内容很少，引起一些玩家不满，但以更新的方式推进剧情的确对于小厂来说很合适：不仅是开发时间的缩短，而且还保证了后期开放资金的来源。毕竟一款不出名的全新IP哪里能吸纳资金。<br>　　总的来说，我仍然觉得原神是米哈游向3A方向的一个试探，至少是向高质量游戏的一次试探。步子不敢迈的很大，但的确是稍稍让国产游戏产业不再固步自封了。至于米哈游以后会不会做买断制，还真不一定，但是个人认为f2p也是一种逐渐成熟的模式，f2p也未必做不成3A。</p>
+<p>　　一般介绍游戏的文章我都会在最后的总结中打个分，但是这次因为没玩过原神，还是不做评分，也可以减少一些争端吧。</p>
+</div>          
+          <nav class="post-nav">
+    
+    <a class="post-nav-item post-nav-prev" href="/archives/2021/tech/myowncity.html">
+      <div class="nav-arrow">&lt;&nbsp;NEWER</div>
+      <span class="post-title">原创短文《一个人的城市》</span>
+    </a>
+    
+    
+    <a class="post-nav-item post-nav-next" href="/archives/2021/reading/Koto.html">
+      <div class="nav-arrow">OLDER&nbsp;&gt;</div>
+      <span class="post-title">《古都》鉴赏：缺失情节却依旧完整</span>
+    </a>
+    
+  </nav>
+          <div class="dis">
+    
+        
+    <script src='//cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js'></script>
+    <div id="waline" class="glass-wrapper waline-container"></div>
+    <script>
+        window.onload = function () {
+            new Waline({
+                el: '#waline',
+                path: location.pathname,
+                avatarCDN: 'https://sdn.geekzu.org/avatar/',
+                serverURL: 'https://comments-blog.illlights.com/',
+                avatar: 'monsterid',
+                placeholder: "封闭的文字无法成长。"
+            });
+        };
+    </script>
+
+
+    
+</div>
+    </div>
+   </main>
+</div>
+
+  <footer class="footer">
+    <small class="footer_copyright">
+      <div id="bottom-inner">
+        © Site by illlights<br>
+        <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a> &
+        <a target="_blank" rel="noopener" href="https://github.com/RichardTang2003/hexo-theme-Klise-glassy">Klise-glassy</a>
+        <br>
+        始于2021.
+        
+      </div>
+    </small>
+  </footer>
+  
+  
+
+    
+      <script src="/js/main.js"></script>
+    
+  
+  <script>
+    window.FPConfig = {
+      delay: 0,
+      ignoreKeywords: [],
+      maxRPS: 3,
+      hoverDelay: 50,
+    };
+  </script>
+  <!-- <script defer src="https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script> -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // 当 DOM 内容加载完成后，为 body 添加 'loaded' 类
+      document.body.classList.add('loaded');
+    });
+  </script>
+</body>
+</html>

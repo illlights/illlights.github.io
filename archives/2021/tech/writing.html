@@ -1,0 +1,551 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <script>
+    (function() {
+      try {
+        // 1. 优先从 localStorage 获取用户保存的主题
+        var savedTheme = localStorage.getItem('theme');
+        
+        // 2. 如果没有保存的主题，则检查系统偏好
+        var theme = savedTheme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        
+        // 3. 将主题属性应用到 <html> 元素上
+        //    在 <head> 中执行时，<body> 可能还不存在，所以操作 <html> 更安全
+        if (theme === 'dark') {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      } catch (e) {
+        // 如果发生错误，则不执行任何操作，让主脚本来处理
+      }
+    })();
+  </script>
+  
+  <!-- 提示浏览器颜色的 meta 标签 -->
+  <meta name="color-scheme" content="light dark">
+  <!-- Mastodon 验证 -->
+  <meta name="fediverse:creator" content="@illlights@anisaga.life">
+  
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>我们真的会中文吗 [ 喑光絮语 ]</title>
+
+  <link rel="icon" href="/img/favicon.ico">
+
+
+    <meta name="author" content="illlights">
+
+
+    <meta name="subtitle" content="illlights blog">
+
+
+    <meta name="Description" content="刚刚脱离高级趣味，所以博客不想太复杂了">
+
+
+    <meta name="keywords" content=",blog, comments, entertainment">
+
+
+  <link rel="alternate" href="/atom.xml " title="喑光絮语" type="application/atom+xml">
+
+
+  
+    <link rel="stylesheet" href="/css/main.css">
+  
+
+<!-- hexo injector head_end start --><style>/* 布局样式 */
+.hexo-tips-layout {
+    margin: 0.5rem 0;
+    padding: 0.5rem 1.5rem;
+    border-radius: 8px;
+    border: 1px solid;
+    border-left-width: 6px;
+    display: flex;
+    align-items: center;
+    transition: transform 0.3s ease;
+    min-width: 2rem;
+    height:auto;
+    overflow-x: auto; 
+    overflow-y: hidden; 
+}
+
+.hexo-tips-layout:hover {
+    transform: translateX(5px);
+}
+
+.hexo-tips-layout .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    font-size: clamp(2em, 2vw, 3em);
+    min-width: 2rem;
+    scale:1.5;
+    transition: transform 0.3s ease;
+}
+
+.hexo-tips-layout:hover .icon {
+    transform: scale(1.3);
+}
+
+.hexo-tips-layout .content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+.hexo-tips-layout:hover .content {
+    transform: translateX(3px);
+}
+
+/* 响应式调整 */
+@media screen and (max-width: 768px) {
+    .hexo-tips-layout {
+        padding: 1rem;
+    }
+}
+
+/* 为每种类型的提示框添加主题样式 */
+[class^="tips-style-"] {
+    --tips-light-bg: #fff; /* 默认值 */
+    --tips-dark-bg: #333;  /* 默认值 */
+    --tips-border: #000;   /* 默认值 */
+}
+
+/* 主题样式规则 */
+[class^="hexo-tips-"] {
+    border-color: var(--tips-border);
+}
+
+[class^="hexo-tips-"] .icon {
+    color: var(--tips-border);
+}
+
+/* 1. 手动暗色模式优先 */
+html.dark [class^="hexo-tips-"] {
+    background-color: var(--tips-dark-bg);
+}
+
+/* 2. 系统暗色模式其次 */
+@media (prefers-color-scheme: dark) {
+    html:not(.light) [class^="hexo-tips-"] {
+        background-color: var(--tips-dark-bg);
+    }
+}
+
+/* 3. 亮色模式最后 */
+html:not(.dark) [class^="hexo-tips-"],
+html.light [class^="hexo-tips-"] {
+    background-color: var(--tips-light-bg);
+}</style><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+<body class="notransition">
+  <!-- <script defer>
+    // 延迟移除 notransition 类，确保初始主题设置完成
+    setTimeout(() => document.body.classList.remove("notransition"), 75);
+  </script> -->
+  <div class="navbar" role="navigation">
+    <nav class="menu">
+      <input type="checkbox" id="menu-trigger" class="menu-trigger" />
+      <label for="menu-trigger">
+        <span class="menu-icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 512 512"
+          >
+            <path
+              d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z"
+            />
+          </svg>
+        </span>
+      </label>
+      <a id="mode">
+        <svg
+          class="mode-sunny"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>LIGHT</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+        <svg
+          class="mode-moon"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>DARK</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+      </a>
+      <div class="trigger">
+        <div class="trigger-container">
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/"> 主页</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/moments/"> 动态</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/archives/"> 文章</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/friends/"> 友链</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " target="_blank" rel="noopener" href="https://www.illlights.com"> 关于</a>
+          
+        </div>
+      </div>
+    </nav>
+  </div>
+  <button id="toTopBtn"><i class="fa-solid fa-hand-point-up " ></i></button>
+<!-- <button id="toggleButton"><i class="fa-solid fa-chart-bar " ></i></button> -->
+<div id="overlay" class="overlay glass-wrapper overlay-bg">
+  <div class="content">
+    
+    <button id="closeButton"><i class="fa-solid fa-circle-xmark"></i></button>
+  </div>
+</div>
+<div class="wrapper post">
+  <head>
+    <!-- 引入 Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  </head>
+
+
+
+  <main class="page-content" aria-label="Content">
+    <div class="glass-wrapper main-content">
+      <header class="header">
+        
+          <div class="tags">
+            
+          </div>
+        
+          <h1 class="header-title" itemprop="headline">我们真的会中文吗</h1>
+          <div class="post-meta">
+            最后更新: <time>Nov 13, 2021</time>
+            作者: <span itemprop="author">
+              <span itemprop="name">illlights</span>
+            </span>
+            字数: <span class="post-count">2.3k</span>
+            预计阅读时间: <span class="post-count">7min</span> 
+          </div>       
+      </header>
+          <div class="page-content"><p>几个月前就在说要提一提文字功底，也看了些东西。可惜语言没什么提升，倒是发现自己根本不会中文，或者说，我们用的中文已经不是中文了。</p>
+<p>我先是看了《中文的常态与病态》（余光中文），他是这么说的：</p>
+<blockquote>
+<p>一般人笔下的白话文，西化的病态日渐严重。一般人从大众传媒学到的，不仅是流行的观念，还有那些观念赖以包装的种种说法；有时，那些说法连高明之士也抗拒不了。今日的中文虽因地区不同而互见差异，但共同的趋势都是繁琐与生硬，例如中文本来是说「因此」，现在不少人却爱说「基于这个原因」；本来是说「问题很多」，现在不少人却爱说「有很多问题存在」。对于这种化简为繁、以拙代巧的趋势，有心人如果不及时提出警告，我们的中文势必越变越差，而地道中文原有的那种美德，那种简洁而又灵活的语文生态，也必将面目全非。</p>
+<p>中文也有生态吗？当然有。措词简洁、句式灵活、声调铿锵，这些都是中文生命的常态。能顺着这样的生态，就能长保中文的健康。要是处处违拗这样的生态，久而久之，中文就会污染而淤塞，危机日渐迫近。</p>
+</blockquote>
+<p>虽说这篇文章已经有些时日，而且有些说法现在看来过于偏激，但诚然有不小警醒意义。全文较长，各位有兴趣可以搜索阅读，我在这做些总结、补充。首先要注意一点，余文说的“中文”指的是近代中文，与我们使用的中文已经不太一样，也就是说，当今中文已经西化了不少，</p>
+<ol>
+<li><p>适当使用成语</p>
+</li>
+<li><p>中文常用实体、短语作主语，而抽象名词作主语较少见</p>
+<p>　　例如，<code>他的收入的减少改变了他的生活方式</code>。这句话是抽象名词“减少”做主语，而中文这样表达便显得生硬，可以改成<code>他收入减少，乃改变生活方式</code>或<code>他因为收入减少而改变生活方式</code>。</p>
+<p>   这种现象在科学类文章中常见。的确，论文为了科学和准确常使用术语和抽象名词，但由此波及日常写作，并不是什么好事。</p>
+</li>
+<li><p>避免「万能动词＋抽象名词」</p>
+<blockquote>
+<p>本校的校友对社会作出了重大的贡献。→  本校的校友对社会贡献很大。</p>
+<p>昨晚的听众对访问教授作出了十分热烈的反应。→  昨晚的听众对访问教授反应十分热烈。</p>
+<p>我们对国际贸易的问题已经进行了详细的研究。→  我们对国际贸易的问题已经详加研究。</p>
+<p>心理学家在老鼠的身上进行试验。→  心理学家用老鼠来做试验。(或：心理学家用老鼠试验。)</p>
+</blockquote>
+<p>这该是最普遍的西化中文用法。在百度上随便打开一篇文章，这样的表达数不胜数：</p>
+<blockquote>
+<p>因此面对日本诸如此类的事件，更多的国家应该警惕，防止日本<strong>做出</strong>更加危险的<strong>举动</strong>。<sup><a target="_blank" rel="noopener" href="https://mbd.baidu.com/newspage/data/landingsuper?context=%7B%22nid%22:%22news_8683899748807900945%22%7D&n_type=-1&p_from=-1">[1]</a></sup></p>
+</blockquote>
+</li>
+<li><p>减少伪术语</p>
+<p>伪术语指自造的“xx性、xx度”，也是受论文波及的余震之一，为了让文章显得准确，编造出伪术语却不准确定义，反而使文章文不从字不顺。</p>
+<p>事实上这种用法很多人已经习以为常，我在上一段的表述中，首先想写的就是<code>为了显示自己文章的准确性</code>，得改！</p>
+</li>
+<li><p>并非只有“们”表示复数概念</p>
+<p>中文名称没有复数变化，中文要表多数的时候，会说「民众」、「徒众」、「观众」、「听众」，所以「众」也有点「们」的作用。但是「众」也好，「们」也好，在中文里并非处处需要复数语尾。往往，我们说「文武百官」，不说「官们」，也不说「文官们」、「武官们」。同理「全国的同胞」、「全校的师生」、「所有的顾客」、「一切乘客」当然是复数，不必再画蛇添足。文中重点提到了「人们」取代原有的「人人」、「大家」、「大众」、「众人」、「世人」。但当下人们已经用得十分普遍，而且使用并不恰当：</p>
+<blockquote>
+<p>这种疾病是肉芽肿性疾病,对<strong>人们</strong>的肺脏,肺门淋巴结等器官造成一定的损伤<sup><a target="_blank" rel="noopener" href="http://www.baidu.com/link?url=8AsCkQgteTMhV5NHa4JMelQN7sIjVxxnr-_pg4I1CtUX0LY8fXOkmxLs9S7b8_tm&wd=&eqid=bdbe07cf0001883a00000006618f32be">[2]</a></sup></p>
+</blockquote>
+<blockquote>
+<p>用实用而美的产品为<strong>人们</strong>增添获得感<sup><a target="_blank" rel="noopener" href="https://baijiahao.baidu.com/s?id=1716204067154645236&wfr=spider&for=pc">[3]</a></sup></p>
+</blockquote>
+<p>此外，「……之一」的泛滥，也不容忽视。</p>
+</li>
+<li><p>可省略部分连接词、介词</p>
+<blockquote>
+<p>在英文里，词性相同的字眼常用and来连接：例如 man and wife, you and I, back and forth。但在中文里，类似的场合往往不用连接词，所以只要说「夫妻」、「你我」、「前后」就够了。同样地，一长串同类词在中文里，也任其并列，无须连接：例如「东南西北」、「金木水火土」、「礼乐射御书数」、「柴米油盐酱醋茶」皆是。中国人绝不说「开门七件事，柴、米、油、盐、酱、醋以及茶。」谁要这么说，一定会惹笑。同理，中文只说「思前想后」、「说古道今」。</p>
+</blockquote>
+<blockquote>
+<p>原来不用连接词的地方，在 and 意识的教唆下，都装上了连接词；而所谓连接词都由「和」、「与」、「及」、「以及」包办，可是灵活而宛转的「而」、「并」、「而且」等词，几乎要绝迹了。</p>
+</blockquote>
+<p>同样，滥用介词也是西化的重灾区：</p>
+<blockquote>
+<p>「今天我们讨论有关台湾交通的问题」；「关于他的申请，你看过了没有？」在这些句子里，「有关」、「关于」完全多余。最近我担任「全国学生文学奖」评审，有一篇投稿的题目很长，叫「关于一个河堤孩子的成长故事」。十三个字里，「关于」两字毫无作用，「一个」与「故事」也可有可无。</p>
+</blockquote>
+</li>
+<li><p>避免动词副词化</p>
+<p>英文的副词形式对中文为害也已经开始了。</p>
+<blockquote>
+<p>他苦心孤诣地想出一套好办法来。</p>
+<p>老师苦口婆心地劝了他半天。</p>
+<p>大家苦中作乐地竟然大唱其民谣。</p>
+</blockquote>
+<p>「苦」字开头的三句成语，本来都是动词，套上副词语尾的「地」就降为副词了。这么一来，文章仍然清楚，文法上却主客分明，太讲从属的关系，有点呆板。若把「地」一律删去，代以逗点，不但可以摆脱这主客的关系，语气也会灵活一些。</p>
+</li>
+<li><p>减少“的”</p>
+<blockquote>
+<p>白话文所以啰嗦而软弱，虚字太多是一大原因，而用得最滥的虚字正是「的」。学会少用「的」字之道，恐怕是白话文作家的第一课吧。</p>
+</blockquote>
+<p>文中提到了一种减少“的”字方法：<strong>形容词后置成句</strong>。</p>
+<blockquote>
+<p>目前的白话文，不知何故，几乎一律前饰，似乎不懂后饰之道。例如前引的英文句，若用中文来说，一般人会不假思索说成：「我见到一个长得像你兄弟的男人。」却很少人会说：「我见到一个男人，长得像你兄弟。」如果句短，前饰也无所谓。如果句长，前饰就太生硬了。例如下面这句：「我见到一个长得像你兄弟说话也有点像他的陌生男人。」就冗长得尾大不掉了。要是改为后饰，就自然得多：「我见到一个陌生男人，长得像你兄弟，说话也有点像他。」</p>
+</blockquote>
+<blockquote>
+<p>后饰句可以一路加下去，虽长而不失自然，富于弹性。前饰句以名词压底，一长了，就显得累赘，紧张，不胜负担。所以前饰句是关闭句，后饰句是开放句。</p>
+</blockquote>
+</li>
+<li><p>中文不常见被动词</p>
+<blockquote>
+<p>(一) 哥伦布发现了新大陆。</p>
+<p>(二) 新大陆被哥伦布发现了。</p>
+<p>(三) 新大陆被发现了。</p>
+<p>第一句施者做主词，乃主动语气。第二句受者做主词，乃被动语气。第三句仍是受者做主词，仍是被动，却不见施者。这三种句子在英文里都很普遍，但在中文里却以第一种最常见，第二、第三种就少得多。第三种在中文里常变成主动语气，例如「糖都吃光了」，「戏看完了」，「稿写了一半」，「钱已经用了」。</p>
+</blockquote>
+<p>文中提到，目前中文的被动语气有两个毛病。一个是用生硬的被动语气来取代自然的主动语气，另一个是千篇一律只会用「被」字，似乎因为它发音近于英文的 by，却不解从「受难」到「遇害」，从「挨打」到「遭殃」，从「经人指点」到「为世所重」，可用的字还有许多，不必套一个公式。</p>
+</li>
+</ol>
+<p>朱光潜在《咬文嚼字》中提到，文学借文字表现思想情感，文字上面有含糊，就显得思想还没有透彻，情感还没有凝炼。咬文嚼字，在表面上象只是斟酌文字的分量，在实际上就是调整思想和情感。这也是最近我努力的方向。</p>
+</div>          
+          <nav class="post-nav">
+    
+    <a class="post-nav-item post-nav-prev" href="/archives/2021/reading/reading2106-2111.html">
+      <div class="nav-arrow">&lt;&nbsp;NEWER</div>
+      <span class="post-title">2021.6-11 阅读记录</span>
+    </a>
+    
+    
+    <a class="post-nav-item post-nav-next" href="/archives/2021/reading/thegodthemselves.html">
+      <div class="nav-arrow">OLDER&nbsp;&gt;</div>
+      <span class="post-title">《神们自己》浅评</span>
+    </a>
+    
+  </nav>
+          <div class="dis">
+    
+        
+    <script src='//cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js'></script>
+    <div id="waline" class="glass-wrapper waline-container"></div>
+    <script>
+        window.onload = function () {
+            new Waline({
+                el: '#waline',
+                path: location.pathname,
+                avatarCDN: 'https://sdn.geekzu.org/avatar/',
+                serverURL: 'https://comments-blog.illlights.com/',
+                avatar: 'monsterid',
+                placeholder: "封闭的文字无法成长。"
+            });
+        };
+    </script>
+
+
+    
+</div>
+    </div>
+   </main>
+</div>
+
+  <footer class="footer">
+    <small class="footer_copyright">
+      <div id="bottom-inner">
+        © Site by illlights<br>
+        <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a> &
+        <a target="_blank" rel="noopener" href="https://github.com/RichardTang2003/hexo-theme-Klise-glassy">Klise-glassy</a>
+        <br>
+        始于2021.
+        
+      </div>
+    </small>
+  </footer>
+  
+  
+
+    
+      <script src="/js/main.js"></script>
+    
+  
+  <script>
+    window.FPConfig = {
+      delay: 0,
+      ignoreKeywords: [],
+      maxRPS: 3,
+      hoverDelay: 50,
+    };
+  </script>
+  <!-- <script defer src="https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script> -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // 当 DOM 内容加载完成后，为 body 添加 'loaded' 类
+      document.body.classList.add('loaded');
+    });
+  </script>
+</body>
+</html>

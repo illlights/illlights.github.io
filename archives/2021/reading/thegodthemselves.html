@@ -1,0 +1,480 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <script>
+    (function() {
+      try {
+        // 1. 优先从 localStorage 获取用户保存的主题
+        var savedTheme = localStorage.getItem('theme');
+        
+        // 2. 如果没有保存的主题，则检查系统偏好
+        var theme = savedTheme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        
+        // 3. 将主题属性应用到 <html> 元素上
+        //    在 <head> 中执行时，<body> 可能还不存在，所以操作 <html> 更安全
+        if (theme === 'dark') {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      } catch (e) {
+        // 如果发生错误，则不执行任何操作，让主脚本来处理
+      }
+    })();
+  </script>
+  
+  <!-- 提示浏览器颜色的 meta 标签 -->
+  <meta name="color-scheme" content="light dark">
+  <!-- Mastodon 验证 -->
+  <meta name="fediverse:creator" content="@illlights@anisaga.life">
+  
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>《神们自己》浅评 [ 喑光絮语 ]</title>
+
+  <link rel="icon" href="/img/favicon.ico">
+
+
+    <meta name="author" content="illlights">
+
+
+    <meta name="subtitle" content="illlights blog">
+
+
+    <meta name="Description" content="刚刚脱离高级趣味，所以博客不想太复杂了">
+
+
+    <meta name="keywords" content=",blog, comments, entertainment">
+
+
+  <link rel="alternate" href="/atom.xml " title="喑光絮语" type="application/atom+xml">
+
+
+  
+    <link rel="stylesheet" href="/css/main.css">
+  
+
+<!-- hexo injector head_end start --><style>/* 布局样式 */
+.hexo-tips-layout {
+    margin: 0.5rem 0;
+    padding: 0.5rem 1.5rem;
+    border-radius: 8px;
+    border: 1px solid;
+    border-left-width: 6px;
+    display: flex;
+    align-items: center;
+    transition: transform 0.3s ease;
+    min-width: 2rem;
+    height:auto;
+    overflow-x: auto; 
+    overflow-y: hidden; 
+}
+
+.hexo-tips-layout:hover {
+    transform: translateX(5px);
+}
+
+.hexo-tips-layout .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    font-size: clamp(2em, 2vw, 3em);
+    min-width: 2rem;
+    scale:1.5;
+    transition: transform 0.3s ease;
+}
+
+.hexo-tips-layout:hover .icon {
+    transform: scale(1.3);
+}
+
+.hexo-tips-layout .content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+.hexo-tips-layout:hover .content {
+    transform: translateX(3px);
+}
+
+/* 响应式调整 */
+@media screen and (max-width: 768px) {
+    .hexo-tips-layout {
+        padding: 1rem;
+    }
+}
+
+/* 为每种类型的提示框添加主题样式 */
+[class^="tips-style-"] {
+    --tips-light-bg: #fff; /* 默认值 */
+    --tips-dark-bg: #333;  /* 默认值 */
+    --tips-border: #000;   /* 默认值 */
+}
+
+/* 主题样式规则 */
+[class^="hexo-tips-"] {
+    border-color: var(--tips-border);
+}
+
+[class^="hexo-tips-"] .icon {
+    color: var(--tips-border);
+}
+
+/* 1. 手动暗色模式优先 */
+html.dark [class^="hexo-tips-"] {
+    background-color: var(--tips-dark-bg);
+}
+
+/* 2. 系统暗色模式其次 */
+@media (prefers-color-scheme: dark) {
+    html:not(.light) [class^="hexo-tips-"] {
+        background-color: var(--tips-dark-bg);
+    }
+}
+
+/* 3. 亮色模式最后 */
+html:not(.dark) [class^="hexo-tips-"],
+html.light [class^="hexo-tips-"] {
+    background-color: var(--tips-light-bg);
+}</style><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+<body class="notransition">
+  <!-- <script defer>
+    // 延迟移除 notransition 类，确保初始主题设置完成
+    setTimeout(() => document.body.classList.remove("notransition"), 75);
+  </script> -->
+  <div class="navbar" role="navigation">
+    <nav class="menu">
+      <input type="checkbox" id="menu-trigger" class="menu-trigger" />
+      <label for="menu-trigger">
+        <span class="menu-icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 512 512"
+          >
+            <path
+              d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z"
+            />
+          </svg>
+        </span>
+      </label>
+      <a id="mode">
+        <svg
+          class="mode-sunny"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>LIGHT</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+        <svg
+          class="mode-moon"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>DARK</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+      </a>
+      <div class="trigger">
+        <div class="trigger-container">
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/"> 主页</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/moments/"> 动态</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/archives/"> 文章</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/friends/"> 友链</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " target="_blank" rel="noopener" href="https://www.illlights.com"> 关于</a>
+          
+        </div>
+      </div>
+    </nav>
+  </div>
+  <button id="toTopBtn"><i class="fa-solid fa-hand-point-up " ></i></button>
+<!-- <button id="toggleButton"><i class="fa-solid fa-chart-bar " ></i></button> -->
+<div id="overlay" class="overlay glass-wrapper overlay-bg">
+  <div class="content">
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A7%91%E5%B9%BB%E4%B8%8E%E6%AC%A7%E4%BA%A8%E5%88%A9%E7%9A%84%E7%A2%B0%E6%92%9E"><span class="toc-text">科幻与欧亨利的碰撞</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8D%E5%86%99%E4%BA%BA%E7%B1%BB%EF%BC%8C%E5%8D%B4%E5%86%99%E5%B0%BD%E4%BA%BA%E6%80%A7"><span class="toc-text">不写人类，却写尽人性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8D%E6%98%AF%E5%BE%88%E5%A5%BD%E7%9A%84%E5%A5%BD%E7%9A%84%E7%BB%93%E5%B1%80"><span class="toc-text">不是很好的好的结局</span></a></li></ol>
+    <button id="closeButton"><i class="fa-solid fa-circle-xmark"></i></button>
+  </div>
+</div>
+<div class="wrapper post">
+  <head>
+    <!-- 引入 Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  </head>
+
+
+
+  <main class="page-content" aria-label="Content">
+    <div class="glass-wrapper main-content">
+      <header class="header">
+        
+          <div class="tags">
+            <a href="/tags/%E7%A7%91%E5%B9%BB/" class="tag"># 科幻</a>
+          </div>
+        
+          <h1 class="header-title" itemprop="headline">《神们自己》浅评</h1>
+          <div class="post-meta">
+            最后更新: <time>Feb 18, 2025</time>
+            作者: <span itemprop="author">
+              <span itemprop="name">illlights</span>
+            </span>
+            字数: <span class="post-count">1.4k</span>
+            预计阅读时间: <span class="post-count">4min</span> 
+          </div>       
+      </header>
+          <div class="page-content"><h2 id="科幻与欧亨利的碰撞"><a href="#科幻与欧亨利的碰撞" class="headerlink" title="科幻与欧亨利的碰撞"></a>科幻与欧亨利的碰撞</h2><p>　　既然是科幻小说，那先说说它的科幻设定吧。故事假设了平行宇宙的存在，平行宇宙中强相互作用力不同，物质的结构也不同，而某个平行宇宙的生物成功的交换了两个宇宙的物质。但与此同时，附带着也会交换两个宇宙的“物理规律”。而物理规律会向整个宇宙扩散，所以交换的物质逐渐变得不稳定，具有放射性，也就成为了无穷无尽的能量来源。</p>
+<p>　　第一部分从人类的角度阐述了这个世界观。而作为小说，冲突才是故事的核心，这一部分的冲突并不是两个平行宇宙的冲突，而恰恰是人类之间的冲突：发现“电子通道”（就是上面说的跨宇宙传输）的哈兰姆被称为“电子通道之父”，却满眼只有名望，事实上人类什么都没有做；而另一位科学家拉蒙特发现物理规律的扩散最终会导致太阳膨胀爆炸，甚至收到了平行宇宙传来的“通道坏”的符号--可惜哈兰姆为了维护地位对他极力打压，而人类沉溺于无尽的能源，早已看不见可能的风险--拉蒙特无论是向哈兰姆汇报还是向议员报告都无力回天。</p>
+<p>　　本以为接下来要接着写拉蒙特的抗争，可是作者在这里选择戛然而止。这戛然而止的效果却出乎意料：作为第一章的主要人物，努力上报了数次的拉蒙特，终究还是一个小人物，甚至没有拉起一点涟漪。这在文学作品、游戏里是很少出现的，却往往是生活的真相。这就是子标题所说的“欧亨利”，不是单纯的“欧亨利氏结尾”，而是一反文学作品的常态，颇具meta元素的意味。</p>
+<h2 id="不写人类，却写尽人性"><a href="#不写人类，却写尽人性" class="headerlink" title="不写人类，却写尽人性"></a>不写人类，却写尽人性</h2><p>　　接下来就是小说的第二部分。开头丢过来很多全新的概念，明摆着告诉读者：这就是那个平行宇宙。不过说来也挺神奇的，明明是刚刚看到的词语（比如“长波酸涩而空洞的滋味”“情者父亲”“理者”“抚育者父亲”“交合”“小左”……）前面读起来还十分吃力，后面竟然完全能够看懂了，而且作者并没有刻意去解释这些词汇的意义，完全是通过语境推断出来的（总之觉得自己很厉害）。个人觉得这是整本书的一大精妙之处，要是以人类的视角解释这些词语，既失去了平行宇宙的氛围，也不会有这样愉快的阅读体验。</p>
+<p>　　说回情节，这一部分的设定与故事也十分精彩，平行宇宙的家庭由“理者”“情者”“抚育者”三者构成，除了普通的家庭还有“长老”，长老是智慧的化身，普通家庭中只有理者拥有知识，抚育者一心向着孩子，而情者……似乎只是为了完成生育这一行为（这一点小说并没有明说）。而我们的主角却是一位渴望知识的情者“阿杜”，虽然受尽非议，却选择了与众不同。而与众不同也就意味着孤独。</p>
+<p>（警告：如果你打算读一读的话，下面这两端可能会严重影响你的阅读体验）</p>
+<hr>
+<p>　　在学习的过程中，阿杜发现电子通道会导致人类毁灭，同时认为这一切都是长老为了得到食物（他们把射线当作食物）的阴谋，于是放弃家庭，背叛长老，向人类传达危险的信息。在她将要因精力耗尽而逝去时，她的理者明白了长老其实是三者合并后的化身，救下阿杜，答应她合并之后一起推翻研究电子通道的长老。只是没想到，他们自己就是这位长老。（这个解释起来非常麻烦，要涉及很多细节的设定，还是自己去看吧）</p>
+<p>　　看到结局之时，我真地被震撼到了，只有短短一行字，写满了阿杜的绝望。虽然可以把它强行升华成勇者与恶龙的故事，不过我觉得没有这个必要，这本身就是一个令人震撼的悲剧结局。</p>
+<hr>
+<p>　　第二部分完全没在写人，却处处都透露着人性：个人认为，“理者”代表着人的理性，“情者”代表着情感，“抚育者”代表着天性（动物本能），先不说阿杜选择与众不同之后受到的排挤这种普遍性现象，本书本身就对人的这三个部分做了剖析。抚育者会为了孩子不顾一切偷长老的东西、理者最终应情者出走而失去理智……这些设定与故事的发展浑然一体，两者也能相辅相成。而在很多细节的部分，还藏着对人性的隐喻与思考。</p>
+<p>　　其实在第一部分</p>
+<h2 id="不是很好的好的结局"><a href="#不是很好的好的结局" class="headerlink" title="不是很好的好的结局"></a><del>不是很好的</del>好的结局</h2><p>　　我觉得第三部分没什么太多可说的，更像是为了整一个合家欢结局而特意写的。冲突本身就不是很有利，过程也没有什么曲折。总之这个结局不太能提起我的胃口，尤其是前面的冲击力那么大，这一部分相对就很平淡了。</p>
+</div>          
+          <nav class="post-nav">
+    
+    <a class="post-nav-item post-nav-prev" href="/archives/2021/tech/writing.html">
+      <div class="nav-arrow">&lt;&nbsp;NEWER</div>
+      <span class="post-title">我们真的会中文吗</span>
+    </a>
+    
+    
+    <a class="post-nav-item post-nav-next" href="/archives/2021/games/rms5e10.html">
+      <div class="nav-arrow">OLDER&nbsp;&gt;</div>
+      <span class="post-title">爱与自由的抉择---Rick and Morty S5E10 片段寓意解读</span>
+    </a>
+    
+  </nav>
+          <div class="dis">
+    
+        
+    <script src='//cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js'></script>
+    <div id="waline" class="glass-wrapper waline-container"></div>
+    <script>
+        window.onload = function () {
+            new Waline({
+                el: '#waline',
+                path: location.pathname,
+                avatarCDN: 'https://sdn.geekzu.org/avatar/',
+                serverURL: 'https://comments-blog.illlights.com/',
+                avatar: 'monsterid',
+                placeholder: "封闭的文字无法成长。"
+            });
+        };
+    </script>
+
+
+    
+</div>
+    </div>
+   </main>
+</div>
+
+  <footer class="footer">
+    <small class="footer_copyright">
+      <div id="bottom-inner">
+        © Site by illlights<br>
+        <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a> &
+        <a target="_blank" rel="noopener" href="https://github.com/RichardTang2003/hexo-theme-Klise-glassy">Klise-glassy</a>
+        <br>
+        始于2021.
+        
+      </div>
+    </small>
+  </footer>
+  
+  
+
+    
+      <script src="/js/main.js"></script>
+    
+  
+  <script>
+    window.FPConfig = {
+      delay: 0,
+      ignoreKeywords: [],
+      maxRPS: 3,
+      hoverDelay: 50,
+    };
+  </script>
+  <!-- <script defer src="https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script> -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // 当 DOM 内容加载完成后，为 body 添加 'loaded' 类
+      document.body.classList.add('loaded');
+    });
+  </script>
+</body>
+</html>

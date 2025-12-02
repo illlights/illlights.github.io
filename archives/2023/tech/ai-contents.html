@@ -1,0 +1,502 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <script>
+    (function() {
+      try {
+        // 1. 优先从 localStorage 获取用户保存的主题
+        var savedTheme = localStorage.getItem('theme');
+        
+        // 2. 如果没有保存的主题，则检查系统偏好
+        var theme = savedTheme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        
+        // 3. 将主题属性应用到 <html> 元素上
+        //    在 <head> 中执行时，<body> 可能还不存在，所以操作 <html> 更安全
+        if (theme === 'dark') {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      } catch (e) {
+        // 如果发生错误，则不执行任何操作，让主脚本来处理
+      }
+    })();
+  </script>
+  
+  <!-- 提示浏览器颜色的 meta 标签 -->
+  <meta name="color-scheme" content="light dark">
+  <!-- Mastodon 验证 -->
+  <meta name="fediverse:creator" content="@illlights@anisaga.life">
+  
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI正在降低互联网的信息密度 [ 喑光絮语 ]</title>
+
+  <link rel="icon" href="/img/favicon.ico">
+
+
+    <meta name="author" content="illlights">
+
+
+    <meta name="subtitle" content="illlights blog">
+
+
+    <meta name="Description" content="刚刚脱离高级趣味，所以博客不想太复杂了">
+
+
+    <meta name="keywords" content=",blog, comments, entertainment">
+
+
+  <link rel="alternate" href="/atom.xml " title="喑光絮语" type="application/atom+xml">
+
+
+  
+    <link rel="stylesheet" href="/css/main.css">
+  
+
+<!-- hexo injector head_end start --><style>/* 布局样式 */
+.hexo-tips-layout {
+    margin: 0.5rem 0;
+    padding: 0.5rem 1.5rem;
+    border-radius: 8px;
+    border: 1px solid;
+    border-left-width: 6px;
+    display: flex;
+    align-items: center;
+    transition: transform 0.3s ease;
+    min-width: 2rem;
+    height:auto;
+    overflow-x: auto; 
+    overflow-y: hidden; 
+}
+
+.hexo-tips-layout:hover {
+    transform: translateX(5px);
+}
+
+.hexo-tips-layout .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    font-size: clamp(2em, 2vw, 3em);
+    min-width: 2rem;
+    scale:1.5;
+    transition: transform 0.3s ease;
+}
+
+.hexo-tips-layout:hover .icon {
+    transform: scale(1.3);
+}
+
+.hexo-tips-layout .content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+.hexo-tips-layout:hover .content {
+    transform: translateX(3px);
+}
+
+/* 响应式调整 */
+@media screen and (max-width: 768px) {
+    .hexo-tips-layout {
+        padding: 1rem;
+    }
+}
+
+/* 为每种类型的提示框添加主题样式 */
+[class^="tips-style-"] {
+    --tips-light-bg: #fff; /* 默认值 */
+    --tips-dark-bg: #333;  /* 默认值 */
+    --tips-border: #000;   /* 默认值 */
+}
+
+/* 主题样式规则 */
+[class^="hexo-tips-"] {
+    border-color: var(--tips-border);
+}
+
+[class^="hexo-tips-"] .icon {
+    color: var(--tips-border);
+}
+
+/* 1. 手动暗色模式优先 */
+html.dark [class^="hexo-tips-"] {
+    background-color: var(--tips-dark-bg);
+}
+
+/* 2. 系统暗色模式其次 */
+@media (prefers-color-scheme: dark) {
+    html:not(.light) [class^="hexo-tips-"] {
+        background-color: var(--tips-dark-bg);
+    }
+}
+
+/* 3. 亮色模式最后 */
+html:not(.dark) [class^="hexo-tips-"],
+html.light [class^="hexo-tips-"] {
+    background-color: var(--tips-light-bg);
+}</style><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+<body class="notransition">
+  <!-- <script defer>
+    // 延迟移除 notransition 类，确保初始主题设置完成
+    setTimeout(() => document.body.classList.remove("notransition"), 75);
+  </script> -->
+  <div class="navbar" role="navigation">
+    <nav class="menu">
+      <input type="checkbox" id="menu-trigger" class="menu-trigger" />
+      <label for="menu-trigger">
+        <span class="menu-icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 512 512"
+          >
+            <path
+              d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z"
+            />
+          </svg>
+        </span>
+      </label>
+      <a id="mode">
+        <svg
+          class="mode-sunny"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>LIGHT</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+        <svg
+          class="mode-moon"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>DARK</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+      </a>
+      <div class="trigger">
+        <div class="trigger-container">
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/"> 主页</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/moments/"> 动态</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/archives/"> 文章</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/friends/"> 友链</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " target="_blank" rel="noopener" href="https://www.illlights.com"> 关于</a>
+          
+        </div>
+      </div>
+    </nav>
+  </div>
+  <button id="toTopBtn"><i class="fa-solid fa-hand-point-up " ></i></button>
+<!-- <button id="toggleButton"><i class="fa-solid fa-chart-bar " ></i></button> -->
+<div id="overlay" class="overlay glass-wrapper overlay-bg">
+  <div class="content">
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#AI%E3%80%81%E6%8A%80%E6%9C%AF-2"><span class="toc-text">AI、技术[^2]</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%88%91%E4%BB%AC%E8%83%BD%E6%8E%A5%E8%A7%A6%E5%88%B0%E4%BB%80%E4%B9%88%E6%A0%B7%E7%9A%84AI"><span class="toc-text">我们能接触到什么样的AI</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AI%E5%8F%91%E5%B1%95%E4%B8%8B%E7%9A%84%E4%BA%92%E8%81%94%E7%BD%91"><span class="toc-text">AI发展下的互联网</span></a></li></ol>
+    <button id="closeButton"><i class="fa-solid fa-circle-xmark"></i></button>
+  </div>
+</div>
+<div class="wrapper post">
+  <head>
+    <!-- 引入 Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  </head>
+
+
+
+  <main class="page-content" aria-label="Content">
+    <div class="glass-wrapper main-content">
+      <header class="header">
+        
+          <div class="tags">
+            <a href="/tags/AI/" class="tag"># AI</a>
+          </div>
+        
+          <h1 class="header-title" itemprop="headline">AI正在降低互联网的信息密度</h1>
+          <div class="post-meta">
+            最后更新: <time>Apr 05, 2023</time>
+            作者: <span itemprop="author">
+              <span itemprop="name">illlights</span>
+            </span>
+            字数: <span class="post-count">1.4k</span>
+            预计阅读时间: <span class="post-count">5min</span> 
+          </div>       
+      </header>
+          <div class="page-content"><blockquote>
+<p>It cannot be predicted when human-level intelligence will be achieved.</p>
+<p>– John McCarthy, Father of AI[^1]</p>
+</blockquote>
+<p>近几年AI的发展确实非常迅速。几年之前的AlphaGo或许还离我们的生活比较遥远，当时我们也只能惊叹AI能这么轻易打败人类。而时至今日，无论是国内还是国外，AI都已经发展出成熟的技术和社区，在商业上的运用也越来越成功。</p>
+<p>先不说公司内部的AI模型，我猜现如今用户行为分析、智能推荐等等少不了它们的用处。作为一个普通人能接触到领域，翻译、写作、作画、声音都已经有较为成熟的AI模型。</p>
+<p>我们常常把出现某个热门产品的技术称作“爆款技术”，比如说WEB技术催生了Google，区块链技术催生了虚拟货币，那么AI技术的应用已经完全在这些爆款技术之上了。那么，AI又是怎么一步步发展至今的呢？</p>
+<h2 id="AI、技术-2"><a href="#AI、技术-2" class="headerlink" title="AI、技术[^2]"></a>AI、技术[^2]</h2><p>AI，虽然被叫做人工智能(Artificial Intelligence)，其本质其实就是计算机在大量计算偏导数来确定海量的参数。它有这么几个特点：</p>
+<ol>
+<li>计算机化</li>
+<li>计算量大</li>
+</ol>
+<p>计算机技术的出现，或者说信息时代到来是AI孕育的土壤，而大量的计算则是需要芯片算力的发展，更精确一点是类显卡技术的不断进步。说起来很巧，区块链也主要是依靠计算量大的显卡性能，大量的简单计算能力会不会是未来的需求趋势？</p>
+<p>显卡原本是用来显示图像的内容，特点是只能进行较为单一的计算，但是计算速度非常快，而计算机游戏对这种高速单一计算的需求是早期推动显卡技术发展的主要助推力。（一般是矩阵计算、张量计算之类）</p>
+<p>虽然现在已经有专门为AI优化的专用芯片，但早期显卡的高算力是AI萌芽时期的重要要素。区块链技术、电子游戏、人工智能技术的计算基础基本相同，在技术发展中也可以说是在相互促进。</p>
+<h2 id="我们能接触到什么样的AI"><a href="#我们能接触到什么样的AI" class="headerlink" title="我们能接触到什么样的AI"></a>我们能接触到什么样的AI</h2><p>字符处理是比较早就出现的AI场景，这一块发展的时间较长，具体体现在产品上就是翻译AI的成熟化运用。</p>
+<p><a target="_blank" rel="noopener" href="https://www.deepl.com/translator">DeepL</a>是这一块较为出名的产品，一家德国小企业靠AI技术实现了和谷歌微软这种行业巨头相似的效果，甚至在一些场景中表现更好。</p>
+<p><img src="https://i.imgtg.com/2023/01/21/S5jLq.png" alt="deepl"></p>
+<p>同样是语言模型AI的还有OpenAI最近开放测试就立即火爆的<a target="_blank" rel="noopener" href="https://chat.openai.com/chat">ChatGPT</a></p>
+<p><img src="https://i.imgtg.com/2023/01/21/S52Xc.png" alt="chatgpt preview webpage"></p>
+<p><img src="https://i.imgtg.com/2023/01/21/S58zr.png" alt="dialog"></p>
+<p>在图像领域，AI作画也在圈内圈外引起了轩然大波：</p>
+<p><img src="https://i.imgtg.com/2023/01/21/S5XPM.png" alt="anti-ai-art"></p>
+<p>上面几种都是公司的商业化产品，不过AI作为一种计算机技术，也有计算机特有的“社区”属性，或者说是“开源产品”。</p>
+<p>图像生成AI模型<a target="_blank" rel="noopener" href="https://gist.github.com/harubaru/f727cedacae336d1f7877c4bbe2196e1">Waifu Diffusion</a></p>
+<p><img src="https://user-images.githubusercontent.com/26317155/210155933-db3a5f1a-1ec3-4777-915c-6deff2841ce9.png" alt="AI generated image"></p>
+<p>还有音频领域的AI演唱模型<a target="_blank" rel="noopener" href="https://github.com/MoonInTheRiver/DiffSinger">DiffSinger</a>、AI语音合成<a target="_blank" rel="noopener" href="https://github.com/jaywalnut310/vits">VITS</a>等等。</p>
+<h2 id="AI发展下的互联网"><a href="#AI发展下的互联网" class="headerlink" title="AI发展下的互联网"></a>AI发展下的互联网</h2><p>前面也有提到，在关注度较高的绘画领域已经出现了较成熟的技术，同时产生了画师的抗议浪潮[^3]，AI与工作者的冲突首次爆发。可以预见的是，在其他领域特别是数据为主的领域，AI会逐步发展渗入。</p>
+<p>在AI没有实现完全成熟的情况下，AI最大的受益者其实是能熟练<strong>使用计算机技术的非专业创作者</strong>。比如能作曲但是自己唱歌水平并不高的作曲家可以使用AI演唱模型来独立创作出一首歌曲；非专业画师有自己的创意但是绘画能力不足，可以借助AI初步实现绘画表达；对自己声音没有信心的创作者可以利用AI文字转语音实现配音。</p>
+<p>总的来说，AI降低了创作的门槛，但是对艺术的上限影响不大，充其量释放了创作者简单重复劳动的时间和精力。</p>
+<p>但是AI对互联网的负面影响也不容忽视。<strong>创作门槛的下降意味着大量低质量内容的涌现</strong>。现如今AI配音已经让营销号更加猖獗，AI绘画也遭受专业画师反对——我想不仅仅是版权上的，也有画作质量上的。在AI低门槛低质量内容的浪潮下，高质量内容更难找到。或者说，AI内容稀释了互联网的信息质量，让我们在互联网上寻找高质量内容变得更加困难。</p>
+<p>我认为现如今反对AI作画的根源就是这种信息密度的降低。或许画家们并不反对高质量的优秀AI绘画，但是大量低质量画作确实让自己的努力淹没在机器生成出的无数数据中。在AI发展的进程中，AI发展到极高水平之前，这种情况或许还会持续很长一段时间。</p>
+<p>[^1]: What is AI? &#x2F; Basic Questions (stanford.edu) <a target="_blank" rel="noopener" href="http://jmc.stanford.edu/artificial-intelligence/what-is-ai/index.html">http://jmc.stanford.edu/artificial-intelligence/what-is-ai/index.html</a></p>
+<p>[^2]: 赛博女友，完美变声，如今AI语音有多超乎想象? -LKs <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1uM411t7ZJ">https://www.bilibili.com/video/BV1uM411t7ZJ</a></p>
+<p>[^3]: ArtStation is removing anti-AI protest artwork from its homepage -The Verge <a target="_blank" rel="noopener" href="https://www.theverge.com/2022/12/23/23523864/artstation-removing-anti-ai-protest-artwork-censorship">https://www.theverge.com/2022/12/23/23523864/artstation-removing-anti-ai-protest-artwork-censorship</a></p>
+</div>          
+          <nav class="post-nav">
+    
+    <a class="post-nav-item post-nav-prev" href="/archives/2023/tech/latex.html">
+      <div class="nav-arrow">&lt;&nbsp;NEWER</div>
+      <span class="post-title">ChatGPT 帮我装好了LaTeX</span>
+    </a>
+    
+    
+    <a class="post-nav-item post-nav-next" href="/archives/2022/games/caligula.html">
+      <div class="nav-arrow">OLDER&nbsp;&gt;</div>
+      <span class="post-title">《卡利古拉》与《冥契》</span>
+    </a>
+    
+  </nav>
+          <div class="dis">
+    
+        
+    <script src='//cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js'></script>
+    <div id="waline" class="glass-wrapper waline-container"></div>
+    <script>
+        window.onload = function () {
+            new Waline({
+                el: '#waline',
+                path: location.pathname,
+                avatarCDN: 'https://sdn.geekzu.org/avatar/',
+                serverURL: 'https://comments-blog.illlights.com/',
+                avatar: 'monsterid',
+                placeholder: "封闭的文字无法成长。"
+            });
+        };
+    </script>
+
+
+    
+</div>
+    </div>
+   </main>
+</div>
+
+  <footer class="footer">
+    <small class="footer_copyright">
+      <div id="bottom-inner">
+        © Site by illlights<br>
+        <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a> &
+        <a target="_blank" rel="noopener" href="https://github.com/RichardTang2003/hexo-theme-Klise-glassy">Klise-glassy</a>
+        <br>
+        始于2021.
+        
+      </div>
+    </small>
+  </footer>
+  
+  
+
+    
+      <script src="/js/main.js"></script>
+    
+  
+  <script>
+    window.FPConfig = {
+      delay: 0,
+      ignoreKeywords: [],
+      maxRPS: 3,
+      hoverDelay: 50,
+    };
+  </script>
+  <!-- <script defer src="https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script> -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // 当 DOM 内容加载完成后，为 body 添加 'loaded' 类
+      document.body.classList.add('loaded');
+    });
+  </script>
+</body>
+</html>

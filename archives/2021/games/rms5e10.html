@@ -1,0 +1,490 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <script>
+    (function() {
+      try {
+        // 1. 优先从 localStorage 获取用户保存的主题
+        var savedTheme = localStorage.getItem('theme');
+        
+        // 2. 如果没有保存的主题，则检查系统偏好
+        var theme = savedTheme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        
+        // 3. 将主题属性应用到 <html> 元素上
+        //    在 <head> 中执行时，<body> 可能还不存在，所以操作 <html> 更安全
+        if (theme === 'dark') {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      } catch (e) {
+        // 如果发生错误，则不执行任何操作，让主脚本来处理
+      }
+    })();
+  </script>
+  
+  <!-- 提示浏览器颜色的 meta 标签 -->
+  <meta name="color-scheme" content="light dark">
+  <!-- Mastodon 验证 -->
+  <meta name="fediverse:creator" content="@illlights@anisaga.life">
+  
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>爱与自由的抉择---Rick and Morty S5E10 片段寓意解读 [ 喑光絮语 ]</title>
+
+  <link rel="icon" href="/img/favicon.ico">
+
+
+    <meta name="author" content="illlights">
+
+
+    <meta name="subtitle" content="illlights blog">
+
+
+    <meta name="Description" content="刚刚脱离高级趣味，所以博客不想太复杂了">
+
+
+    <meta name="keywords" content=",blog, comments, entertainment">
+
+
+  <link rel="alternate" href="/atom.xml " title="喑光絮语" type="application/atom+xml">
+
+
+  
+    <link rel="stylesheet" href="/css/main.css">
+  
+
+<!-- hexo injector head_end start --><style>/* 布局样式 */
+.hexo-tips-layout {
+    margin: 0.5rem 0;
+    padding: 0.5rem 1.5rem;
+    border-radius: 8px;
+    border: 1px solid;
+    border-left-width: 6px;
+    display: flex;
+    align-items: center;
+    transition: transform 0.3s ease;
+    min-width: 2rem;
+    height:auto;
+    overflow-x: auto; 
+    overflow-y: hidden; 
+}
+
+.hexo-tips-layout:hover {
+    transform: translateX(5px);
+}
+
+.hexo-tips-layout .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    font-size: clamp(2em, 2vw, 3em);
+    min-width: 2rem;
+    scale:1.5;
+    transition: transform 0.3s ease;
+}
+
+.hexo-tips-layout:hover .icon {
+    transform: scale(1.3);
+}
+
+.hexo-tips-layout .content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+.hexo-tips-layout:hover .content {
+    transform: translateX(3px);
+}
+
+/* 响应式调整 */
+@media screen and (max-width: 768px) {
+    .hexo-tips-layout {
+        padding: 1rem;
+    }
+}
+
+/* 为每种类型的提示框添加主题样式 */
+[class^="tips-style-"] {
+    --tips-light-bg: #fff; /* 默认值 */
+    --tips-dark-bg: #333;  /* 默认值 */
+    --tips-border: #000;   /* 默认值 */
+}
+
+/* 主题样式规则 */
+[class^="hexo-tips-"] {
+    border-color: var(--tips-border);
+}
+
+[class^="hexo-tips-"] .icon {
+    color: var(--tips-border);
+}
+
+/* 1. 手动暗色模式优先 */
+html.dark [class^="hexo-tips-"] {
+    background-color: var(--tips-dark-bg);
+}
+
+/* 2. 系统暗色模式其次 */
+@media (prefers-color-scheme: dark) {
+    html:not(.light) [class^="hexo-tips-"] {
+        background-color: var(--tips-dark-bg);
+    }
+}
+
+/* 3. 亮色模式最后 */
+html:not(.dark) [class^="hexo-tips-"],
+html.light [class^="hexo-tips-"] {
+    background-color: var(--tips-light-bg);
+}</style><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+<body class="notransition">
+  <!-- <script defer>
+    // 延迟移除 notransition 类，确保初始主题设置完成
+    setTimeout(() => document.body.classList.remove("notransition"), 75);
+  </script> -->
+  <div class="navbar" role="navigation">
+    <nav class="menu">
+      <input type="checkbox" id="menu-trigger" class="menu-trigger" />
+      <label for="menu-trigger">
+        <span class="menu-icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 512 512"
+          >
+            <path
+              d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z"
+            />
+          </svg>
+        </span>
+      </label>
+      <a id="mode">
+        <svg
+          class="mode-sunny"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>LIGHT</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+        <svg
+          class="mode-moon"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>DARK</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+      </a>
+      <div class="trigger">
+        <div class="trigger-container">
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/"> 主页</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/moments/"> 动态</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/archives/"> 文章</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/friends/"> 友链</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " target="_blank" rel="noopener" href="https://www.illlights.com"> 关于</a>
+          
+        </div>
+      </div>
+    </nav>
+  </div>
+  <button id="toTopBtn"><i class="fa-solid fa-hand-point-up " ></i></button>
+<!-- <button id="toggleButton"><i class="fa-solid fa-chart-bar " ></i></button> -->
+<div id="overlay" class="overlay glass-wrapper overlay-bg">
+  <div class="content">
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BA%9F%E8%AF%9D"><span class="toc-text">废话</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%87%E6%AE%B5%E8%A7%A3%E8%AF%BB"><span class="toc-text">片段解读</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E4%BA%8E%E4%B8%AD%E5%A4%AE%E6%9C%89%E9%99%90%E6%9B%B2%E7%BA%BF%E7%9A%84%E7%90%86%E8%A7%A3"><span class="toc-text">对于中央有限曲线的理解</span></a></li></ol>
+    <button id="closeButton"><i class="fa-solid fa-circle-xmark"></i></button>
+  </div>
+</div>
+<div class="wrapper post">
+  <head>
+    <!-- 引入 Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  </head>
+
+
+
+  <main class="page-content" aria-label="Content">
+    <div class="glass-wrapper main-content">
+      <header class="header">
+        
+          <div class="tags">
+            
+          </div>
+        
+          <h1 class="header-title" itemprop="headline">爱与自由的抉择---Rick and Morty S5E10 片段寓意解读</h1>
+          <div class="post-meta">
+            最后更新: <time>Feb 18, 2025</time>
+            作者: <span itemprop="author">
+              <span itemprop="name">illlights</span>
+            </span>
+            字数: <span class="post-count">833</span>
+            预计阅读时间: <span class="post-count">2min</span> 
+          </div>       
+      </header>
+          <div class="page-content"><h2 id="废话"><a href="#废话" class="headerlink" title="废话"></a>废话</h2><p>　　先说些题外话。其实我也算是瑞莫的老粉，但是一直没有介绍这个系列。主要是觉得它太强了，几篇文章说不清，而且b站有一位up解析得很详细，怎么说都轮不上我来评头道足。</p>
+<p>　　还有啊，最近这个第五季前几集质量的确是不怎么行，俨然只剩讽刺——而且我还看不懂，让我更不想写。</p>
+<p>　　可是不得不承认，这最后两集确实劲爆，先不说S5E10把所有的主线故事线、无数的伏笔收束，S5E9也在探讨一个从未提及但是非常切题的主题：同伴关系。再加上E10姥爷丢掉了传送枪，不禁让人遐想S6也许会大有改变？</p>
+<h2 id="片段解读"><a href="#片段解读" class="headerlink" title="片段解读"></a>片段解读</h2><p>　　废话少说，让我来讲讲S5E10这个主线收束部分。剧情和主题很宏大，寓意和讽刺随处可见，我肯定只能管中窥豹，索性取一个小镜头来谈一谈。</p>
+<p>　　故事临近结尾有这样一幕：</p>
+<p>　　邪恶莫蒂破坏了中央有限曲线，这个东西我是理解成“瑞克城的瑞克”( they )在无限平行宇宙里建了一面墙，墙内的平行宇宙中主角瑞克( he )是最聪明的瑞克（关于这部分的分析附在文末）。邪恶莫蒂在进入无限平行宇宙中时，邀请了主角莫蒂。而我们的莫蒂虽然了解了瑞克体系的真相（在邪恶莫蒂眼中瑞克们利用莫蒂的善于原谅满足自己，后来甚至克隆莫蒂以满足需求），却没有选择离开，救下了主角瑞克。</p>
+<p><img src="https://s3.bmp.ovh/imgs/2021/09/9fdb3d7e8a75bfb6.jpg" alt="邀请"></p>
+<p><img src="https://s3.bmp.ovh/imgs/2021/09/7a1f9c956cdbd732.jpg" alt="邀请"></p>
+<p><img src="https://s3.bmp.ovh/imgs/2021/09/8bb2ad99ef7026d6.jpg" alt="拒绝"></p>
+<p>　　最后，邪恶莫蒂独自去往了无限宇宙，</p>
+<p><img src="https://s3.bmp.ovh/imgs/2021/09/29b4a10e8575e82d.jpg" alt="无限宇宙"></p>
+<p><img src="https://s3.bmp.ovh/imgs/2021/09/4183deb80cda6d47.jpg" alt="无限宇宙"></p>
+<p>　　而爷孙俩合力逃离了即将爆炸的瑞城。</p>
+<p><img src="https://s3.bmp.ovh/imgs/2021/09/68172c6c9944b95c.jpg" alt="逃脱"></p>
+<p>　　以我的角度来看，无限宇宙象征着真相、真理，毕竟是真正的无限宇宙，没有限制和约束，但也同时面临着危险。而有限宇宙（准确来说应该是有限制条件的无限宇宙）则意味着安全，也同时意味着狭隘。</p>
+<p>　　主角瑞克在无限宇宙闯荡过一圈之后建造了有限宇宙，是体验过绝对理性与追求真理之后，选择了回归亲情，即使这样会让自己永远接触不到真正的无限宇宙。</p>
+<p>　　而我们的主角莫蒂面临的选择，是在亲情与真理之间的抉择，情与理的分叉口。有点类似鲁迅先生的“铁房子”中的选择，但是对象不太一样。</p>
+<p>　　从邪恶莫蒂的处境来看，追求绝对的真理就意味着绝对的寂寞，无限宇宙里邪恶莫蒂孤身一人。</p>
+<p><img src="https://s3.bmp.ovh/imgs/2021/09/4183deb80cda6d47.jpg" alt="无限宇宙"></p>
+<p>　　标题中“爱与自由的抉择”，爱便是主角莫蒂的选择，自由，或者说追求真理的自由，是邪恶莫蒂的选择。而在现实世界中，往往这两者也是一道单选。</p>
+<h2 id="对于中央有限曲线的理解"><a href="#对于中央有限曲线的理解" class="headerlink" title="对于中央有限曲线的理解"></a>对于中央有限曲线的理解</h2><p>先来看篇文章：</p>
+<p><a target="_blank" rel="noopener" href="https://m.douban.com/movie/review/13851187/">https://m.douban.com/movie/review/13851187/</a></p>
+<p>比起这篇文章，我的思路还是浅了一层，主要是没想到邪恶莫蒂说的这句话可能是错的。各位也就图个乐吧。</p>
+</div>          
+          <nav class="post-nav">
+    
+    <a class="post-nav-item post-nav-prev" href="/archives/2021/reading/thegodthemselves.html">
+      <div class="nav-arrow">&lt;&nbsp;NEWER</div>
+      <span class="post-title">《神们自己》浅评</span>
+    </a>
+    
+    
+    <a class="post-nav-item post-nav-next" href="/archives/2021/games/gal3.html">
+      <div class="nav-arrow">OLDER&nbsp;&gt;</div>
+      <span class="post-title">gal解包系列Ⅲ：解包通用流程</span>
+    </a>
+    
+  </nav>
+          <div class="dis">
+    
+        
+    <script src='//cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js'></script>
+    <div id="waline" class="glass-wrapper waline-container"></div>
+    <script>
+        window.onload = function () {
+            new Waline({
+                el: '#waline',
+                path: location.pathname,
+                avatarCDN: 'https://sdn.geekzu.org/avatar/',
+                serverURL: 'https://comments-blog.illlights.com/',
+                avatar: 'monsterid',
+                placeholder: "封闭的文字无法成长。"
+            });
+        };
+    </script>
+
+
+    
+</div>
+    </div>
+   </main>
+</div>
+
+  <footer class="footer">
+    <small class="footer_copyright">
+      <div id="bottom-inner">
+        © Site by illlights<br>
+        <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a> &
+        <a target="_blank" rel="noopener" href="https://github.com/RichardTang2003/hexo-theme-Klise-glassy">Klise-glassy</a>
+        <br>
+        始于2021.
+        
+      </div>
+    </small>
+  </footer>
+  
+  
+
+    
+      <script src="/js/main.js"></script>
+    
+  
+  <script>
+    window.FPConfig = {
+      delay: 0,
+      ignoreKeywords: [],
+      maxRPS: 3,
+      hoverDelay: 50,
+    };
+  </script>
+  <!-- <script defer src="https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script> -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // 当 DOM 内容加载完成后，为 body 添加 'loaded' 类
+      document.body.classList.add('loaded');
+    });
+  </script>
+</body>
+</html>
