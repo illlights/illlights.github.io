@@ -1,0 +1,500 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <script>
+    (function() {
+      try {
+        document.documentElement.classList.add('js');
+
+        var saved = localStorage.getItem('theme');
+        var mode = (saved === 'light' || saved === 'dark' || saved === 'auto') ? saved : 'auto';
+
+        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var effective = (mode === 'auto') ? (prefersDark ? 'dark' : 'light') : mode;
+
+        document.documentElement.setAttribute('data-theme-mode', mode);
+        if (effective === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+        else document.documentElement.removeAttribute('data-theme');
+      } catch (e) {
+        // 如果发生错误，则不执行任何操作，让主脚本来处理
+      }
+    })();
+  </script>
+  
+  <!-- 提示浏览器颜色的 meta 标签 -->
+  <meta name="color-scheme" content="light dark">
+  <!-- Mastodon 验证 -->
+  <meta name="fediverse:creator" content="@illlights@anisaga.life">
+  
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2022，我还在写博客 [ 喑光絮语 ]</title>
+
+  <link rel="icon" href="/img/favicon.ico">
+
+
+    <meta name="author" content="illlights">
+
+
+    <meta name="subtitle" content="illlights blog">
+
+
+    <meta name="Description" content="刚刚脱离高级趣味，所以博客不想太复杂了">
+
+
+    <meta name="keywords" content=",blog, comments, entertainment">
+
+
+  <link rel="alternate" href="/atom.xml " title="喑光絮语" type="application/atom+xml">
+
+
+  
+    <link rel="stylesheet" href="/css/main.css">
+  
+
+<!-- hexo injector head_end start --><style>/* 布局样式 */
+.hexo-tips-layout {
+    margin: 0.5rem 0;
+    padding: 0.5rem 1.5rem;
+    border-radius: 8px;
+    border: 1px solid;
+    border-left-width: 6px;
+    display: flex;
+    align-items: center;
+    transition: transform 0.3s ease;
+    min-width: 2rem;
+    height:auto;
+    overflow-x: auto; 
+    overflow-y: hidden; 
+}
+
+.hexo-tips-layout:hover {
+    transform: translateX(5px);
+}
+
+.hexo-tips-layout .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    font-size: clamp(2em, 2vw, 3em);
+    min-width: 2rem;
+    scale:1.5;
+    transition: transform 0.3s ease;
+}
+
+.hexo-tips-layout:hover .icon {
+    transform: scale(1.3);
+}
+
+.hexo-tips-layout .content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+.hexo-tips-layout:hover .content {
+    transform: translateX(3px);
+}
+
+/* 响应式调整 */
+@media screen and (max-width: 768px) {
+    .hexo-tips-layout {
+        padding: 1rem;
+    }
+}
+
+/* 为每种类型的提示框添加主题样式 */
+[class^="tips-style-"] {
+    --tips-light-bg: #fff; /* 默认值 */
+    --tips-dark-bg: #333;  /* 默认值 */
+    --tips-border: #000;   /* 默认值 */
+}
+
+/* 主题样式规则 */
+[class^="hexo-tips-"] {
+    border-color: var(--tips-border);
+}
+
+[class^="hexo-tips-"] .icon {
+    color: var(--tips-border);
+}
+
+/* 1. 手动暗色模式优先 */
+html.dark [class^="hexo-tips-"] {
+    background-color: var(--tips-dark-bg);
+}
+
+/* 2. 系统暗色模式其次 */
+@media (prefers-color-scheme: dark) {
+    html:not(.light) [class^="hexo-tips-"] {
+        background-color: var(--tips-dark-bg);
+    }
+}
+
+/* 3. 亮色模式最后 */
+html:not(.dark) [class^="hexo-tips-"],
+html.light [class^="hexo-tips-"] {
+    background-color: var(--tips-light-bg);
+}</style><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+<body class="notransition">
+  <!-- 固定背景层 - 解决 iOS Safari 不支持 background-attachment: fixed 的问题 -->
+  <div id="fixed-bg"></div>
+  <!-- <script defer>
+    // 延迟移除 notransition 类，确保初始主题设置完成
+    setTimeout(() => document.body.classList.remove("notransition"), 75);
+  </script> -->
+  <div class="navbar" role="navigation">
+    <nav class="menu">
+      <input type="checkbox" id="menu-trigger" class="menu-trigger" />
+      <label for="menu-trigger">
+        <span class="menu-icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 512 512"
+          >
+            <path
+              d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z"
+            />
+          </svg>
+        </span>
+      </label>
+      <a id="mode" role="button" aria-label="Theme">
+        <svg
+          class="mode-sunny"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>LIGHT</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+        <svg
+          class="mode-moon"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>DARK</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+        <span class="mode-auto" aria-hidden="true">A</span>
+      </a>
+      <div class="trigger">
+        <div class="trigger-container">
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/"> 主页</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/moments/"> 动态</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/archives/"> 文章</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/friends/"> 友链</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " target="_blank" rel="noopener" href="https://www.illlights.com"> 关于</a>
+          
+        </div>
+      </div>
+    </nav>
+  </div>
+
+  <button id="toTopBtn"><i class="fa-solid fa-hand-point-up " ></i></button>
+<!-- <button id="toggleButton"><i class="fa-solid fa-chart-bar " ></i></button> -->
+<div id="overlay" class="overlay glass-wrapper overlay-bg">
+  <div class="content">
+    
+    <button id="closeButton"><i class="fa-solid fa-circle-xmark"></i></button>
+  </div>
+</div>
+<div class="wrapper post">
+  <head>
+    <!-- 引入 Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  </head>
+
+
+
+  <main class="page-content" aria-label="Content">
+    <div class="glass-wrapper main-content">
+      <header class="header">
+        
+          <div class="tags">
+            
+          </div>
+        
+          <h1 class="header-title" itemprop="headline">2022，我还在写博客</h1>
+          <div class="post-meta">
+            最后更新: <time>Apr 02, 2022</time>
+            作者: <span itemprop="author">
+              <span itemprop="name">illlights</span>
+            </span>
+            字数: <span class="post-count">1.1k</span>
+            预计阅读时间: <span class="post-count">3min</span> 
+          </div>       
+      </header>
+          <div class="page-content"><p>最近发生的事目接不暇。</p>
+<p>　　按我的排序来，首先是Typecho1.2.0的更新。下面是<a target="_blank" rel="noopener" href="https://typecho.org/blog/">官网日志</a>的截图，可以看到，Typecho上次更新距今已有五年，文字很难描绘出我得知这个消息时的激动。<img src="https://cdn.jsdelivr.net/gh/RichardTang2003/never-gargoyle-files/img/20220402160900.png" alt="image-20220402160859974"></p>
+<p>　　我从2018年开始写博客，那时Typecho已经发布1.1版本一年左右，也就是说，这是我第一次接收到正式更新。2018年我尚在初三，第一次写博客，可以写的东西挺少，但也算是第一个博客了。此后博客零零碎碎，断断续续，几次关闭，几次重新开始，基本上用的都是Typecho。</p>
+<p>　　过去的文章都储存在数据库中，typecho数据表，typecho-content，可以说储存了我中学的幼稚和成长。从这种意义上，Typecho是为数不多的陪伴我走过童年的东西，我长大了，但它一直没有。时至前天（2022.3.31），版本号依旧停留在1.1(17.10.30)。</p>
+<p>　　疯我就不发了，来看看更新之后的问题。</p>
+<p>　　先是主题报废，显然我现在没时间自己去改。（所以索性换了新主题）</p>
+<p><img src="https://cdn.jsdelivr.net/gh/RichardTang2003/never-gargoyle-files/img/20220402163846.png" alt="image-20220402161427767"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/RichardTang2003/never-gargoyle-files/img/20220402161501.png" alt="image-20220402161501567"></p>
+<p>　　然后插件也报废一半，基本上属于一开插件就报数据库错误。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/RichardTang2003/never-gargoyle-files/img/20220402154654.png" alt="image-20220402154653860"></p>
+<p>　　喏还有烦人而且关不掉的红色版本提示，看起来有问题的菜单按钮。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/RichardTang2003/never-gargoyle-files/img/20220402163834.png" alt="image-20220402163834749"></p>
+<p>　　但这有什么关系呢，它可是Typecho，它可是更新了的啊！！！</p>
+<p>　　第二件事，Gitee开了图片防盗链。</p>
+<p>　　简单解释一下，我博客里的所有图片都是存在gitee里，毕竟1Mbps的服务器流量，把图片丢服务器里就是让访问者等图片加载等到天荒地老。一起都很正常，但是，但是，gitee它不准其它域名显示它里面的图片了，所以这几天网站图片全部一片空白。</p>
+<p>　　所以，今天下午，数据库前，我在那里一个一个手动改文章。</p>
+<p>　　可怜。我应该学点数据库和PHP。</p>
+<p>　　更不用说以后图片储存的高昂费用。准备好花钱咯。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/RichardTang2003/never-gargoyle-files/img/image-20220402154324495.png" alt="image-20220402154324495"></p>
+<p>　　这两件事，为什么要放在一起讲？往深一点，前者是互联网精神的重燃，而后者是互联网的进一步封闭。</p>
+<p>　　什么是互联网精神？我想它是共享，是全体网民的无私分享。十年前，论坛盛行时，有东西的人把资源发到论坛里，没什么，就是分享给大家。没有技术的大部分网民，发一个贴子，“求xxx”，拿到之后，“谢谢大佬”，足以作为资源的回报。</p>
+<p>　　共享，开放，互联，这就是互联网。破解和盗版是为了公平和信息对称，为了技术的传播。</p>
+<p>　　而如今，连搜索引擎都开始给自家引流，百度搜索出来的东西有几个不是百度xx？随便在网上找到的资源都是“微信扫码支付”，不，我不是不尊重版权，但为了获利而盗版，难道不比一时没有钱购买正版但是希望体验到最新的技术、未来很可能补票支持正版更可耻吗？</p>
+<p>　　现在各家企业都在开发app，微信直接把公众号文章独立于搜索引擎，这就是封闭网络的表现，微信公众号的丰富内容，只归微信独有。网络不再互联，每家企业都给自己的信息划出界线，gitee不也是吗？连CSDN也要求登录后才能复制博文内容。</p>
+<p>　　博客程序一次一次更新，技术越来越方便、先进，但互联网精神的衰退，让博客哑了火，让论坛退了烧。现在做博客，技术上很简单，但环境上越来越难。环境是金钱上的，政策上的，精神上的。我不只一次想过，微博不行吗？公众号有什么不好？CSDN呢？他们都挺好，帮博主节约搭建维护的时间。但是，我更愿意保护那一点仅有的微不足道的“互联”精神。</p>
+<p>　　很高兴我结识了几位博主，也许写博客越来越难，但我们很高兴，</p>
+<p>　　2022年，我们仍在写博客。</p>
+</div>          
+          <nav class="post-nav">
+    
+    <a class="post-nav-item post-nav-prev" href="/archives/2022/games/13-Sentinels-Aegis-Rim.html">
+      <div class="nav-arrow">&lt;&nbsp;NEWER</div>
+      <span class="post-title">一周目谈 | 从《十三机兵防卫圈》到优秀的科幻</span>
+    </a>
+    
+    
+    <a class="post-nav-item post-nav-next" href="/archives/2021/reading/reading2106-2111.html">
+      <div class="nav-arrow">OLDER&nbsp;&gt;</div>
+      <span class="post-title">2021.6-11 阅读记录</span>
+    </a>
+    
+  </nav>
+          <div class="dis">
+    
+        
+    <script src='//cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js'></script>
+    <div id="waline" class="glass-wrapper waline-container"></div>
+    <script>
+        window.onload = function () {
+            new Waline({
+                el: '#waline',
+                path: location.pathname,
+                avatarCDN: 'https://sdn.geekzu.org/avatar/',
+                serverURL: 'https://comments-blog.illlights.com/',
+                avatar: 'monsterid',
+                placeholder: "封闭的文字无法成长。"
+            });
+        };
+    </script>
+
+
+    
+</div>
+    </div>
+   </main>
+</div>
+
+  <footer class="footer">
+    <small class="footer_copyright">
+      <div id="bottom-inner">
+        © Site by illlights<br>
+        <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a> &
+        <a target="_blank" rel="noopener" href="https://github.com/RichardTang2003/hexo-theme-Klise-glassy">Klise-glassy</a>
+        <br>
+        始于2021.
+        
+      </div>
+    </small>
+  </footer>
+  
+  
+
+    
+      <script src="/js/main.js"></script>
+    
+  
+  <script>
+    window.FPConfig = {
+      delay: 0,
+      ignoreKeywords: [],
+      maxRPS: 3,
+      hoverDelay: 50,
+    };
+  </script>
+  <!-- <script defer src="https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script> -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // 当 DOM 内容加载完成后，延后 1-2 帧再加 'loaded'，确保过渡能触发
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => document.body.classList.add('loaded'));
+      });
+    });
+  </script>
+</body>
+</html>

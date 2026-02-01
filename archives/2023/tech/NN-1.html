@@ -1,0 +1,543 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <script>
+    (function() {
+      try {
+        document.documentElement.classList.add('js');
+
+        var saved = localStorage.getItem('theme');
+        var mode = (saved === 'light' || saved === 'dark' || saved === 'auto') ? saved : 'auto';
+
+        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var effective = (mode === 'auto') ? (prefersDark ? 'dark' : 'light') : mode;
+
+        document.documentElement.setAttribute('data-theme-mode', mode);
+        if (effective === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+        else document.documentElement.removeAttribute('data-theme');
+      } catch (e) {
+        // 如果发生错误，则不执行任何操作，让主脚本来处理
+      }
+    })();
+  </script>
+  
+  <!-- 提示浏览器颜色的 meta 标签 -->
+  <meta name="color-scheme" content="light dark">
+  <!-- Mastodon 验证 -->
+  <meta name="fediverse:creator" content="@illlights@anisaga.life">
+  
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>我的第一个神经网络-手写识别 [ 喑光絮语 ]</title>
+
+  <link rel="icon" href="/img/favicon.ico">
+
+
+    <meta name="author" content="illlights">
+
+
+    <meta name="subtitle" content="illlights blog">
+
+
+    <meta name="Description" content="刚刚脱离高级趣味，所以博客不想太复杂了">
+
+
+    <meta name="keywords" content=",blog, comments, entertainment">
+
+
+  <link rel="alternate" href="/atom.xml " title="喑光絮语" type="application/atom+xml">
+
+
+  
+    <link rel="stylesheet" href="/css/main.css">
+  
+
+<!-- hexo injector head_end start --><style>/* 布局样式 */
+.hexo-tips-layout {
+    margin: 0.5rem 0;
+    padding: 0.5rem 1.5rem;
+    border-radius: 8px;
+    border: 1px solid;
+    border-left-width: 6px;
+    display: flex;
+    align-items: center;
+    transition: transform 0.3s ease;
+    min-width: 2rem;
+    height:auto;
+    overflow-x: auto; 
+    overflow-y: hidden; 
+}
+
+.hexo-tips-layout:hover {
+    transform: translateX(5px);
+}
+
+.hexo-tips-layout .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    font-size: clamp(2em, 2vw, 3em);
+    min-width: 2rem;
+    scale:1.5;
+    transition: transform 0.3s ease;
+}
+
+.hexo-tips-layout:hover .icon {
+    transform: scale(1.3);
+}
+
+.hexo-tips-layout .content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+.hexo-tips-layout:hover .content {
+    transform: translateX(3px);
+}
+
+/* 响应式调整 */
+@media screen and (max-width: 768px) {
+    .hexo-tips-layout {
+        padding: 1rem;
+    }
+}
+
+/* 为每种类型的提示框添加主题样式 */
+[class^="tips-style-"] {
+    --tips-light-bg: #fff; /* 默认值 */
+    --tips-dark-bg: #333;  /* 默认值 */
+    --tips-border: #000;   /* 默认值 */
+}
+
+/* 主题样式规则 */
+[class^="hexo-tips-"] {
+    border-color: var(--tips-border);
+}
+
+[class^="hexo-tips-"] .icon {
+    color: var(--tips-border);
+}
+
+/* 1. 手动暗色模式优先 */
+html.dark [class^="hexo-tips-"] {
+    background-color: var(--tips-dark-bg);
+}
+
+/* 2. 系统暗色模式其次 */
+@media (prefers-color-scheme: dark) {
+    html:not(.light) [class^="hexo-tips-"] {
+        background-color: var(--tips-dark-bg);
+    }
+}
+
+/* 3. 亮色模式最后 */
+html:not(.dark) [class^="hexo-tips-"],
+html.light [class^="hexo-tips-"] {
+    background-color: var(--tips-light-bg);
+}</style><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+<body class="notransition">
+  <!-- 固定背景层 - 解决 iOS Safari 不支持 background-attachment: fixed 的问题 -->
+  <div id="fixed-bg"></div>
+  <!-- <script defer>
+    // 延迟移除 notransition 类，确保初始主题设置完成
+    setTimeout(() => document.body.classList.remove("notransition"), 75);
+  </script> -->
+  <div class="navbar" role="navigation">
+    <nav class="menu">
+      <input type="checkbox" id="menu-trigger" class="menu-trigger" />
+      <label for="menu-trigger">
+        <span class="menu-icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 512 512"
+          >
+            <path
+              d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z"
+            />
+          </svg>
+        </span>
+      </label>
+      <a id="mode" role="button" aria-label="Theme">
+        <svg
+          class="mode-sunny"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>LIGHT</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+        <svg
+          class="mode-moon"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>DARK</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+        <span class="mode-auto" aria-hidden="true">A</span>
+      </a>
+      <div class="trigger">
+        <div class="trigger-container">
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/"> 主页</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/moments/"> 动态</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/archives/"> 文章</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/friends/"> 友链</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " target="_blank" rel="noopener" href="https://www.illlights.com"> 关于</a>
+          
+        </div>
+      </div>
+    </nav>
+  </div>
+
+  <button id="toTopBtn"><i class="fa-solid fa-hand-point-up " ></i></button>
+<!-- <button id="toggleButton"><i class="fa-solid fa-chart-bar " ></i></button> -->
+<div id="overlay" class="overlay glass-wrapper overlay-bg">
+  <div class="content">
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86"><span class="toc-text">基本原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-text">神经网络的工作原理是什么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E6%9E%B6%E6%9E%84"><span class="toc-text">简单神经网络架构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E8%BE%93%E5%85%A5%E5%B1%82"><span class="toc-text">1. 输入层</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E9%9A%90%E8%97%8F%E5%B1%82"><span class="toc-text">2. 隐藏层</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E8%BE%93%E5%87%BA%E5%B1%82"><span class="toc-text">3. 输出层</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E5%BA%A6%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E6%9E%B6%E6%9E%84"><span class="toc-text">深度神经网络架构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%AA%E4%BA%BA%E7%90%86%E8%A7%A3"><span class="toc-text">个人理解</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%87%86%E5%A4%87"><span class="toc-text">数据准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%90%AD%E5%BB%BA%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C"><span class="toc-text">搭建神经网络</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83%E4%B8%8E%E9%AA%8C%E8%AF%81"><span class="toc-text">模型训练与验证</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%A8%A1%E5%9E%8B%E8%BF%9B%E8%A1%8C%E9%A2%84%E6%B5%8B"><span class="toc-text">使用模型进行预测</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%8C%E6%95%B4%E4%BB%A3%E7%A0%81"><span class="toc-text">完整代码</span></a></li></ol>
+    <button id="closeButton"><i class="fa-solid fa-circle-xmark"></i></button>
+  </div>
+</div>
+<div class="wrapper post">
+  <head>
+    <!-- 引入 Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  </head>
+
+
+
+  <main class="page-content" aria-label="Content">
+    <div class="glass-wrapper main-content">
+      <header class="header">
+        
+          <div class="tags">
+            <a href="/tags/AI/" class="tag"># AI</a>
+          </div>
+        
+          <h1 class="header-title" itemprop="headline">我的第一个神经网络-手写识别</h1>
+          <div class="post-meta">
+            最后更新: <time>Aug 05, 2024</time>
+            作者: <span itemprop="author">
+              <span itemprop="name">illlights</span>
+            </span>
+            字数: <span class="post-count">3k</span>
+            预计阅读时间: <span class="post-count">12min</span> 
+          </div>       
+      </header>
+          <div class="page-content"><p>最近参加美赛可能要用到神经网络，所以稍微学了一下，姑且把我的学习过程写出来吧。本系列不会讲解深度学习中的数学原理，直接用“习惯用法”代替了研究的数学证明，需要了解其中的数学原理的推荐<a target="_blank" rel="noopener" href="https://www.youtube.com/playlist?list=PLoROMvodv4rMiGQp3WXShtMGgzqpfVfbU">吴思达的公开课</a>。</p>
+<p>我使用 Tensorflow 框架，直接在 Google Colab 上运行，在这里可以直接打开使用：<a target="_blank" rel="noopener" href="https://colab.research.google.com/drive/1AOFqeIBGQ6LxIo0XsoQSMoxSS4wcLGOp?usp=sharing">AI Learning.ipynb</a>，但是还是建议自己重新打一遍代码，否则很可能做完之后还是什么都不会。</p>
+<h2 id="基本原理"><a href="#基本原理" class="headerlink" title="基本原理"></a>基本原理</h2><p>从<a target="_blank" rel="noopener" href="https://aws.amazon.com/cn/what-is/neural-network/">亚马逊云抄</a>来的原理，算一个检测吧，<strong>先得看得懂这些东西再继续</strong>，不然很可能完全不知道在做什么。</p>
+<h3 id="神经网络的工作原理是什么？"><a href="#神经网络的工作原理是什么？" class="headerlink" title="神经网络的工作原理是什么？"></a>神经网络的工作原理是什么？</h3><p>神经网络架构的灵感源自人脑。人脑细胞称为神经元，构成了一个复杂、高度互联的网络，并能互相发送电信号，以帮助人类处理信息。同样，人工神经网络由人工神经元组成，它们共同合作以解决问题。人工神经元是软件模块，称为节点；人工神经网络是软件程序或算法，在其核心，使用计算系统求解数学计算。</p>
+<h3 id="简单神经网络架构"><a href="#简单神经网络架构" class="headerlink" title="简单神经网络架构"></a>简单神经网络架构</h3><p>基本神经网络的相互连接的人工神经元分为三层：</p>
+<p><img src="https://i.imgtg.com/2023/04/05/2wYvC.png" alt="神经元示意图"></p>
+<h4 id="1-输入层"><a href="#1-输入层" class="headerlink" title="1. 输入层"></a>1. 输入层</h4><p>来自外部世界的信息通过输入层进入人工神经网络。输入节点对数据进行处理、分析或分类，然后将其继续传递到下一层。</p>
+<h4 id="2-隐藏层"><a href="#2-隐藏层" class="headerlink" title="2. 隐藏层"></a>2. 隐藏层</h4><p>隐藏层从输入层或其他隐藏层获取其输入。人工神经网络可以具有大量的隐藏层。每个隐藏层都会对来自上一层的输出进行分析和进一步处理，然后将其继续传递到下一层。</p>
+<h4 id="3-输出层"><a href="#3-输出层" class="headerlink" title="3. 输出层"></a>3. 输出层</h4><p>输出层提供人工神经网络对所有数据进行处理的最终结果。它可以包含单个或多个节点。例如，如果我们要解决一个二元（是&#x2F;否）分类问题，则输出层包含一个输出节点，它将提供 1 或 0 的结果。但是，如果我们要解决一个多类分类问题，则输出层可能会由一个以上输出节点组成。</p>
+<h3 id="深度神经网络架构"><a href="#深度神经网络架构" class="headerlink" title="深度神经网络架构"></a>深度神经网络架构</h3><p>深度神经网络又名深度学习网络，拥有多个隐藏层，包含数百万个链接在一起的人工神经元。名为权重的数字代表节点之间的连接。如果节点之间相互激励，则该权重为正值，如果节点之间相互压制，则该权重为负值。节点的权重值越高，对其他节点的影响力就越大。<br> 从理论上讲，深度神经网络可将任何输入类型映射到任何输出类型。但与其他机器学习方法相比，它们也需要更多大量的训练。它们需要数百万个训练数据示例，而不像较简单的网络那样，可能只需数百或数千个训练数据示例。</p>
+<h3 id="个人理解"><a href="#个人理解" class="headerlink" title="个人理解"></a>个人理解</h3><p>简单来说神经网络可以看作一个整体的函数，里面可以有数以亿计的参数（参数数量是我们设定的）。通过不断的调整参数来调整结果，使输出达到能继续预测的准确度。</p>
+<p>有一点像评价类模型，常规评价类模型的建模相当于人为调整参数，但是使用神经网络就是在利用数学原理自动修改参数。</p>
+<p>自然而然，整个建模过程就分为两大部分：训练、预测。训练就是调整参数的过程，而预测是使用这些参数求得结果的过程。当然预测过程也需要求结果，注意区分。</p>
+<h2 id="数据准备"><a href="#数据准备" class="headerlink" title="数据准备"></a>数据准备</h2><p>计算机只能处理二进制数据，十进制转二进制非常容易，而图片的本质就是每个像素点的 R 、G 、B 十进制数值。这就是计算机显示图像的原理。为了将图像输入 Python 中进行处理，我们得约定一种数据表示方法。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> tensorflow.keras.preprocessing.image <span class="keyword">import</span> load_img, img_to_array</span><br><span class="line"><span class="keyword">from</span> tensorflow.keras.utils <span class="keyword">import</span> load_img, img_to_array</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> ImageOps</span><br><span class="line"></span><br><span class="line">img_path = <span class="string">&#x27;xxx.jpg&#x27;</span>             </span><br><span class="line">img = load_img(img_path)       <span class="comment"># 导入图片文件，我预处理了图片，每个图片分辨率均为 28*28</span></span><br><span class="line">img = ImageOps.grayscale(img)  <span class="comment"># 转换为灰度图像，将 RGB 图片转化为灰度图片。</span></span><br><span class="line">x = np.array(img).astype(<span class="string">&#x27;float32&#x27;</span>) <span class="comment"># 将 28*28 图片数据展平成 784 维向量</span></span><br><span class="line">x = np.expand_dims(x, axis=<span class="number">0</span>)  <span class="comment"># 符合数据网络数据的要求</span></span><br><span class="line">x = x/<span class="number">255.0</span>                    <span class="comment"># 归一化数据，让所有的数据都在 0~1 这个区间内</span></span><br></pre></td></tr></table></figure>
+
+<p>现在只要人工写几万张手写图片，并且先人工识别出每张图片的意思，输入 Python 中就可以开始训练了！</p>
+<p>是不是很麻烦？这就是神经网络的重点，要有庞大且优质的数据集。这个数据集才是神经网络算法的核心，得到优质的数据集甚至比选择好的模型还重要。</p>
+<p>对于手写数字识别来说，已经有整理好的数据集，直接导入就行了。这里我们顺便把依赖导入了吧：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">from</span> tensorflow <span class="keyword">import</span> keras</span><br><span class="line"><span class="keyword">from</span> tensorflow.keras <span class="keyword">import</span> layers, models</span><br><span class="line"><span class="keyword">from</span> tensorflow.keras.models <span class="keyword">import</span> load_model</span><br><span class="line"><span class="keyword">from</span> tensorflow.keras.callbacks <span class="keyword">import</span> ModelCheckpoint</span><br><span class="line"></span><br><span class="line">mnist = tf.keras.datasets.mnist</span><br><span class="line">(x_train, y_train), (x_test, y_test) = mnist.load_data()</span><br></pre></td></tr></table></figure>
+
+<p>关键的数据导入就是最后两行代码，从库中读取数据。数据分为四个组：</p>
+<ul>
+<li><code>train_images</code>: 训练集图像的 numpy 数组，形状为 (60000, 28, 28)。</li>
+<li><code>train_labels</code>: 训练集标签的 numpy 数组，形状为 (60000,)，每个标签是一个整数，表示对应图像的数字。</li>
+<li><code>test_images</code>: 测试集图像的 numpy 数组，形状为 (10000, 28, 28)。</li>
+<li><code>test_labels</code>: 测试集标签的 numpy 数组，形状为 (10000,)，每个标签是一个整数，表示对应图像的数字。</li>
+</ul>
+<h2 id="搭建神经网络"><a href="#搭建神经网络" class="headerlink" title="搭建神经网络"></a>搭建神经网络</h2><p>先看代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">model = models.Sequential([</span><br><span class="line">    layers.Flatten(input_shape=(<span class="number">28</span>, <span class="number">28</span>)),  <span class="comment"># 输入层，将 28x28 的图片矩阵展平成 784 维向量</span></span><br><span class="line">    layers.Dense(<span class="number">128</span>, activation=<span class="string">&#x27;relu&#x27;</span>),  <span class="comment"># 隐藏层，128 个神经元，使用 ReLU 激活函数</span></span><br><span class="line">    layers.Dropout(<span class="number">0.2</span>),</span><br><span class="line">    layers.Dense(<span class="number">128</span>, activation=<span class="string">&#x27;relu&#x27;</span>),  <span class="comment"># 隐藏层，128 个神经元，使用 ReLU 激活函数</span></span><br><span class="line">    layers.Dropout(<span class="number">0.2</span>),</span><br><span class="line">    layers.Dense(<span class="number">10</span>, activation=<span class="string">&#x27;softmax&#x27;</span>)  <span class="comment"># 输出层，10 个神经元，使用 Softmax 激活函数，用于多分类问题</span></span><br><span class="line">])</span><br></pre></td></tr></table></figure>
+
+<p>很容易理解，<code>models.Sequential</code>中的一个参数就是一层，填入的数字是该层的节点数，<code>activation</code>则表示该层使用什么激活函数，是上一层到这一层的映射关系。</p>
+<p>激活函数在这里不多做介绍，以后有机会再写文章详细说。</p>
+<p><code>Dropout</code> 层的主要参数是丢弃率（dropout rate），它是一个 0 到 1 之间的浮点数，表示每次训练迭代时随机丢弃的神经元比例。例如，<code>Dropout(0.2)</code> 表示每次训练迭代时随机丢弃 20% 的神经元输出，使得网络不会过于依赖于某些特定神经元。这可以提高模型的泛化能力，从而在测试集上获得更好的性能。</p>
+<p>层数、节点数和丢弃率都需要不断尝试。对于手写识别这种简单的分类问题一两层就够了，层数过多反而容易出现过拟合的问题。</p>
+<h2 id="模型训练与验证"><a href="#模型训练与验证" class="headerlink" title="模型训练与验证"></a>模型训练与验证</h2><ol>
+<li>编译模型：指定优化器、损失函数、训练目标</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">model.<span class="built_in">compile</span>(optimizer=<span class="string">&#x27;adam&#x27;</span>,</span><br><span class="line">              loss=<span class="string">&#x27;sparse_categorical_crossentropy&#x27;</span>,</span><br><span class="line">              metrics=[<span class="string">&#x27;accuracy&#x27;</span>])</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>训练模型：用 x_train 和 y_train 数据训练模型，epochs 用于指定训练的次数</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">model.fit(x_train, y_train, epochs=<span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>验证模型：用 x_test 和 y_test 验证模型的效果。作为操作者，我们可以根据这个结果来调整模型。</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">test_loss, test_acc = model.evaluate(x_test, y_test)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;Test accuracy: <span class="subst">&#123;test_acc&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>手写数字识别是个很简单的任务，不需要迭代几百次，用 Colab 几秒钟就能完成，所以也无需保存模型、重新训练，但是如果模型大了，保存、读取就显得越发重要：</p>
+<p>保存模型：<code>codemodel.save(&quot;mnist_model.h5&quot;)</code><br>加载模型：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> tensorflow.keras.models <span class="keyword">import</span> load_model</span><br><span class="line">loaded_model = load_model(<span class="string">&quot;mnist_model.h5&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>使用加载的模型进行预测：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">prediction = loaded_model.predict(input_image)</span><br><span class="line">predicted_label = np.argmax(prediction)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;Predicted label: <span class="subst">&#123;predicted_label&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>继续训练模型：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> tensorflow.keras.models <span class="keyword">import</span> load_model</span><br><span class="line"></span><br><span class="line">loaded_model = load_model(<span class="string">&quot;mnist_model.h5&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 编译模型（可选）：如果您在保存模型之前已经编译过模型，那么在加载模型时，编译信息也会被保留。但是，如果您希望改变优化器、损失函数或指标，您可以在加载模型后重新编译模型。</span></span><br><span class="line">loaded_model.<span class="built_in">compile</span>(optimizer=<span class="string">&#x27;adam&#x27;</span>,</span><br><span class="line">                 loss=<span class="string">&#x27;sparse_categorical_crossentropy&#x27;</span>,</span><br><span class="line">                 metrics=[<span class="string">&#x27;accuracy&#x27;</span>])</span><br><span class="line"><span class="comment"># 继续训练模型：使用fit()方法继续训练模型。在这个例子中，我用MNIST数据集的训练数据和2个额外的训练周期（epochs）。</span></span><br><span class="line">loaded_model.fit(x_train, y_train, epochs=<span class="number">2</span>)</span><br><span class="line"><span class="comment"># 评估模型性能</span></span><br><span class="line">test_loss, test_acc = loaded_model.evaluate(x_test, y_test)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;Test accuracy: <span class="subst">&#123;test_acc&#125;</span>&quot;</span>)</span><br><span class="line"><span class="comment"># 保存更新后的模型 </span></span><br><span class="line">loaded_model.save(<span class="string">&quot;mnist_model_updated.h5&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>如果想要在中途保存权重 (weigh)，参考：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 计算每五个周期的批次数</span></span><br><span class="line">save_freq_batches = <span class="built_in">len</span>(x_train) // <span class="number">5</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建 ModelCheckpoint 回调以在训练期间保存权重检查点</span></span><br><span class="line">checkpoint_path = <span class="string">&quot;checkpoints/weights_cp-&#123;epoch:04d&#125;.ckpt&quot;</span></span><br><span class="line">checkpoint_callback = ModelCheckpoint(filepath=checkpoint_path,</span><br><span class="line">                                      save_weights_only=<span class="literal">True</span>,</span><br><span class="line">                                      save_freq=save_freq_batches, <span class="comment"># 每五个周期保存一次权重</span></span><br><span class="line">                                      verbose=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用 fit() 方法进行训练</span></span><br><span class="line">loaded_model.fit(x_train, y_train, epochs=<span class="number">100</span>, callbacks=[checkpoint_callback])</span><br><span class="line">loaded_model.save(<span class="string">&quot;mnist_model_updated.h5&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用模型进行预测"><a href="#使用模型进行预测" class="headerlink" title="使用模型进行预测"></a>使用模型进行预测</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> ImageOps</span><br><span class="line"><span class="keyword">from</span> tensorflow.keras.preprocessing.image <span class="keyword">import</span> load_img, img_to_array</span><br><span class="line"></span><br><span class="line">img_path = <span class="string">&#x27;3.jpg&#x27;</span></span><br><span class="line">img = load_img(img_path, color_mode=<span class="string">&#x27;grayscale&#x27;</span>, target_size=(<span class="number">28</span>, <span class="number">28</span>))</span><br><span class="line">img_array = img_to_array(img)</span><br><span class="line"><span class="comment"># img_array = 255 - img_array  # 如果输入图像的背景是白色，这会将其反转为黑色背景</span></span><br><span class="line">img_array = img_array.astype(<span class="string">&#x27;float32&#x27;</span>)</span><br><span class="line">img_array = np.expand_dims(img_array, axis=<span class="number">0</span>)</span><br><span class="line">img_array /= <span class="number">255</span></span><br><span class="line">pred = model.predict(img_array)</span><br><span class="line">class_idx = np.argmax(pred[<span class="number">0</span>])</span><br><span class="line"><span class="built_in">print</span>(pred[<span class="number">0</span>])</span><br><span class="line"><span class="built_in">print</span>(class_idx)</span><br></pre></td></tr></table></figure>
+
+<p>在使用自己的图片之前要进行数据处理，反而是预测的代码非常简单，<code>model.predict(x)</code>。</p>
+<h2 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">from</span> tensorflow.keras <span class="keyword">import</span> layers, models</span><br><span class="line"><span class="keyword">from</span> tensorflow.keras.models <span class="keyword">import</span> load_model</span><br><span class="line"><span class="keyword">from</span> tensorflow.keras.callbacks <span class="keyword">import</span> ModelCheckpoint</span><br><span class="line"></span><br><span class="line">mnist = tf.keras.datasets.mnist</span><br><span class="line">(x_train, y_train), (x_test, y_test) = mnist.load_data()</span><br><span class="line">x_train, x_test = x_train / <span class="number">255.0</span>, x_test / <span class="number">255.0</span></span><br><span class="line"></span><br><span class="line">model = models.Sequential([</span><br><span class="line">    layers.Flatten(input_shape=(<span class="number">28</span>, <span class="number">28</span>)),  <span class="comment"># 输入层，将 28x28 的图片矩阵展平成 784 维向量</span></span><br><span class="line">    layers.Dropout(<span class="number">0.1</span>),</span><br><span class="line">    layers.Dense(<span class="number">64</span>, activation=<span class="string">&#x27;relu&#x27;</span>),  <span class="comment"># 隐藏层，64 个神经元，使用 ReLU 激活函数</span></span><br><span class="line">    layers.Dropout(<span class="number">0.1</span>),</span><br><span class="line">    layers.Dense(<span class="number">128</span>, activation=<span class="string">&#x27;relu&#x27;</span>),  <span class="comment"># 隐藏层，128 个神经元，使用 ReLU 激活函数</span></span><br><span class="line">    layers.Dropout(<span class="number">0.1</span>),</span><br><span class="line">    layers.Dense(<span class="number">64</span>, activation=<span class="string">&#x27;relu&#x27;</span>),  <span class="comment"># 隐藏层，64 个神经元，使用 ReLU 激活函数</span></span><br><span class="line">    layers.Dropout(<span class="number">0.1</span>),</span><br><span class="line">    layers.Dense(<span class="number">256</span>, activation=<span class="string">&#x27;relu&#x27;</span>),  <span class="comment"># 隐藏层，256 个神经元，使用 ReLU 激活函数</span></span><br><span class="line">    layers.Dropout(<span class="number">0.1</span>),</span><br><span class="line">    layers.Dense(<span class="number">64</span>, activation=<span class="string">&#x27;relu&#x27;</span>),  <span class="comment"># 隐藏层，64 个神经元，使用 ReLU 激活函数</span></span><br><span class="line">    layers.Dropout(<span class="number">0.1</span>),</span><br><span class="line">    layers.Dense(<span class="number">128</span>, activation=<span class="string">&#x27;relu&#x27;</span>),  <span class="comment"># 隐藏层，128 个神经元，使用 ReLU 激活函数</span></span><br><span class="line">    layers.Dropout(<span class="number">0.1</span>),</span><br><span class="line">    layers.Dense(<span class="number">64</span>, activation=<span class="string">&#x27;relu&#x27;</span>),  <span class="comment"># 隐藏层，64 个神经元，使用 ReLU 激活函数</span></span><br><span class="line">    layers.Dropout(<span class="number">0.1</span>),</span><br><span class="line">    layers.Dense(<span class="number">32</span>, activation=<span class="string">&#x27;relu&#x27;</span>),  <span class="comment"># 隐藏层，32 个神经元，使用 ReLU 激活函数</span></span><br><span class="line">    layers.Dropout(<span class="number">0.1</span>),</span><br><span class="line">    layers.Dense(<span class="number">10</span>, activation=<span class="string">&#x27;softmax&#x27;</span>)  <span class="comment"># 输出层，10 个神经元，使用 Softmax 激活函数，用于多分类问题</span></span><br><span class="line">])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建 ModelCheckpoint 回调</span></span><br><span class="line">checkpoint_path = <span class="string">&quot;checkpoints/cp-&#123;epoch:04d&#125;.ckpt&quot;</span></span><br><span class="line">checkpoint_callback = ModelCheckpoint(filepath=checkpoint_path,</span><br><span class="line">                                      save_weights_only=<span class="literal">True</span>,</span><br><span class="line">                                      save_freq=<span class="string">&#x27;epoch&#x27;</span>,</span><br><span class="line">                                      verbose=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">model.<span class="built_in">compile</span>(optimizer=<span class="string">&#x27;adam&#x27;</span>,</span><br><span class="line">              loss=<span class="string">&#x27;sparse_categorical_crossentropy&#x27;</span>,</span><br><span class="line">              metrics=[<span class="string">&#x27;accuracy&#x27;</span>])</span><br><span class="line"><span class="comment"># model.fit(x_train, y_train, epochs=1, callbacks=[checkpoint_callback])</span></span><br><span class="line">model.fit(x_train, y_train, epochs=<span class="number">20</span>)</span><br><span class="line">test_loss, test_acc = model.evaluate(x_test, y_test)</span><br><span class="line">model.save(<span class="string">&quot;hello1.h5&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;Test accuracy: <span class="subst">&#123;test_acc&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 预测</span></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> ImageOps</span><br><span class="line"><span class="keyword">from</span> tensorflow.keras.preprocessing.image <span class="keyword">import</span> load_img, img_to_array</span><br><span class="line"></span><br><span class="line">img_path = <span class="string">&#x27;3.jpg&#x27;</span></span><br><span class="line">img = load_img(img_path, color_mode=<span class="string">&#x27;grayscale&#x27;</span>, target_size=(<span class="number">28</span>, <span class="number">28</span>))</span><br><span class="line">img_array = img_to_array(img)</span><br><span class="line"><span class="comment"># img_array = 255 - img_array  # 如果输入图像的背景是白色，这会将其反转为黑色背景</span></span><br><span class="line">img_array = img_array.astype(<span class="string">&#x27;float32&#x27;</span>)</span><br><span class="line">img_array = np.expand_dims(img_array, axis=<span class="number">0</span>)</span><br><span class="line">img_array = img_array / <span class="number">255.0</span></span><br><span class="line">pred = model.predict(img_array)</span><br><span class="line">class_idx = np.argmax(pred[<span class="number">0</span>])</span><br><span class="line"><span class="built_in">print</span>(pred[<span class="number">0</span>])</span><br><span class="line"><span class="built_in">print</span>(class_idx)</span><br></pre></td></tr></table></figure>
+
+<p>自己调一调参数吧！</p>
+</div>          
+          <nav class="post-nav">
+    
+    <a class="post-nav-item post-nav-prev" href="/archives/2024/reading/digital-library.html">
+      <div class="nav-arrow">&lt;&nbsp;NEWER</div>
+      <span class="post-title">Calibre 私人数字图书馆能让我开始阅读吗？</span>
+    </a>
+    
+    
+    <a class="post-nav-item post-nav-next" href="/archives/2023/tech/physical-experiments-utilities.html">
+      <div class="nav-arrow">OLDER&nbsp;&gt;</div>
+      <span class="post-title">物理实验工具——AI开发小记</span>
+    </a>
+    
+  </nav>
+          <div class="dis">
+    
+        
+    <script src='//cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js'></script>
+    <div id="waline" class="glass-wrapper waline-container"></div>
+    <script>
+        window.onload = function () {
+            new Waline({
+                el: '#waline',
+                path: location.pathname,
+                avatarCDN: 'https://sdn.geekzu.org/avatar/',
+                serverURL: 'https://comments-blog.illlights.com/',
+                avatar: 'monsterid',
+                placeholder: "封闭的文字无法成长。"
+            });
+        };
+    </script>
+
+
+    
+</div>
+    </div>
+   </main>
+</div>
+
+  <footer class="footer">
+    <small class="footer_copyright">
+      <div id="bottom-inner">
+        © Site by illlights<br>
+        <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a> &
+        <a target="_blank" rel="noopener" href="https://github.com/RichardTang2003/hexo-theme-Klise-glassy">Klise-glassy</a>
+        <br>
+        始于2021.
+        
+      </div>
+    </small>
+  </footer>
+  
+  
+
+    
+      <script src="/js/main.js"></script>
+    
+  
+  <script>
+    window.FPConfig = {
+      delay: 0,
+      ignoreKeywords: [],
+      maxRPS: 3,
+      hoverDelay: 50,
+    };
+  </script>
+  <!-- <script defer src="https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script> -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // 当 DOM 内容加载完成后，延后 1-2 帧再加 'loaded'，确保过渡能触发
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => document.body.classList.add('loaded'));
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,536 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <script>
+    (function() {
+      try {
+        document.documentElement.classList.add('js');
+
+        var saved = localStorage.getItem('theme');
+        var mode = (saved === 'light' || saved === 'dark' || saved === 'auto') ? saved : 'auto';
+
+        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var effective = (mode === 'auto') ? (prefersDark ? 'dark' : 'light') : mode;
+
+        document.documentElement.setAttribute('data-theme-mode', mode);
+        if (effective === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+        else document.documentElement.removeAttribute('data-theme');
+      } catch (e) {
+        // 如果发生错误，则不执行任何操作，让主脚本来处理
+      }
+    })();
+  </script>
+  
+  <!-- 提示浏览器颜色的 meta 标签 -->
+  <meta name="color-scheme" content="light dark">
+  <!-- Mastodon 验证 -->
+  <meta name="fediverse:creator" content="@illlights@anisaga.life">
+  
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>开始手办摄影！- POP UP PARADE 百鬼あやめ [ 喑光絮语 ]</title>
+
+  <link rel="icon" href="/img/favicon.ico">
+
+
+    <meta name="author" content="illlights">
+
+
+    <meta name="subtitle" content="illlights blog">
+
+
+    <meta name="Description" content="刚刚脱离高级趣味，所以博客不想太复杂了">
+
+
+    <meta name="keywords" content=",blog, comments, entertainment">
+
+
+  <link rel="alternate" href="/atom.xml " title="喑光絮语" type="application/atom+xml">
+
+
+  
+    <link rel="stylesheet" href="/css/main.css">
+  
+
+<!-- hexo injector head_end start --><style>/* 布局样式 */
+.hexo-tips-layout {
+    margin: 0.5rem 0;
+    padding: 0.5rem 1.5rem;
+    border-radius: 8px;
+    border: 1px solid;
+    border-left-width: 6px;
+    display: flex;
+    align-items: center;
+    transition: transform 0.3s ease;
+    min-width: 2rem;
+    height:auto;
+    overflow-x: auto; 
+    overflow-y: hidden; 
+}
+
+.hexo-tips-layout:hover {
+    transform: translateX(5px);
+}
+
+.hexo-tips-layout .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    font-size: clamp(2em, 2vw, 3em);
+    min-width: 2rem;
+    scale:1.5;
+    transition: transform 0.3s ease;
+}
+
+.hexo-tips-layout:hover .icon {
+    transform: scale(1.3);
+}
+
+.hexo-tips-layout .content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+.hexo-tips-layout:hover .content {
+    transform: translateX(3px);
+}
+
+/* 响应式调整 */
+@media screen and (max-width: 768px) {
+    .hexo-tips-layout {
+        padding: 1rem;
+    }
+}
+
+/* 为每种类型的提示框添加主题样式 */
+[class^="tips-style-"] {
+    --tips-light-bg: #fff; /* 默认值 */
+    --tips-dark-bg: #333;  /* 默认值 */
+    --tips-border: #000;   /* 默认值 */
+}
+
+/* 主题样式规则 */
+[class^="hexo-tips-"] {
+    border-color: var(--tips-border);
+}
+
+[class^="hexo-tips-"] .icon {
+    color: var(--tips-border);
+}
+
+/* 1. 手动暗色模式优先 */
+html.dark [class^="hexo-tips-"] {
+    background-color: var(--tips-dark-bg);
+}
+
+/* 2. 系统暗色模式其次 */
+@media (prefers-color-scheme: dark) {
+    html:not(.light) [class^="hexo-tips-"] {
+        background-color: var(--tips-dark-bg);
+    }
+}
+
+/* 3. 亮色模式最后 */
+html:not(.dark) [class^="hexo-tips-"],
+html.light [class^="hexo-tips-"] {
+    background-color: var(--tips-light-bg);
+}</style><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+<body class="notransition">
+  <!-- 固定背景层 - 解决 iOS Safari 不支持 background-attachment: fixed 的问题 -->
+  <div id="fixed-bg"></div>
+  <!-- <script defer>
+    // 延迟移除 notransition 类，确保初始主题设置完成
+    setTimeout(() => document.body.classList.remove("notransition"), 75);
+  </script> -->
+  <div class="navbar" role="navigation">
+    <nav class="menu">
+      <input type="checkbox" id="menu-trigger" class="menu-trigger" />
+      <label for="menu-trigger">
+        <span class="menu-icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 512 512"
+          >
+            <path
+              d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z"
+            />
+          </svg>
+        </span>
+      </label>
+      <a id="mode" role="button" aria-label="Theme">
+        <svg
+          class="mode-sunny"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>LIGHT</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+        <svg
+          class="mode-moon"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>DARK</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+        <span class="mode-auto" aria-hidden="true">A</span>
+      </a>
+      <div class="trigger">
+        <div class="trigger-container">
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/"> 主页</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/moments/"> 动态</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/archives/"> 文章</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/friends/"> 友链</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " target="_blank" rel="noopener" href="https://www.illlights.com"> 关于</a>
+          
+        </div>
+      </div>
+    </nav>
+  </div>
+
+  <button id="toTopBtn"><i class="fa-solid fa-hand-point-up " ></i></button>
+<!-- <button id="toggleButton"><i class="fa-solid fa-chart-bar " ></i></button> -->
+<div id="overlay" class="overlay glass-wrapper overlay-bg">
+  <div class="content">
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%93%E5%85%89"><span class="toc-text">打光</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%95%9C%E5%A4%B4%E5%8F%82%E6%95%B0%E9%80%89%E6%8B%A9"><span class="toc-text">镜头参数选择</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%83%E6%99%AF"><span class="toc-text">布景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%8E%E6%9C%9F"><span class="toc-text">后期</span></a></li></ol>
+    <button id="closeButton"><i class="fa-solid fa-circle-xmark"></i></button>
+  </div>
+</div>
+<div class="wrapper post">
+  <head>
+    <!-- 引入 Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  </head>
+
+
+
+  <main class="page-content" aria-label="Content">
+    <div class="glass-wrapper main-content">
+      <header class="header">
+        
+          <div class="tags">
+            <a href="/tags/Photography/" class="tag"># Photography</a><a href="/tags/Anime/" class="tag"># Anime</a>
+          </div>
+        
+          <h1 class="header-title" itemprop="headline">开始手办摄影！- POP UP PARADE 百鬼あやめ</h1>
+          <div class="post-meta">
+            最后更新: <time>12月 11, 2025</time>
+            作者: <span itemprop="author">
+              <span itemprop="name">illlights</span>
+            </span>
+            字数: <span class="post-count">1.7k</span>
+            预计阅读时间: <span class="post-count">5min</span> 
+          </div>       
+      </header>
+          <div class="page-content"><p><img src="https://gallery.illlights.com/api/originals/0536d161-c417-4016-b716-169f19065f6f" alt="POP UP PARADE ホロライブプロダクション 百鬼あやめ"></p>
+<blockquote>
+<p>POP UP PARADE ホロライブプロダクション 百鬼あやめ<br>Camera DMC-LX10<br>Exposure 1&#x2F;80s<br>ISO 125<br>f&#x2F;2.8</p>
+</blockquote>
+<p>手办摄影，给手办拍照 —— 看起来好像很简单：手办又不会动，怼上去拍就完了！试试？怎么拍的这么丑？</p>
+<p>实际上手办摄影和风景摄影、人像、拍鸟不太一样，确实得重新学。还好有一个自媒体泛滥的虚假二次元视频平台，二次元和摄像摄影都沾点，就在 B 站学一下入门吧。</p>
+<h2 id="打光"><a href="#打光" class="headerlink" title="打光"></a>打光</h2><p>摄影本质上是在操纵光线。尤其是室内手办摄影这种，所有光线都是人造光源，布光打光就显得额外重要。</p>
+<p>手办摄影的打光和室内人物基本上差不多，在完全消除环境光之后，最基本的可以用一个主光一个补光，主光打在正侧面，补光消除一些不想要的阴影。</p>
+<p>正面光尤其重要，下面这两张对比就是有无主光的示例。虽然两张图的整体补光都不行（最大的问题是没有消除环境光，但是只是想做一个示例，懒得布置了），还是可以明显看出打上正面光之后能让手办主体更加明亮清晰。</p>
+<p><img src="https://cdn.nodeimage.com/i/ebx5Hioc5f3R7o9DOXmWntLuWAckrYPk.webp" alt="打光前"></p>
+<blockquote>
+<p>Camera iPhone 16<br>Exposure 1&#x2F;60s<br>ISO 160<br>f&#x2F;2.2</p>
+</blockquote>
+<p><img src="https://cdn.nodeimage.com/i/mbHQHyslJk546gexMhO76pgN9c2CayGQ.webp" alt="正面打光后"></p>
+<blockquote>
+<p>Camera iPhone 16<br>Exposure 1&#x2F;90s<br>ISO 100<br>f&#x2F;2.2</p>
+</blockquote>
+<p>当然，也有通过打背光加强手办故事感的风格化打光方案，不过那些我也还得慢慢学，先保证基础打光的稳定性，至少让手办主题光线充足、自然。</p>
+<h2 id="镜头参数选择"><a href="#镜头参数选择" class="headerlink" title="镜头参数选择"></a>镜头参数选择</h2><p>虽然我因为太穷没有什么选择，但是拍手办的镜头选择甚至能直接影响到最后风格。</p>
+<p>一般来说手办摄影不会使用中长焦，焦段在 20-50mm（等效全画幅）的短焦大光圈比较合适，可以有效突出手办主题，让背景产生合适的虚化，渲染氛围而不吸引注意力。但这里的“大光圈”并不需要真的很大，我实际用起来发现 f&#x2F;1.4 的光圈大小就会让手办部分出现虚化，反而观感不好。</p>
+<p>特别是本次摄影的手办，动作幅度比较大，光圈过大会导致手办后半部分被虚化掉，反而影响观感。</p>
+<p><img src="https://cdn.nodeimage.com/i/3aY7KfxhpIPsbUupnLT7JxRBZIy004gz.webp" alt="光圈过大的样片"></p>
+<blockquote>
+<p>Camera DMC-LX10<br>Exposure 1&#x2F;500s<br>ISO 125<br>f&#x2F;1.4</p>
+</blockquote>
+<p>另外需要注意的是最近对焦距离和镜头畸变。手办虽然不需要用到“微距”，但至少 0.3m 左右的最近对焦距离还是要有。因为我遇到过好不容易找到比较好的近距离视角，结果对焦不上的情况。</p>
+<p>近距离拍摄容易出现的镜头畸变，也需要在拍摄的时候多检查。这个问题人像摄影里往往不会遇到，因为人像从来没有怼着脸拍的场景。虽然后期软件处理也不失为一种方法，但我觉得能直出处理好的就尽量优化直出吧。</p>
+<p>下面这张拍进来了一点屏幕边框，可以看到边缘的畸变非常明显（这还是使用默认镜头畸变参数处理过的），又没有其他参照线条，处理起来比较麻烦。</p>
+<p><img src="https://cdn.nodeimage.com/i/ciCJVnefU56IwnY4Q45t66bvwmjejKnZ.webp" alt="左上角有肉眼可见的畸变"></p>
+<blockquote>
+<p>Camera DMC-LX10<br>Exposure 1&#x2F;250s<br>ISO 125<br>f&#x2F;1.4</p>
+</blockquote>
+<p>要是镜头素质不高，可以考虑使用稍长一点的焦段，拉远距离。</p>
+<p>焦段选择也会影响整体风格——更短焦段会容纳进更多的背景，让视野更开阔；而较长焦段可以聚焦手办主题，避免周围的背景干扰，在没钱布景、只有小桌面这种场景里甚至有奇效。</p>
+<p>我最后的成片选的是 12.2 mm f&#x2F;2.8，而不是 LX-10 最好的 8.8mm f&#x2F;1.4（上面那张畸变严重的就是 8.8mm f&#x2F;1.4）</p>
+<h2 id="布景"><a href="#布景" class="headerlink" title="布景"></a>布景</h2><p>如果你很富，可以给每个手办买一套特色装饰，还有大房子放一个摄影桌，那么全套装饰肯定是出片效果最好的选择。</p>
+<p>这个手办的官图就拍的挺不错。</p>
+<p><img src="https://cdn.nodeimage.com/i/kQndD1Y6jDWZZMHgkHNWg5XcsNiG2aZ7.webp" alt="手办官图"></p>
+<p>手办正面没什么打光，背景倒是下了很多心思，感觉还可以再优化。</p>
+<p><img src="https://cdn.nodeimage.com/i/06EalGibDplmuMr5w43VGh432BngYQLY.webp" alt="手办官图2"></p>
+<p>不过如果你和我一样，穷，甚至没场地布这么大的景，那么可以考虑以下几种选择：</p>
+<ul>
+<li>纯色背景布</li>
+<li>屏幕背景</li>
+<li>外景拍摄</li>
+</ul>
+<p>外景拍摄先按下不表，因为我也还不太会……下次有实战经验了再写。</p>
+<p>纯色背景布很简单，淘宝买个就好，推荐“深灰色、哑光、磨砂”背景布。纯黑吸光太严重，没有大量的灯支撑不起来；白色又会产生大量的反光，徒增自己的布光难度；灰色质感合适，光线布置也比较简单，真要反光就加一块柔光反光板。</p>
+<p>这次我采用的方案是用屏幕做背景，可以用电脑显示器放张风格匹配的图片做背景，像我这种懒人甚至用 Windows 11 默认桌面都还有不错的效果。</p>
+<p>屏幕做背景还需要补光有讲究。首先要避免光源直接通过屏幕的反射，会有一块高光，穿帮。比如这张样片的中上部。</p>
+<p><img src="https://cdn.nodeimage.com/i/lBc8T7HOLLRjSwW0GIPf7ggUrgHmG4UP.webp" alt="屏幕上有补光灯的直接反射"></p>
+<blockquote>
+<p>Camera DMC-LX10<br>Exposure 1&#x2F;160s<br>ISO 125<br>f&#x2F;1.4</p>
+</blockquote>
+<p>有很多方案可以减少反光：买不反光的屏幕（没钱换）、拉大屏幕亮度、把反光部分移出成像区域、用大面积柔光灯……我选择的方案有点简陋，但是很实用：正面灯、镜头、手办放在一条直线上，用手办挡住反光区域。这样做的缺点是无法调整光线方向、形成风格化打光，但就将手办拍清楚来说已经够用了。</p>
+<p><img src="https://cdn.nodeimage.com/i/sAUbEWjtZ0mhhCwEosth5YuthpLXck2O.webp" alt="直接打正面直射光，避免反光"></p>
+<blockquote>
+<p>Camera DMC-LX10<br>Exposure 1&#x2F;60s<br>ISO 125<br>f&#x2F;2.8</p>
+</blockquote>
+<p>还有一点拍摄的小技巧，和拍人像比较相似，可以考虑把相机放在较低的位置从下往上拍。在人像里说是“显得腿长、突出身体线条、避免大头”，在手办摄影里大概也有类似的效果吧。</p>
+<p>不过手办和人像又不太一样，手办动作无法改变，有时候仰视视角不太适合，所以还是需要根据情况根据审美现场调整。</p>
+<h2 id="后期"><a href="#后期" class="headerlink" title="后期"></a>后期</h2><p>手办摄影是最适合风格化的一种摄影形式，后期的空间非常大。</p>
+<p>可惜我还不会，最近在研究用免费的 Affinity 做摄影后期处理，另外写文章发吧。</p>
+</div>          
+          <nav class="post-nav">
+    
+    <a class="post-nav-item post-nav-prev" href="/archives/2025/Learn/image-compression-test-2025.html">
+      <div class="nav-arrow">&lt;&nbsp;NEWER</div>
+      <span class="post-title">2025 年快结束了，试试先进的图片编码</span>
+    </a>
+    
+    
+    <a class="post-nav-item post-nav-next" href="/archives/2025/Life/my-server.html">
+      <div class="nav-arrow">OLDER&nbsp;&gt;</div>
+      <span class="post-title">别折腾服务器啦</span>
+    </a>
+    
+  </nav>
+          <div class="dis">
+    
+        
+    <script src='//cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js'></script>
+    <div id="waline" class="glass-wrapper waline-container"></div>
+    <script>
+        window.onload = function () {
+            new Waline({
+                el: '#waline',
+                path: location.pathname,
+                avatarCDN: 'https://sdn.geekzu.org/avatar/',
+                serverURL: 'https://comments-blog.illlights.com/',
+                avatar: 'monsterid',
+                placeholder: "封闭的文字无法成长。"
+            });
+        };
+    </script>
+
+
+    
+</div>
+    </div>
+   </main>
+</div>
+
+  <footer class="footer">
+    <small class="footer_copyright">
+      <div id="bottom-inner">
+        © Site by illlights<br>
+        <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a> &
+        <a target="_blank" rel="noopener" href="https://github.com/RichardTang2003/hexo-theme-Klise-glassy">Klise-glassy</a>
+        <br>
+        始于2021.
+        
+      </div>
+    </small>
+  </footer>
+  
+  
+
+    
+      <script src="/js/main.js"></script>
+    
+  
+  <script>
+    window.FPConfig = {
+      delay: 0,
+      ignoreKeywords: [],
+      maxRPS: 3,
+      hoverDelay: 50,
+    };
+  </script>
+  <!-- <script defer src="https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script> -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // 当 DOM 内容加载完成后，延后 1-2 帧再加 'loaded'，确保过渡能触发
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => document.body.classList.add('loaded'));
+      });
+    });
+  </script>
+</body>
+</html>

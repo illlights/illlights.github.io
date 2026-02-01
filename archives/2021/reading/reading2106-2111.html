@@ -1,0 +1,482 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <script>
+    (function() {
+      try {
+        document.documentElement.classList.add('js');
+
+        var saved = localStorage.getItem('theme');
+        var mode = (saved === 'light' || saved === 'dark' || saved === 'auto') ? saved : 'auto';
+
+        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var effective = (mode === 'auto') ? (prefersDark ? 'dark' : 'light') : mode;
+
+        document.documentElement.setAttribute('data-theme-mode', mode);
+        if (effective === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+        else document.documentElement.removeAttribute('data-theme');
+      } catch (e) {
+        // 如果发生错误，则不执行任何操作，让主脚本来处理
+      }
+    })();
+  </script>
+  
+  <!-- 提示浏览器颜色的 meta 标签 -->
+  <meta name="color-scheme" content="light dark">
+  <!-- Mastodon 验证 -->
+  <meta name="fediverse:creator" content="@illlights@anisaga.life">
+  
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2021.6-11 阅读记录 [ 喑光絮语 ]</title>
+
+  <link rel="icon" href="/img/favicon.ico">
+
+
+    <meta name="author" content="illlights">
+
+
+    <meta name="subtitle" content="illlights blog">
+
+
+    <meta name="Description" content="刚刚脱离高级趣味，所以博客不想太复杂了">
+
+
+    <meta name="keywords" content=",blog, comments, entertainment">
+
+
+  <link rel="alternate" href="/atom.xml " title="喑光絮语" type="application/atom+xml">
+
+
+  
+    <link rel="stylesheet" href="/css/main.css">
+  
+
+<!-- hexo injector head_end start --><style>/* 布局样式 */
+.hexo-tips-layout {
+    margin: 0.5rem 0;
+    padding: 0.5rem 1.5rem;
+    border-radius: 8px;
+    border: 1px solid;
+    border-left-width: 6px;
+    display: flex;
+    align-items: center;
+    transition: transform 0.3s ease;
+    min-width: 2rem;
+    height:auto;
+    overflow-x: auto; 
+    overflow-y: hidden; 
+}
+
+.hexo-tips-layout:hover {
+    transform: translateX(5px);
+}
+
+.hexo-tips-layout .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    font-size: clamp(2em, 2vw, 3em);
+    min-width: 2rem;
+    scale:1.5;
+    transition: transform 0.3s ease;
+}
+
+.hexo-tips-layout:hover .icon {
+    transform: scale(1.3);
+}
+
+.hexo-tips-layout .content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+.hexo-tips-layout:hover .content {
+    transform: translateX(3px);
+}
+
+/* 响应式调整 */
+@media screen and (max-width: 768px) {
+    .hexo-tips-layout {
+        padding: 1rem;
+    }
+}
+
+/* 为每种类型的提示框添加主题样式 */
+[class^="tips-style-"] {
+    --tips-light-bg: #fff; /* 默认值 */
+    --tips-dark-bg: #333;  /* 默认值 */
+    --tips-border: #000;   /* 默认值 */
+}
+
+/* 主题样式规则 */
+[class^="hexo-tips-"] {
+    border-color: var(--tips-border);
+}
+
+[class^="hexo-tips-"] .icon {
+    color: var(--tips-border);
+}
+
+/* 1. 手动暗色模式优先 */
+html.dark [class^="hexo-tips-"] {
+    background-color: var(--tips-dark-bg);
+}
+
+/* 2. 系统暗色模式其次 */
+@media (prefers-color-scheme: dark) {
+    html:not(.light) [class^="hexo-tips-"] {
+        background-color: var(--tips-dark-bg);
+    }
+}
+
+/* 3. 亮色模式最后 */
+html:not(.dark) [class^="hexo-tips-"],
+html.light [class^="hexo-tips-"] {
+    background-color: var(--tips-light-bg);
+}</style><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+<body class="notransition">
+  <!-- 固定背景层 - 解决 iOS Safari 不支持 background-attachment: fixed 的问题 -->
+  <div id="fixed-bg"></div>
+  <!-- <script defer>
+    // 延迟移除 notransition 类，确保初始主题设置完成
+    setTimeout(() => document.body.classList.remove("notransition"), 75);
+  </script> -->
+  <div class="navbar" role="navigation">
+    <nav class="menu">
+      <input type="checkbox" id="menu-trigger" class="menu-trigger" />
+      <label for="menu-trigger">
+        <span class="menu-icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 512 512"
+          >
+            <path
+              d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z"
+            />
+          </svg>
+        </span>
+      </label>
+      <a id="mode" role="button" aria-label="Theme">
+        <svg
+          class="mode-sunny"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>LIGHT</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+        <svg
+          class="mode-moon"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>DARK</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+        <span class="mode-auto" aria-hidden="true">A</span>
+      </a>
+      <div class="trigger">
+        <div class="trigger-container">
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/"> 主页</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/moments/"> 动态</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/archives/"> 文章</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/friends/"> 友链</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " target="_blank" rel="noopener" href="https://www.illlights.com"> 关于</a>
+          
+        </div>
+      </div>
+    </nav>
+  </div>
+
+  <button id="toTopBtn"><i class="fa-solid fa-hand-point-up " ></i></button>
+<!-- <button id="toggleButton"><i class="fa-solid fa-chart-bar " ></i></button> -->
+<div id="overlay" class="overlay glass-wrapper overlay-bg">
+  <div class="content">
+    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E3%80%8A%E5%8F%A4%E9%83%BD%E3%80%8B-%E6%97%A5-%E5%B7%9D%E7%AB%AF%E5%BA%B7%E6%88%90"><span class="toc-text">《古都》[日]川端康成</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E3%80%8A%E6%BD%9C%E8%A7%84%E5%88%99%E3%80%8B%E5%90%B4%E6%80%9D"><span class="toc-text">《潜规则》吴思</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E3%80%8A%E5%86%AC%E7%89%A7%E5%9C%BA%E3%80%8B%E6%9D%8E%E5%A8%9F"><span class="toc-text">《冬牧场》李娟</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E3%80%8A%E5%B1%80%E5%A4%96%E4%BA%BA%E3%80%8B-%E6%B3%95-%E9%98%BF%E5%B0%94%E8%B4%9D%C2%B7%E5%8A%A0%E7%BC%AA"><span class="toc-text">《局外人》[法]阿尔贝·加缪</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E3%80%8A%E7%A5%9E%E4%BB%AC%E8%87%AA%E5%B7%B1%E3%80%8B-%E7%BE%8E-%E8%89%BE%E8%90%A8%E5%85%8B%C2%B7%E9%98%BF%E8%A5%BF%E8%8E%AB%E5%A4%AB"><span class="toc-text">《神们自己》[美]艾萨克·阿西莫夫</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E3%80%8A%E5%9B%B4%E5%9F%8E%E3%80%8B%E9%92%B1%E9%94%BA%E4%B9%A6"><span class="toc-text">《围城》钱锺书</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E3%80%8A%E7%BE%8E%E4%B8%BD%E6%96%B0%E4%B8%96%E7%95%8C%E3%80%8B-%E8%8B%B1-%E9%98%BF%E9%81%93%E5%8F%B8%C2%B7%E4%BC%A6%E7%BA%B3%E5%BE%B7%C2%B7%E8%B5%AB%E8%83%A5%E9%BB%8E"><span class="toc-text">《美丽新世界》[英]阿道司·伦纳德·赫胥黎</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E3%80%8A%E5%B9%B3%E7%94%9F%E6%AC%A2%E3%80%8B%E4%B8%83%E5%A0%87%E5%B9%B4"><span class="toc-text">《平生欢》七堇年</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E3%80%8A%E5%BD%93%E6%88%91%E8%B0%88%E8%B7%91%E6%AD%A5%E6%97%B6%E6%88%91%E8%B0%88%E4%BA%9B%E4%BB%80%E4%B9%88%E3%80%8B-%E6%97%A5-%E6%9D%91%E4%B8%8A%E6%98%A5%E6%A0%91"><span class="toc-text">《当我谈跑步时我谈些什么》[日]村上春树</span></a></li></ol>
+    <button id="closeButton"><i class="fa-solid fa-circle-xmark"></i></button>
+  </div>
+</div>
+<div class="wrapper post">
+  <head>
+    <!-- 引入 Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  </head>
+
+
+
+  <main class="page-content" aria-label="Content">
+    <div class="glass-wrapper main-content">
+      <header class="header">
+        
+          <div class="tags">
+            <a href="/tags/%E6%97%A5%E6%9C%AC/" class="tag"># 日本</a><a href="/tags/%E7%A7%91%E5%B9%BB/" class="tag"># 科幻</a><a href="/tags/%E9%98%85%E8%AF%BB%E8%AE%B0%E5%BD%95/" class="tag"># 阅读记录</a>
+          </div>
+        
+          <h1 class="header-title" itemprop="headline">2021.6-11 阅读记录</h1>
+          <div class="post-meta">
+            最后更新: <time>Jan 31, 2023</time>
+            作者: <span itemprop="author">
+              <span itemprop="name">illlights</span>
+            </span>
+            字数: <span class="post-count">620</span>
+            预计阅读时间: <span class="post-count">2min</span> 
+          </div>       
+      </header>
+          <div class="page-content"><h4 id="《古都》-日-川端康成"><a href="#《古都》-日-川端康成" class="headerlink" title="《古都》[日]川端康成"></a>《古都》[日]川端康成</h4><p>很细腻的描写、很美的氛围，是典型川端康成作品。这一部尤其重氛围轻情节，不熟悉川端康成的作品可能会觉得什么都没写。我写过一篇文章评价：<a href="https://blog.illlights.com/archives/2021/reading/Koto.html">https://blog.illlights.com/archives/2021/reading/Koto.html</a></p>
+<h4 id="《潜规则》吴思"><a href="#《潜规则》吴思" class="headerlink" title="《潜规则》吴思"></a>《潜规则》吴思</h4><p>从历史的角度剖析腐败。我觉得啊，虽然看起来很有道理，但是没啥用，至少对我来说是这样。</p>
+<h4 id="《冬牧场》李娟"><a href="#《冬牧场》李娟" class="headerlink" title="《冬牧场》李娟"></a>《冬牧场》李娟</h4><p>这是一本非虚构长篇。淡淡的描述，平实的语言，描绘出了一个与世隔绝、贴近自然的世界——冬牧场。一开始看可能会觉得没意思，就像在记日记，但往后看，李娟散文功底还是很高的——毫无痕迹地将叙事和抒情结合，毫无痕迹，丝毫没有“起势”升华的感觉，而是渗透在字里行间。当我们在大城市中生活，远离自然，也许《冬牧场》还能给我们带来一些关于自然的感悟。</p>
+<h4 id="《局外人》-法-阿尔贝·加缪"><a href="#《局外人》-法-阿尔贝·加缪" class="headerlink" title="《局外人》[法]阿尔贝·加缪"></a>《局外人》[法]阿尔贝·加缪</h4><p>象征作品。我倒是比较喜欢加缪的荒诞哲学。</p>
+<h4 id="《神们自己》-美-艾萨克·阿西莫夫"><a href="#《神们自己》-美-艾萨克·阿西莫夫" class="headerlink" title="《神们自己》[美]艾萨克·阿西莫夫"></a>《神们自己》[美]艾萨克·阿西莫夫</h4><p>毕竟是阿西莫夫，情节高潮迭起，让人惊呼“意料之外”。个人觉得本作中还有些在探讨人性。具体可以参看我写的浅评：<a href="https://blog.illlights.com/archives/2021/reading/thegodthemselves.html">https://blog.illlights.com/archives/2021/reading/thegodthemselves.html</a></p>
+<h4 id="《围城》钱锺书"><a href="#《围城》钱锺书" class="headerlink" title="《围城》钱锺书"></a>《围城》钱锺书</h4><p>作者想要写那个西方思想和传统文化（包括文化糟粕）的冲突时代，却写出了本质的人性。实际上，将这个故事至于当代视角，也能反映出很多问题。此外，钱锺书的语言值得我们学学，特别是地道的比喻。</p>
+<h4 id="《美丽新世界》-英-阿道司·伦纳德·赫胥黎"><a href="#《美丽新世界》-英-阿道司·伦纳德·赫胥黎" class="headerlink" title="《美丽新世界》[英]阿道司·伦纳德·赫胥黎"></a>《美丽新世界》[英]阿道司·伦纳德·赫胥黎</h4><p>大家都在吹，我就没必要再多说了。确实一部反乌托邦巨著，值得细细思考。这本书让我惊讶的是，中间很多东西有些“预言”色彩，比如性的逐步开放、社会娱乐化趋势……</p>
+<h4 id="《平生欢》七堇年"><a href="#《平生欢》七堇年" class="headerlink" title="《平生欢》七堇年"></a>《平生欢》七堇年</h4><p>当言情小说来看还是可圈可点，但是以文学作品角度看嘛，emmmmm。</p>
+<h4 id="《当我谈跑步时我谈些什么》-日-村上春树"><a href="#《当我谈跑步时我谈些什么》-日-村上春树" class="headerlink" title="《当我谈跑步时我谈些什么》[日]村上春树"></a>《当我谈跑步时我谈些什么》[日]村上春树</h4><p>像一次面对面的交流，作者毫不介意地把生活、价值观、成败观寓于书中。书中关于生命的感悟也能引人深思。</p>
+</div>          
+          <nav class="post-nav">
+    
+    <a class="post-nav-item post-nav-prev" href="/archives/2022/life/2022-im-still-blogging.html">
+      <div class="nav-arrow">&lt;&nbsp;NEWER</div>
+      <span class="post-title">2022，我还在写博客</span>
+    </a>
+    
+    
+    <a class="post-nav-item post-nav-next" href="/archives/2021/tech/writing.html">
+      <div class="nav-arrow">OLDER&nbsp;&gt;</div>
+      <span class="post-title">我们真的会中文吗</span>
+    </a>
+    
+  </nav>
+          <div class="dis">
+    
+        
+    <script src='//cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js'></script>
+    <div id="waline" class="glass-wrapper waline-container"></div>
+    <script>
+        window.onload = function () {
+            new Waline({
+                el: '#waline',
+                path: location.pathname,
+                avatarCDN: 'https://sdn.geekzu.org/avatar/',
+                serverURL: 'https://comments-blog.illlights.com/',
+                avatar: 'monsterid',
+                placeholder: "封闭的文字无法成长。"
+            });
+        };
+    </script>
+
+
+    
+</div>
+    </div>
+   </main>
+</div>
+
+  <footer class="footer">
+    <small class="footer_copyright">
+      <div id="bottom-inner">
+        © Site by illlights<br>
+        <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a> &
+        <a target="_blank" rel="noopener" href="https://github.com/RichardTang2003/hexo-theme-Klise-glassy">Klise-glassy</a>
+        <br>
+        始于2021.
+        
+      </div>
+    </small>
+  </footer>
+  
+  
+
+    
+      <script src="/js/main.js"></script>
+    
+  
+  <script>
+    window.FPConfig = {
+      delay: 0,
+      ignoreKeywords: [],
+      maxRPS: 3,
+      hoverDelay: 50,
+    };
+  </script>
+  <!-- <script defer src="https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script> -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // 当 DOM 内容加载完成后，延后 1-2 帧再加 'loaded'，确保过渡能触发
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => document.body.classList.add('loaded'));
+      });
+    });
+  </script>
+</body>
+</html>

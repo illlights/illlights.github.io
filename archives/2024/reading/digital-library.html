@@ -1,0 +1,516 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <script>
+    (function() {
+      try {
+        document.documentElement.classList.add('js');
+
+        var saved = localStorage.getItem('theme');
+        var mode = (saved === 'light' || saved === 'dark' || saved === 'auto') ? saved : 'auto';
+
+        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var effective = (mode === 'auto') ? (prefersDark ? 'dark' : 'light') : mode;
+
+        document.documentElement.setAttribute('data-theme-mode', mode);
+        if (effective === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+        else document.documentElement.removeAttribute('data-theme');
+      } catch (e) {
+        // 如果发生错误，则不执行任何操作，让主脚本来处理
+      }
+    })();
+  </script>
+  
+  <!-- 提示浏览器颜色的 meta 标签 -->
+  <meta name="color-scheme" content="light dark">
+  <!-- Mastodon 验证 -->
+  <meta name="fediverse:creator" content="@illlights@anisaga.life">
+  
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calibre 私人数字图书馆能让我开始阅读吗？ [ 喑光絮语 ]</title>
+
+  <link rel="icon" href="/img/favicon.ico">
+
+
+    <meta name="author" content="illlights">
+
+
+    <meta name="subtitle" content="illlights blog">
+
+
+    <meta name="Description" content="刚刚脱离高级趣味，所以博客不想太复杂了">
+
+
+    <meta name="keywords" content=",blog, comments, entertainment">
+
+
+  <link rel="alternate" href="/atom.xml " title="喑光絮语" type="application/atom+xml">
+
+
+  
+    <link rel="stylesheet" href="/css/main.css">
+  
+
+<!-- hexo injector head_end start --><style>/* 布局样式 */
+.hexo-tips-layout {
+    margin: 0.5rem 0;
+    padding: 0.5rem 1.5rem;
+    border-radius: 8px;
+    border: 1px solid;
+    border-left-width: 6px;
+    display: flex;
+    align-items: center;
+    transition: transform 0.3s ease;
+    min-width: 2rem;
+    height:auto;
+    overflow-x: auto; 
+    overflow-y: hidden; 
+}
+
+.hexo-tips-layout:hover {
+    transform: translateX(5px);
+}
+
+.hexo-tips-layout .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    font-size: clamp(2em, 2vw, 3em);
+    min-width: 2rem;
+    scale:1.5;
+    transition: transform 0.3s ease;
+}
+
+.hexo-tips-layout:hover .icon {
+    transform: scale(1.3);
+}
+
+.hexo-tips-layout .content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+.hexo-tips-layout:hover .content {
+    transform: translateX(3px);
+}
+
+/* 响应式调整 */
+@media screen and (max-width: 768px) {
+    .hexo-tips-layout {
+        padding: 1rem;
+    }
+}
+
+/* 为每种类型的提示框添加主题样式 */
+[class^="tips-style-"] {
+    --tips-light-bg: #fff; /* 默认值 */
+    --tips-dark-bg: #333;  /* 默认值 */
+    --tips-border: #000;   /* 默认值 */
+}
+
+/* 主题样式规则 */
+[class^="hexo-tips-"] {
+    border-color: var(--tips-border);
+}
+
+[class^="hexo-tips-"] .icon {
+    color: var(--tips-border);
+}
+
+/* 1. 手动暗色模式优先 */
+html.dark [class^="hexo-tips-"] {
+    background-color: var(--tips-dark-bg);
+}
+
+/* 2. 系统暗色模式其次 */
+@media (prefers-color-scheme: dark) {
+    html:not(.light) [class^="hexo-tips-"] {
+        background-color: var(--tips-dark-bg);
+    }
+}
+
+/* 3. 亮色模式最后 */
+html:not(.dark) [class^="hexo-tips-"],
+html.light [class^="hexo-tips-"] {
+    background-color: var(--tips-light-bg);
+}</style><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+<body class="notransition">
+  <!-- 固定背景层 - 解决 iOS Safari 不支持 background-attachment: fixed 的问题 -->
+  <div id="fixed-bg"></div>
+  <!-- <script defer>
+    // 延迟移除 notransition 类，确保初始主题设置完成
+    setTimeout(() => document.body.classList.remove("notransition"), 75);
+  </script> -->
+  <div class="navbar" role="navigation">
+    <nav class="menu">
+      <input type="checkbox" id="menu-trigger" class="menu-trigger" />
+      <label for="menu-trigger">
+        <span class="menu-icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 512 512"
+          >
+            <path
+              d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z"
+            />
+          </svg>
+        </span>
+      </label>
+      <a id="mode" role="button" aria-label="Theme">
+        <svg
+          class="mode-sunny"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>LIGHT</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+        <svg
+          class="mode-moon"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>DARK</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+        <span class="mode-auto" aria-hidden="true">A</span>
+      </a>
+      <div class="trigger">
+        <div class="trigger-container">
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/"> 主页</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/moments/"> 动态</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/archives/"> 文章</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/friends/"> 友链</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " target="_blank" rel="noopener" href="https://www.illlights.com"> 关于</a>
+          
+        </div>
+      </div>
+    </nav>
+  </div>
+
+  <button id="toTopBtn"><i class="fa-solid fa-hand-point-up " ></i></button>
+<!-- <button id="toggleButton"><i class="fa-solid fa-chart-bar " ></i></button> -->
+<div id="overlay" class="overlay glass-wrapper overlay-bg">
+  <div class="content">
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E4%BB%8B%E7%BB%8D"><span class="toc-text">基本介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Calibre-Docker-%E5%AE%B9%E5%99%A8%E5%AE%89%E8%A3%85"><span class="toc-text">Calibre Docker 容器安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="toc-text">使用方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-text">初始化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8A%E4%BC%A0%E4%B9%A6%E7%B1%8D"><span class="toc-text">上传书籍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%98%85%E8%AF%BB"><span class="toc-text">阅读</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%99%E5%9C%A8%E6%9C%80%E5%90%8E"><span class="toc-text">写在最后</span></a></li></ol>
+    <button id="closeButton"><i class="fa-solid fa-circle-xmark"></i></button>
+  </div>
+</div>
+<div class="wrapper post">
+  <head>
+    <!-- 引入 Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  </head>
+
+
+
+  <main class="page-content" aria-label="Content">
+    <div class="glass-wrapper main-content">
+      <header class="header">
+        
+          <div class="tags">
+            
+          </div>
+        
+          <h1 class="header-title" itemprop="headline">Calibre 私人数字图书馆能让我开始阅读吗？</h1>
+          <div class="post-meta">
+            最后更新: <time>Aug 05, 2024</time>
+            作者: <span itemprop="author">
+              <span itemprop="name">illlights</span>
+            </span>
+            字数: <span class="post-count">1.2k</span>
+            预计阅读时间: <span class="post-count">4min</span> 
+          </div>       
+      </header>
+          <div class="page-content"><p>自二进制计算机发明以来，人们一直在做一件事：用0和1表示所有信息。</p>
+<p>从最早发明的ASCII用以表示字母，到如今人人都无法离开的视频传输，“数字化”和“云服务”已经应用到我们能接触到的各种信息形式中。</p>
+<p>直到最近才发现我的知识获取途径已经全部数字化：上课课本基本不用，PPT和电子讲义已经足够；有些科目掌握的不好，也不需要什么辅导书、咨询老师，网上视频再听一听就行；娱乐活动也很少见到纸牌、实物游戏，基本上都是游戏数据；纸质书？好像好久没拿起来认真读过，倒是电子书收集了一大堆。</p>
+<p>要不，搞一个统一的电子书阅读平台吧，说不定有空了还能打开看一看呢。</p>
+<p>我是有过电子书平台使用经验的用户，几年之前买了 Kindle PaperWhite，用 Amazon 的电子书库统一管理。使用体验中规中矩，导入的电子书格式有限制，管理书籍太麻烦，阅读平台单一，无法完全控制电子书文件，kindle 中国服务关闭则是让我放弃 Amazon 电子书库的最后一根稻草（其实也不得不放弃，因为电子书全被删了）</p>
+<p>我的需求很简单，网页阅读，服务器本地存储，支持常见格式电子书。这就是我们今天的主角—— Calibre.</p>
+<h2 id="基本介绍"><a href="#基本介绍" class="headerlink" title="基本介绍"></a>基本介绍</h2><p><a target="_blank" rel="noopener" href="https://github.com/kovidgoyal/calibre">calibre</a> 应该是 <a target="_blank" rel="noopener" href="https://github.com/kovidgoyal">kovidgoya</a> 写的一个跨平台 GUI 图书阅读器，但是功能非常强大，用来管理电子书都绰绰有余。也因为功能非常强大，依赖太多，反正我是不想自己构建。</p>
+<p>今天我们使用 Docker 直接跑 calibre，据说 Docker 版的 calibre 也有几个版本，我也不想一个一个试，直接用了 <a target="_blank" rel="noopener" href="https://github.com/linuxserver">linuxserver</a> 的版本。要问为什么？Google 搜 calibre docker 第一个结果就是。</p>
+<p>打开一看，怎么还有两个镜像？calibre 和 calibre-web 据我的使用体验其实都一样，前者是直接用 <a target="_blank" rel="noopener" href="https://github.com/kovidgoyal/calibre">calibre</a> 做镜像，网页访问界面是 VNC 直接调用 calibre 的 GUI。而后者更像是重写的一个前端+后端，提供一个更现代的 Web 访问界面和用户管理，但是书籍管理相对于原版差一些。</p>
+<p>两个都装想用哪个用哪个。</p>
+<h2 id="Calibre-Docker-容器安装"><a href="#Calibre-Docker-容器安装" class="headerlink" title="Calibre Docker 容器安装"></a>Calibre Docker 容器安装</h2><p>在一个空文件夹里新建 <code>compose.xml</code> 文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> calibre-docker</span><br><span class="line"><span class="built_in">cd</span> calibre-docker</span><br><span class="line">vim compose.xml</span><br></pre></td></tr></table></figure>
+
+<p>按照官方给出的配置文件，写入以下内容</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">services:</span><br><span class="line">  calibre-web:</span><br><span class="line">    image: lscr.io/linuxserver/calibre-web:latest</span><br><span class="line">    container_name: calibre-web</span><br><span class="line">    environment:</span><br><span class="line">      - PUID=1000</span><br><span class="line">      - PGID=1000</span><br><span class="line">      - TZ=Etc/UTC</span><br><span class="line">      - DOCKER_MODS=linuxserver/mods:universal-calibre <span class="comment">#optional</span></span><br><span class="line">      - OAUTHLIB_RELAX_TOKEN_SCOPE=1 <span class="comment">#optional</span></span><br><span class="line">    volumes:</span><br><span class="line">      - /path/to/data:/config</span><br><span class="line">      - /path/to/calibre/library:/books</span><br><span class="line">    ports:</span><br><span class="line">      - 8083:8083</span><br><span class="line">    restart: unless-stopped</span><br><span class="line"></span><br><span class="line">  calibre:</span><br><span class="line">    image: lscr.io/linuxserver/calibre:latest</span><br><span class="line">    container_name: calibre</span><br><span class="line">    security_opt:</span><br><span class="line">      - seccomp:unconfined <span class="comment">#optional</span></span><br><span class="line">    environment:</span><br><span class="line">      - PUID=1000</span><br><span class="line">      - PGID=1000</span><br><span class="line">      - TZ=Etc/UTC</span><br><span class="line">    volumes:</span><br><span class="line">      - /path/to/data:/config</span><br><span class="line">    ports:</span><br><span class="line">      - 8080:8080</span><br><span class="line">      - 8181:8181</span><br><span class="line">      - 8081:8081</span><br><span class="line">    restart: unless-stopped</span><br></pre></td></tr></table></figure>
+
+<p>&#x2F;path&#x2F;to&#x2F;data 是挂载到 Docker 中的文件夹，&#x2F;path&#x2F;to&#x2F;calibre&#x2F;library 是导入书时用的文件夹</p>
+<p>里面的 PUID 和 GUID 是运行用户，用户要对以上文件夹可读可写，可用以下指令查看用户的 ID</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">id</span> your_user</span><br></pre></td></tr></table></figure>
+
+<p>配置好之后， Docker 启动！</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> docker-compose up -d</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><p>calibre 面板：<code>http://&lt;your_ip&gt;:8080</code></p>
+<p>calibre-web 面板：<code>http://&lt;your_ip&gt;:8083</code></p>
+<h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><p>初始账户 admin</p>
+<p>初始密码 admin123</p>
+<p>建议用 calibre 创建 Library，calibre-web 填创建好的目录，就可以实现两个面板同步操作了！</p>
+<p><img src="https://github.com/EXP-Tools/calibre-docker/blob/main/imgs/01.png?raw=true" alt="calibre初始化"></p>
+<p><img src="https://github.com/EXP-Tools/calibre-docker/raw/main/imgs/04.png" alt="calibre-web设置"></p>
+<h3 id="上传书籍"><a href="#上传书籍" class="headerlink" title="上传书籍"></a>上传书籍</h3><p>calibre 中可以将 Docker 挂载目录中的书籍添加到数据库中</p>
+<p><img src="https://github.com/EXP-Tools/calibre-docker/raw/main/imgs/03.png" alt="calibre 添加电子书"></p>
+<p>calibre-web 设置后也可以直接上传文件</p>
+<p><img src="https://ooo.0x0.ooo/2024/02/17/OyMfcx.png" alt="calibre-web设置"></p>
+<p><img src="https://ooo.0x0.ooo/2024/02/17/OyM9Mj.png" alt="calibre-web设置"></p>
+<p>设置完成之后，给予对应用户权限之后可以在右上角看到上传按钮</p>
+<p><img src="https://ooo.0x0.ooo/2024/02/17/OyMj7p.png" alt="calibre-web上传书籍"></p>
+<h3 id="阅读"><a href="#阅读" class="headerlink" title="阅读"></a>阅读</h3><p>两个容器的server网页服务都可以直接阅读，但是都没有记忆功能，只是简单的打开数据库中的书。</p>
+<p><img src="https://ooo.0x0.ooo/2024/02/17/OyM6XY.png" alt="calibre-web阅读界面"></p>
+<p>也可以使用第三方阅读器阅读，那么 calibre 就完全变成了一个书的储存桶，支持HTML 或者 OPDS 的第三方阅读器都可以从 calibre-web 下载书籍和数据，还是不能同步所有阅读器的阅读进度。</p>
+<p>OPDS 地址：<code>http://&lt;server_ip&gt;:8083/opds/</code></p>
+<h2 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h2><p>折腾上一个晚上，Calibre 的架构和功能基本上已经了解，它和 Emby 类似，是一种“媒体管理库”。那么接下来就有两个问题：媒体从哪里来？谁来使用这些媒体？</p>
+<p>其实无论是书架、纸张还是 Calibre、电子书，它们只是文字和思想的载体，而看什么书，看不看书，什么时候看书，从来都不为这些载体所能决定。</p>
+</div>          
+          <nav class="post-nav">
+    
+    <a class="post-nav-item post-nav-prev" href="/archives/2024/games/animation-fantasy-world.html">
+      <div class="nav-arrow">&lt;&nbsp;NEWER</div>
+      <span class="post-title">动漫，幻想与世界</span>
+    </a>
+    
+    
+    <a class="post-nav-item post-nav-next" href="/archives/2023/tech/NN-1.html">
+      <div class="nav-arrow">OLDER&nbsp;&gt;</div>
+      <span class="post-title">我的第一个神经网络-手写识别</span>
+    </a>
+    
+  </nav>
+          <div class="dis">
+    
+        
+    <script src='//cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js'></script>
+    <div id="waline" class="glass-wrapper waline-container"></div>
+    <script>
+        window.onload = function () {
+            new Waline({
+                el: '#waline',
+                path: location.pathname,
+                avatarCDN: 'https://sdn.geekzu.org/avatar/',
+                serverURL: 'https://comments-blog.illlights.com/',
+                avatar: 'monsterid',
+                placeholder: "封闭的文字无法成长。"
+            });
+        };
+    </script>
+
+
+    
+</div>
+    </div>
+   </main>
+</div>
+
+  <footer class="footer">
+    <small class="footer_copyright">
+      <div id="bottom-inner">
+        © Site by illlights<br>
+        <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a> &
+        <a target="_blank" rel="noopener" href="https://github.com/RichardTang2003/hexo-theme-Klise-glassy">Klise-glassy</a>
+        <br>
+        始于2021.
+        
+      </div>
+    </small>
+  </footer>
+  
+  
+
+    
+      <script src="/js/main.js"></script>
+    
+  
+  <script>
+    window.FPConfig = {
+      delay: 0,
+      ignoreKeywords: [],
+      maxRPS: 3,
+      hoverDelay: 50,
+    };
+  </script>
+  <!-- <script defer src="https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script> -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // 当 DOM 内容加载完成后，延后 1-2 帧再加 'loaded'，确保过渡能触发
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => document.body.classList.add('loaded'));
+      });
+    });
+  </script>
+</body>
+</html>

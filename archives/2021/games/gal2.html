@@ -1,0 +1,508 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <script>
+    (function() {
+      try {
+        document.documentElement.classList.add('js');
+
+        var saved = localStorage.getItem('theme');
+        var mode = (saved === 'light' || saved === 'dark' || saved === 'auto') ? saved : 'auto';
+
+        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var effective = (mode === 'auto') ? (prefersDark ? 'dark' : 'light') : mode;
+
+        document.documentElement.setAttribute('data-theme-mode', mode);
+        if (effective === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+        else document.documentElement.removeAttribute('data-theme');
+      } catch (e) {
+        // 如果发生错误，则不执行任何操作，让主脚本来处理
+      }
+    })();
+  </script>
+  
+  <!-- 提示浏览器颜色的 meta 标签 -->
+  <meta name="color-scheme" content="light dark">
+  <!-- Mastodon 验证 -->
+  <meta name="fediverse:creator" content="@illlights@anisaga.life">
+  
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>gal解包系列Ⅱ：krkrextract [ 喑光絮语 ]</title>
+
+  <link rel="icon" href="/img/favicon.ico">
+
+
+    <meta name="author" content="illlights">
+
+
+    <meta name="subtitle" content="illlights blog">
+
+
+    <meta name="Description" content="刚刚脱离高级趣味，所以博客不想太复杂了">
+
+
+    <meta name="keywords" content=",blog, comments, entertainment">
+
+
+  <link rel="alternate" href="/atom.xml " title="喑光絮语" type="application/atom+xml">
+
+
+  
+    <link rel="stylesheet" href="/css/main.css">
+  
+
+<!-- hexo injector head_end start --><style>/* 布局样式 */
+.hexo-tips-layout {
+    margin: 0.5rem 0;
+    padding: 0.5rem 1.5rem;
+    border-radius: 8px;
+    border: 1px solid;
+    border-left-width: 6px;
+    display: flex;
+    align-items: center;
+    transition: transform 0.3s ease;
+    min-width: 2rem;
+    height:auto;
+    overflow-x: auto; 
+    overflow-y: hidden; 
+}
+
+.hexo-tips-layout:hover {
+    transform: translateX(5px);
+}
+
+.hexo-tips-layout .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    font-size: clamp(2em, 2vw, 3em);
+    min-width: 2rem;
+    scale:1.5;
+    transition: transform 0.3s ease;
+}
+
+.hexo-tips-layout:hover .icon {
+    transform: scale(1.3);
+}
+
+.hexo-tips-layout .content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+.hexo-tips-layout:hover .content {
+    transform: translateX(3px);
+}
+
+/* 响应式调整 */
+@media screen and (max-width: 768px) {
+    .hexo-tips-layout {
+        padding: 1rem;
+    }
+}
+
+/* 为每种类型的提示框添加主题样式 */
+[class^="tips-style-"] {
+    --tips-light-bg: #fff; /* 默认值 */
+    --tips-dark-bg: #333;  /* 默认值 */
+    --tips-border: #000;   /* 默认值 */
+}
+
+/* 主题样式规则 */
+[class^="hexo-tips-"] {
+    border-color: var(--tips-border);
+}
+
+[class^="hexo-tips-"] .icon {
+    color: var(--tips-border);
+}
+
+/* 1. 手动暗色模式优先 */
+html.dark [class^="hexo-tips-"] {
+    background-color: var(--tips-dark-bg);
+}
+
+/* 2. 系统暗色模式其次 */
+@media (prefers-color-scheme: dark) {
+    html:not(.light) [class^="hexo-tips-"] {
+        background-color: var(--tips-dark-bg);
+    }
+}
+
+/* 3. 亮色模式最后 */
+html:not(.dark) [class^="hexo-tips-"],
+html.light [class^="hexo-tips-"] {
+    background-color: var(--tips-light-bg);
+}</style><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+<body class="notransition">
+  <!-- 固定背景层 - 解决 iOS Safari 不支持 background-attachment: fixed 的问题 -->
+  <div id="fixed-bg"></div>
+  <!-- <script defer>
+    // 延迟移除 notransition 类，确保初始主题设置完成
+    setTimeout(() => document.body.classList.remove("notransition"), 75);
+  </script> -->
+  <div class="navbar" role="navigation">
+    <nav class="menu">
+      <input type="checkbox" id="menu-trigger" class="menu-trigger" />
+      <label for="menu-trigger">
+        <span class="menu-icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 512 512"
+          >
+            <path
+              d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z"
+            />
+          </svg>
+        </span>
+      </label>
+      <a id="mode" role="button" aria-label="Theme">
+        <svg
+          class="mode-sunny"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>LIGHT</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+        <svg
+          class="mode-moon"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>DARK</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+        <span class="mode-auto" aria-hidden="true">A</span>
+      </a>
+      <div class="trigger">
+        <div class="trigger-container">
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/"> 主页</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/moments/"> 动态</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/archives/"> 文章</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/friends/"> 友链</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " target="_blank" rel="noopener" href="https://www.illlights.com"> 关于</a>
+          
+        </div>
+      </div>
+    </nav>
+  </div>
+
+  <button id="toTopBtn"><i class="fa-solid fa-hand-point-up " ></i></button>
+<!-- <button id="toggleButton"><i class="fa-solid fa-chart-bar " ></i></button> -->
+<div id="overlay" class="overlay glass-wrapper overlay-bg">
+  <div class="content">
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E8%A6%81%E6%B1%82"><span class="toc-text">使用要求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8"><span class="toc-text">如何使用</span></a></li></ol>
+    <button id="closeButton"><i class="fa-solid fa-circle-xmark"></i></button>
+  </div>
+</div>
+<div class="wrapper post">
+  <head>
+    <!-- 引入 Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  </head>
+
+
+
+  <main class="page-content" aria-label="Content">
+    <div class="glass-wrapper main-content">
+      <header class="header">
+        
+          <div class="tags">
+            <a href="/tags/galgame/" class="tag"># galgame</a><a href="/tags/gal%E8%A7%A3%E5%8C%85/" class="tag"># gal解包</a>
+          </div>
+        
+          <h1 class="header-title" itemprop="headline">gal解包系列Ⅱ：krkrextract</h1>
+          <div class="post-meta">
+            最后更新: <time>Feb 18, 2025</time>
+            作者: <span itemprop="author">
+              <span itemprop="name">illlights</span>
+            </span>
+            字数: <span class="post-count">1.1k</span>
+            预计阅读时间: <span class="post-count">4min</span> 
+          </div>       
+      </header>
+          <div class="page-content"><p>For English Readers: <a href="https://blog.illlights.com/archives/2023/games/en-gal2.html">Visual Novel Extract Ⅱ: krkrextract</a></p>
+<p>　　上一篇提到了GARbro对.xp3文件的支持并不算好，一般我在实际操作中会先用GARbro的“未加密”试一试，不行就换krkrextract。不过很多小厂的游戏都是未加密的，这时候用krkrextract就不方便了：krkrextract必须把整个文件全部解压出来，而GARbro可以打开文件挑选再提取文件。</p>
+<h2 id="使用要求"><a href="#使用要求" class="headerlink" title="使用要求"></a>使用要求</h2><ol>
+<li>使用krkrextract的前提是游戏要能运行，那些要用模拟器打开的游戏（只有.xp3文件）还是老老实实用GARbro吧。</li>
+<li>steam中的galgame启动时需要先启动steam，而steam会阻止其它应用注入内存，所以krkrextract无法使用。想要解steam启动的游戏，试试<a target="_blank" rel="noopener" href="https://github.com/atom0s/Steamless">steamless</a></li>
+<li>krkrextract对资源的消耗较大，部分内存较小的电脑可能会闪退、卡顿，CPU也比较吃紧，这个要看解包文件的大小和加密复杂程度。</li>
+</ol>
+<h2 id="如何使用"><a href="#如何使用" class="headerlink" title="如何使用"></a>如何使用</h2><p>　　同样，请提取到文末下载工具。</p>
+<p>　　首先把.exe文件和.dll文件解压到游戏的运行目录（亲测windows安全中心会报毒，请提前关掉）。要是不知道目录在哪里就点开快捷方式的“属性”，“目标”栏中就是文件位置了。</p>
+<p>　　现在把游戏的exe文件拖动到krkrextract.exe里：</p>
+<p><img src="https://imgcdn.illlights.com/tang2003/pics/raw/master/pics/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202021-08-19%20174333.jpg"></p>
+<p>　　如果游戏和krkrextract正常启动，那么提取密钥这一步应该就完成了。简单来说，krkrextract是通过监控软件运行、注入内存提取解密方式，自然也不必手动选择。</p>
+<p><img src="https://imgcdn.illlights.com/tang2003/pics/raw/master/pics/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202021-08-19%20174403.jpg"></p>
+<p>　　接下来要做的是根据文件名的只言片语猜测你要的文件在哪个包里。krkrextract不会自动打开xp3文件，需要你把xp3文件拖进窗口，解包才会开始，而且是全部解包出来。所以呢，这里要先看好要解包哪个文件，一般来说data.xp3是游戏的主要资源，每个游戏也不一样，自己去试吧。</p>
+<p><img src="https://imgcdn.illlights.com/tang2003/pics/raw/master/pics/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202021-08-19%20174522.jpg"></br></p>
+<p>　　解包需要一定时间，完成之后会生成一个Output文件夹，解包出的数据就在文件夹里了。</p>
+<p><img src="https://imgcdn.illlights.com/tang2003/pics/raw/master/pics/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202021-08-19%20174555.jpg"></p>
+<p><img src="https://imgcdn.illlights.com/tang2003/pics/raw/master/pics/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202021-08-19%20174651.jpg"></p>
+<p>　　基本的使用就是这么多，krkrextract还可以用来封包之类的，更多的内容可以看官网的介绍。</p>
+<p>　　官网地址：官网已下线</p>
+<p>　　顺带一提，作者好像很喜欢杏玲哦！！</p>
+<p><img src="https://imgcdn.illlights.com/tang2003/pics/raw/master/pics/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202021-08-19%20224453.jpg"></p>
+<p>　　网页全部是英文的，我把一些重要的参数的内容翻译了一下：</p>
+<blockquote>
+<p>(1)PNG Setting:<br>Raw: 默认设置.<br>System Decoder: 尝试使用内置工具.如果RAW导出的数据看上去有问题，那就试试这个. 然而不是100%稳定.(比如: 恋がさくころ桜どき)<br>(2)PSB File:<br>Raw: 默认设置.<br>Decompile Script: 把二进制数据反编译成.tjs脚本.<br>Unpack Image: 尝试解包PSB包里的图片.<br>Unpack Animation: 尝试解包PSB包里的图片(比如:emote) .<br>Dump Text: 只提取翻译所用的关键性文本.<br>JSON: 选择该选项也会反编译二进制数据, 但是会输出JSON格式.(这个选项会有利于使用实时编辑器)<br>Full Unpack: 进行所有步骤.<br>(3)Text Decryption:<br>Raw: 默认设置.<br>Text: 尝试使用kirikiri的标准解密.<br>(4)TLG Image:<br>Raw: 默认设置.<br>Build-in Decoder: 使用内置解码器, 将图片另存为为32bit的bmp格式图像.<br>System: 尝试使用内置插件然后提取图像(另存为为png格式). 如果tlg文件使用了位置的格式，请试试这个. 不是100%稳定.<br>PNG: 使用内置解码器，将图片另存为为png格式.<br>JPG: 使用内置解码器，将图片另存为为jpg格式.<br>(5)TJS2 Script:<br>Raw: 默认设置.<br>Decompile: 尝试反编译现有的剧本文件.<br>(6)Alpha Movie Animation:(amv file)<br>JPG(Sequence): 使用内置解码器，另存为为jpg序列(sequence).<br>PNG(Sequence): 使用内置解码器，另存为为png序列.<br>MNG: 使用内置解码器，转换为mng格式. </p>
+</blockquote>
+<p>下载地址：</p>
+<p>GitHub项目地址：<a target="_blank" rel="noopener" href="https://github.com/xmoezzz/KrkrExtract">https://github.com/xmoezzz/KrkrExtract</a></p>
+<p>备用下载地址：<a target="_blank" rel="noopener" href="https://www.illlights.com/downloads/KrkrExtract.rar">https://www.illlights.com/downloads/KrkrExtract.rar</a></p>
+<p>请验证本站分发PGP签名：<a target="_blank" rel="noopener" href="https://www.illlights.com/sig/KrkrExtract.rar.sig">https://www.illlights.com/sig/KrkrExtract.rar.sig</a>（仅证明文件由本站分发，不证明软件著作权）</p>
+<p>使用本站链接下载表明您已阅读本站<a href="/download.html">下载说明</a></p>
+<p>我开了一个项目，收集GalGame的背景音乐，有兴趣可以看一看：<a href="https://blog.illlights.com/archives/2021/games/bgm-collection.html">https://blog.illlights.com/archives/2021/games/bgm-collection.html</a></p>
+<p>全部文章请转到标签<a href="https://blog.illlights.com/tags/gal%E8%A7%A3%E5%8C%85/">#gal解包#</a></p>
+<p>上一篇:<a href="https://blog.illlights.com/archives/2021/games/gal1.html">《简介与基本工具GARbro》</a></p>
+<p>下一篇:<a href="https://blog.illlights.com/archives/2021/games/gal3.html">《解包通用流程》</a> </p>
+</div>          
+          <nav class="post-nav">
+    
+    <a class="post-nav-item post-nav-prev" href="/archives/2021/life/8-23.html">
+      <div class="nav-arrow">&lt;&nbsp;NEWER</div>
+      <span class="post-title">杂谈:让游戏轻松些吧</span>
+    </a>
+    
+    
+    <a class="post-nav-item post-nav-next" href="/archives/2021/games/gal1.html">
+      <div class="nav-arrow">OLDER&nbsp;&gt;</div>
+      <span class="post-title">gal解包系列Ⅰ：简介与基本工具GARbro</span>
+    </a>
+    
+  </nav>
+          <div class="dis">
+    
+        
+    <script src='//cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js'></script>
+    <div id="waline" class="glass-wrapper waline-container"></div>
+    <script>
+        window.onload = function () {
+            new Waline({
+                el: '#waline',
+                path: location.pathname,
+                avatarCDN: 'https://sdn.geekzu.org/avatar/',
+                serverURL: 'https://comments-blog.illlights.com/',
+                avatar: 'monsterid',
+                placeholder: "封闭的文字无法成长。"
+            });
+        };
+    </script>
+
+
+    
+</div>
+    </div>
+   </main>
+</div>
+
+  <footer class="footer">
+    <small class="footer_copyright">
+      <div id="bottom-inner">
+        © Site by illlights<br>
+        <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a> &
+        <a target="_blank" rel="noopener" href="https://github.com/RichardTang2003/hexo-theme-Klise-glassy">Klise-glassy</a>
+        <br>
+        始于2021.
+        
+      </div>
+    </small>
+  </footer>
+  
+  
+
+    
+      <script src="/js/main.js"></script>
+    
+  
+  <script>
+    window.FPConfig = {
+      delay: 0,
+      ignoreKeywords: [],
+      maxRPS: 3,
+      hoverDelay: 50,
+    };
+  </script>
+  <!-- <script defer src="https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script> -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // 当 DOM 内容加载完成后，延后 1-2 帧再加 'loaded'，确保过渡能触发
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => document.body.classList.add('loaded'));
+      });
+    });
+  </script>
+</body>
+</html>

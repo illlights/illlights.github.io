@@ -1,0 +1,1270 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <script>
+    (function() {
+      try {
+        document.documentElement.classList.add('js');
+
+        var saved = localStorage.getItem('theme');
+        var mode = (saved === 'light' || saved === 'dark' || saved === 'auto') ? saved : 'auto';
+
+        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var effective = (mode === 'auto') ? (prefersDark ? 'dark' : 'light') : mode;
+
+        document.documentElement.setAttribute('data-theme-mode', mode);
+        if (effective === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+        else document.documentElement.removeAttribute('data-theme');
+      } catch (e) {
+        // 如果发生错误，则不执行任何操作，让主脚本来处理
+      }
+    })();
+  </script>
+  
+  <!-- 提示浏览器颜色的 meta 标签 -->
+  <meta name="color-scheme" content="light dark">
+  <!-- Mastodon 验证 -->
+  <meta name="fediverse:creator" content="@illlights@anisaga.life">
+  
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2025 年快结束了，试试先进的图片编码 [ 喑光絮语 ]</title>
+
+  <link rel="icon" href="/img/favicon.ico">
+
+
+    <meta name="author" content="illlights">
+
+
+    <meta name="subtitle" content="illlights blog">
+
+
+    <meta name="Description" content="刚刚脱离高级趣味，所以博客不想太复杂了">
+
+
+    <meta name="keywords" content=",blog, comments, entertainment">
+
+
+  <link rel="alternate" href="/atom.xml " title="喑光絮语" type="application/atom+xml">
+
+
+  
+    <link rel="stylesheet" href="/css/main.css">
+  
+
+<!-- hexo injector head_end start --><style>/* 布局样式 */
+.hexo-tips-layout {
+    margin: 0.5rem 0;
+    padding: 0.5rem 1.5rem;
+    border-radius: 8px;
+    border: 1px solid;
+    border-left-width: 6px;
+    display: flex;
+    align-items: center;
+    transition: transform 0.3s ease;
+    min-width: 2rem;
+    height:auto;
+    overflow-x: auto; 
+    overflow-y: hidden; 
+}
+
+.hexo-tips-layout:hover {
+    transform: translateX(5px);
+}
+
+.hexo-tips-layout .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    font-size: clamp(2em, 2vw, 3em);
+    min-width: 2rem;
+    scale:1.5;
+    transition: transform 0.3s ease;
+}
+
+.hexo-tips-layout:hover .icon {
+    transform: scale(1.3);
+}
+
+.hexo-tips-layout .content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+.hexo-tips-layout:hover .content {
+    transform: translateX(3px);
+}
+
+/* 响应式调整 */
+@media screen and (max-width: 768px) {
+    .hexo-tips-layout {
+        padding: 1rem;
+    }
+}
+
+/* 为每种类型的提示框添加主题样式 */
+[class^="tips-style-"] {
+    --tips-light-bg: #fff; /* 默认值 */
+    --tips-dark-bg: #333;  /* 默认值 */
+    --tips-border: #000;   /* 默认值 */
+}
+
+/* 主题样式规则 */
+[class^="hexo-tips-"] {
+    border-color: var(--tips-border);
+}
+
+[class^="hexo-tips-"] .icon {
+    color: var(--tips-border);
+}
+
+/* 1. 手动暗色模式优先 */
+html.dark [class^="hexo-tips-"] {
+    background-color: var(--tips-dark-bg);
+}
+
+/* 2. 系统暗色模式其次 */
+@media (prefers-color-scheme: dark) {
+    html:not(.light) [class^="hexo-tips-"] {
+        background-color: var(--tips-dark-bg);
+    }
+}
+
+/* 3. 亮色模式最后 */
+html:not(.dark) [class^="hexo-tips-"],
+html.light [class^="hexo-tips-"] {
+    background-color: var(--tips-light-bg);
+}</style><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+<body class="notransition">
+  <!-- 固定背景层 - 解决 iOS Safari 不支持 background-attachment: fixed 的问题 -->
+  <div id="fixed-bg"></div>
+  <!-- <script defer>
+    // 延迟移除 notransition 类，确保初始主题设置完成
+    setTimeout(() => document.body.classList.remove("notransition"), 75);
+  </script> -->
+  <div class="navbar" role="navigation">
+    <nav class="menu">
+      <input type="checkbox" id="menu-trigger" class="menu-trigger" />
+      <label for="menu-trigger">
+        <span class="menu-icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 512 512"
+          >
+            <path
+              d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z"
+            />
+          </svg>
+        </span>
+      </label>
+      <a id="mode" role="button" aria-label="Theme">
+        <svg
+          class="mode-sunny"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>LIGHT</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+        <svg
+          class="mode-moon"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>DARK</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+        <span class="mode-auto" aria-hidden="true">A</span>
+      </a>
+      <div class="trigger">
+        <div class="trigger-container">
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/"> 主页</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/moments/"> 动态</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/archives/"> 文章</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/friends/"> 友链</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " target="_blank" rel="noopener" href="https://www.illlights.com"> 关于</a>
+          
+        </div>
+      </div>
+    </nav>
+  </div>
+
+  <button id="toTopBtn"><i class="fa-solid fa-hand-point-up " ></i></button>
+<!-- <button id="toggleButton"><i class="fa-solid fa-chart-bar " ></i></button> -->
+<div id="overlay" class="overlay glass-wrapper overlay-bg">
+  <div class="content">
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E6%9E%9C%E5%88%86%E6%9E%90"><span class="toc-text"> 结果分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E7%8E%AF%E5%A2%83"><span class="toc-text"> 测试环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E7%BB%93%E6%9E%9C"><span class="toc-text"> 测试结果</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%AE%9E%E9%99%85%E6%96%87%E4%BB%B6%E5%A4%A7%E5%B0%8F-kb"><span class="toc-text"> 1. 实际文件大小 (KB)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%8E%8B%E7%BC%A9%E6%AF%94%E4%BE%8B-%E7%9B%B8%E5%AF%B9%E4%BA%8E-png-%E7%9A%84%E7%99%BE%E5%88%86%E6%AF%94"><span class="toc-text"> 2. 压缩比例 (相对于 PNG 的百分比)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%A0%BC%E5%BC%8F%E5%B9%B3%E5%9D%87%E8%A1%A8%E7%8E%B0%E6%8E%92%E5%90%8D-%E8%B6%8A%E5%B0%8F%E8%B6%8A%E5%A5%BD"><span class="toc-text"> 3. 格式平均表现排名 (越小越好)</span></a></li></ol></li></ol>
+    <button id="closeButton"><i class="fa-solid fa-circle-xmark"></i></button>
+  </div>
+</div>
+<div class="wrapper post">
+  <head>
+    <!-- 引入 Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  </head>
+
+
+
+  <main class="page-content" aria-label="Content">
+    <div class="glass-wrapper main-content">
+      <header class="header">
+        
+          <div class="tags">
+            <a href="/tags/Website/" class="tag"># Website</a>
+          </div>
+        
+          <h1 class="header-title" itemprop="headline">2025 年快结束了，试试先进的图片编码</h1>
+          <div class="post-meta">
+            最后更新: <time>12月 21, 2025</time>
+            作者: <span itemprop="author">
+              <span itemprop="name">illlights</span>
+            </span>
+            字数: <span class="post-count">3k</span>
+            预计阅读时间: <span class="post-count">14min</span> 
+          </div>       
+      </header>
+          <div class="page-content"><p><a target="_blank" rel="noopener" href="https://api.illlights.com/guide/img.html">Galgame 随机图 API</a> 已经上线快三年了，虽然每部 Galgame 都只挑选几张或十几张，但游戏数量多起来，总量也来到了 GB 级别。这个级别下储存倒不是什么难事，但是考虑传输的请求量，流量费还是挺贵的。</p>
+<p><img src="https://cdn.nodeimage.com/i/rlf6hkVncgWGrJZAGcicmySBZwOxYxSv.png" alt="随机图 API 宽带使用情况" /></p>
+<p><img src="https://cdn.nodeimage.com/i/dXecnuJTb4Gpe5bKV6YALWvXAbRCQmg2.webp" alt="服务器流量情况" /></p>
+<p>当时刚开始写这个 API 的时候 AVIF 格式还是比较新的图片格式，我把这个项目当成 NodeJS 学习项目来写，没仔细考虑大量图片传输的情况，直接转成 AVIF 传出去就完事了。直到最近，我又要一些和图片储存相关的项目，还重新迈入了摄影圈，怎么发照片、怎么存照片又被提上台面；最近图片和视频编码格式不断演化，确实是重新考虑图片格式的好时机。</p>
+<p>可惜我对图片编码的理论不甚了解，所以这里的测试只能使用生产级、易用的现有转换工具，从感知上对图片大小和图片质量进行评价。</p>
+<p>为了覆盖多种使用场景（其实是我的多种使用场景），选取了<strong>游戏截图</strong>、<strong>Galgame CG</strong>、<strong>室内手办摄影</strong>（并非手办）、<strong>风景摄影</strong>每个场景各两张。</p>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>文件名</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Galgame CG</td>
+<td>021_ev104_5、VCG27_8</td>
+</tr>
+<tr>
+<td>游戏截图</td>
+<td>鸣潮   1_9_2025 3_59_18 PM、鸣潮   9_27_2025 10_42_08 PM、Apex Legends 6_29_2024 4_15_55 PM</td>
+</tr>
+<tr>
+<td>室内手办摄影</td>
+<td>P1000025、P1000042</td>
+</tr>
+<tr>
+<td>风景摄影</td>
+<td>P1000122、P1000200</td>
+</tr>
+</tbody>
+</table>
+<p>各个编码的参数也不进行微调，毕竟真实使用情况不可能一张图片调一个参，压缩参数均使用默认配置，只改变质量参数。选取了最先进的几种图片编码，JPEG，JPEG XL，AVIF，WebP，分别测试了质量为 100、80、50 的情况。</p>
+<p>这里需要注意的是，JPEG 是典型的有损压缩格式，即使质量设置成 100 也会对图片造成不可逆的破坏性压缩。AVIF 和 WebP 理论上有无损压缩模式，但我没玩明白怎么进行无损压缩，经过检查发现我这组测试只有 jxl 是真无损压缩（压缩后 hash 不变）：</p>
+<p>JXL 格式 hash 检测</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Check: 021_ev104_5 ... [ MATCH ]</span><br><span class="line">Check: Apex Legends 6_29_2024 4_15_55 PM ... [ MATCH ]</span><br><span class="line">Check: P1000025 ... [ MATCH ]</span><br><span class="line">Check: P1000042 ... [ MATCH ]</span><br><span class="line">Check: P1000122 ... [ MATCH ]</span><br><span class="line">Check: P1000200 ... [ MATCH ]</span><br><span class="line">Check: VCG27_8 ... [ MATCH ]</span><br><span class="line">Check: 鸣潮   1_9_2025 3_59_18 PM ... [ MATCH ]</span><br><span class="line">Check: 鸣潮   9_27_2025 10_42_08 PM ... [ MATCH ]</span><br></pre></td></tr></table></figure>
+<p>AVIF 格式 hash 检测</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">Check: 021_ev104_5 ... [ DIFF  ]</span><br><span class="line">      PNG  Hash: 490b77ae75b3be59b3eb2453bf841c5b02be7e7d7476ac43bd4b45bb303ab4ae</span><br><span class="line">      avif Hash: 14bb5ca65be5075d111ae16d4561de7b6fda8b7dce70745e065d3fddd68a2e13</span><br><span class="line">Check: Apex Legends 6_29_2024 4_15_55 PM ... [ DIFF  ]</span><br><span class="line">      PNG  Hash: 5d070d85dfb717e13ccfb3eaf065cde36fc2fefaa6d23a3fac953dfb80c68677</span><br><span class="line">      avif Hash: 9eb5827f39e92c3e414476e985d0011879701939e0ddafc434cedafb7f50cad6</span><br><span class="line">Check: P1000025 ... [ DIFF  ]</span><br><span class="line">      PNG  Hash: 257e7b6350f8451667789facb5358d1944fac6d5cf8a538e12b41e07e53659c8</span><br><span class="line">      avif Hash: d1dc6c23c103de2cffce10eb5e3ea520e051ff200885893988c819fe366516df</span><br><span class="line">Check: P1000042 ... [ DIFF  ]</span><br><span class="line">      PNG  Hash: 6faf0ca2cd4404d02a607c33f9c80cbb3f1a6b9de70e05d6a2c8cad0f3260531</span><br><span class="line">      avif Hash: 10445622f675e67004f30c97bea595578e9124be85a905680cb87ea2689ef6a3</span><br><span class="line">Check: P1000122 ... [ DIFF  ]</span><br><span class="line">      PNG  Hash: fbeaec2f12cff04258d6c7c7e5ea5f21dcf124c8103be62a617f145f8298f35a</span><br><span class="line">      avif Hash: 86f3f4d10bb089fb451060488cbd776386285215389e4cff6e9c83c27a5aeef0</span><br><span class="line">Check: P1000200 ... [ DIFF  ]</span><br><span class="line">      PNG  Hash: b7aecc3b8c92ae6f229df5d01a00370df6070cc5cd197c3a4a876d1c5dbae65a</span><br><span class="line">      avif Hash: 23f941224ca55159259ff87aea66b9a89f82a69c76e37a5536fe03626ae674ee</span><br><span class="line">Check: VCG27_8 ... [ DIFF  ]</span><br><span class="line">      PNG  Hash: 398b87d9d68f6e025cf215ddded841185b82276bf2c7ff72fd35f9193c7e2f68</span><br><span class="line">      avif Hash: e13e261d2dd46eba8118521486ccf15afa9540b7806b9b53209cd9b38e6aff90</span><br><span class="line">Check: 鸣潮   1_9_2025 3_59_18 PM ... [ DIFF  ]</span><br><span class="line">      PNG  Hash: c34a2d5db4dd1c2b23674603a55ccc6ca8f229053c77283761720b895fa73141</span><br><span class="line">      avif Hash: 3c829698495d56ccdc8de2a2c5cdd3ef1a38c6ed8e7cc202cbfd29f4e0a187a0</span><br><span class="line">Check: 鸣潮   9_27_2025 10_42_08 PM ... [ DIFF  ]</span><br><span class="line">      PNG  Hash: 8605e3fbc7206408595619f8c3ad91ef3eb136a0617d19fdecba104519ffc91f</span><br><span class="line">      avif Hash: e03f53fcd89f103578cc0d265c08e63378caf285390d56e22baeaf50d81d381a</span><br></pre></td></tr></table></figure>
+<p>WebP 格式 hash 检测</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">Check: 021_ev104_5 ... [ MATCH ]</span><br><span class="line">Check: Apex Legends 6_29_2024 4_15_55 PM ... [ DIFF  ]</span><br><span class="line">      PNG  Hash: 5d070d85dfb717e13ccfb3eaf065cde36fc2fefaa6d23a3fac953dfb80c68677</span><br><span class="line">      WebP Hash: beb0301fe601c2750c36157b1198eca55bff9c67f32891d3c08a722d29c659bc</span><br><span class="line">Check: P1000025 ... [ DIFF  ]</span><br><span class="line">      PNG  Hash: 257e7b6350f8451667789facb5358d1944fac6d5cf8a538e12b41e07e53659c8</span><br><span class="line">      WebP Hash: 7e3b169e6fa516293bce7abe7e0701af16c1995864972134cdd351712e475661</span><br><span class="line">Check: P1000042 ... [ DIFF  ]</span><br><span class="line">      PNG  Hash: 6faf0ca2cd4404d02a607c33f9c80cbb3f1a6b9de70e05d6a2c8cad0f3260531</span><br><span class="line">      WebP Hash: b6697432daad46896bea9d8032eec4b9678f80651faf088c4189ffc39bec68aa</span><br><span class="line">Check: P1000122 ... [ DIFF  ]</span><br><span class="line">      PNG  Hash: fbeaec2f12cff04258d6c7c7e5ea5f21dcf124c8103be62a617f145f8298f35a</span><br><span class="line">      WebP Hash: 9ad9189a901a0cc2b593c0a0a12a309536995838171c2e82ded16a022a031c6a</span><br><span class="line">Check: P1000200 ... [ DIFF  ]</span><br><span class="line">      PNG  Hash: b7aecc3b8c92ae6f229df5d01a00370df6070cc5cd197c3a4a876d1c5dbae65a</span><br><span class="line">      WebP Hash: df33ea28fb958ba63fa9cfa88d6171adbdb4468de8954dc6e54b834c0335c217</span><br><span class="line">Check: VCG27_8 ... [ DIFF  ]</span><br><span class="line">      PNG  Hash: 398b87d9d68f6e025cf215ddded841185b82276bf2c7ff72fd35f9193c7e2f68</span><br><span class="line">      WebP Hash: 9a6d4c3b6135609dda606dea627c2429a03da00b1900b9f82522f25aa7719197</span><br><span class="line">Check: 鸣潮   1_9_2025 3_59_18 PM ... [ DIFF  ]</span><br><span class="line">      PNG  Hash: c34a2d5db4dd1c2b23674603a55ccc6ca8f229053c77283761720b895fa73141</span><br><span class="line">      WebP Hash: 2c9a960efb60651018c5f47bc607873cd0c1b7d305052e47e9a9dc988d4827cb</span><br><span class="line">Check: 鸣潮   9_27_2025 10_42_08 PM ... [ DIFF  ]</span><br><span class="line">      PNG  Hash: 8605e3fbc7206408595619f8c3ad91ef3eb136a0617d19fdecba104519ffc91f</span><br><span class="line">      WebP Hash: 264e33f253302b6666daf9c0bd34758a333f10f8443bcb2fb963af1293cb8fe1</span><br></pre></td></tr></table></figure>
+<h2 id="结果分析"><a class="markdownIt-Anchor" href="#结果分析"></a> 结果分析</h2>
+<p>我们先写结果，详细的测试参数和数据放在后面，想自己尝试或者验证结果的往下翻。</p>
+<p>如果不细分图片类型，<strong>无损存档想要放心无损压缩直接使用 JXL，高质量有损格式使用 AVIF_100，中等质量有损格式使用 WEBP_80，低质量/缩略图使用 AVIF_50</strong>。</p>
+<p>如果图片有明显的特征，只考虑图片大小，可以参考以下结论：</p>
+<p><strong>JPEG 有损压缩质量 100 对于相机拍摄的大图片压缩具有明显的优势。</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Filename</th>
+<th>JPG_100</th>
+<th>AVIF_100</th>
+<th>WEBP_100</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">P1000025</td>
+<td><strong>19.65%</strong></td>
+<td>27.27%</td>
+<td>22.02%</td>
+</tr>
+<tr>
+<td style="text-align:left">P1000042</td>
+<td><strong>24.56%</strong></td>
+<td>30.97%</td>
+<td>23.12%</td>
+</tr>
+<tr>
+<td style="text-align:left">P1000122</td>
+<td><strong>24.13%</strong></td>
+<td>32.22%</td>
+<td>25.93%</td>
+</tr>
+<tr>
+<td style="text-align:left">P1000200</td>
+<td><strong>26.54%</strong></td>
+<td>34.47%</td>
+<td>27.75%</td>
+</tr>
+</tbody>
+</table>
+<p>但是 JPEG 在游戏截屏、Galgame CG 这些类别中表现很差，并且在相机拍摄的大图片中的优势随着质量降低也会消失。</p>
+<p>我觉得 JPEG 比较适合网络传输下非原图的高质量摄影作品图片。由于是有损压缩，不应用于存档；较低质量参数下压缩比率优势也不明显。</p>
+<p><strong>游戏截图和二次元 CG 比较适合使用 AVIF 格式</strong>，在二次元用 JPEG_100 和 WebP_100 还不如用 JXL 无损。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Filename</th>
+<th style="text-align:left">JPG_100</th>
+<th style="text-align:left">JPG_80</th>
+<th style="text-align:left">JPG_50</th>
+<th style="text-align:left">AVIF_100</th>
+<th style="text-align:left">AVIF_80</th>
+<th style="text-align:left">AVIF_50</th>
+<th style="text-align:left">WEBP_100</th>
+<th style="text-align:left">WEBP_80</th>
+<th style="text-align:left">WEBP_50</th>
+<th style="text-align:left">JXL_100</th>
+<th style="text-align:left">JXL_80</th>
+<th style="text-align:left">JXL_50</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">021_ev104_5</td>
+<td style="text-align:left">86.99%</td>
+<td style="text-align:left">11.08%</td>
+<td style="text-align:left">6.58%</td>
+<td style="text-align:left"><strong>41.10%</strong></td>
+<td style="text-align:left"><strong>7.20%</strong></td>
+<td style="text-align:left"><strong>3.14%</strong></td>
+<td style="text-align:left">76.94%</td>
+<td style="text-align:left">6.76%</td>
+<td style="text-align:left">4.28%</td>
+<td style="text-align:left">68.27%</td>
+<td style="text-align:left">9.37%</td>
+<td style="text-align:left">5.24%</td>
+</tr>
+<tr>
+<td style="text-align:left">Apex Legends 6_29_2024 4_15_55 PM</td>
+<td style="text-align:left">70.75%</td>
+<td style="text-align:left">10.26%</td>
+<td style="text-align:left">5.86%</td>
+<td style="text-align:left"><strong>38.41%</strong></td>
+<td style="text-align:left"><strong>8.06%</strong></td>
+<td style="text-align:left"><strong>3.06%</strong></td>
+<td style="text-align:left">66.14%</td>
+<td style="text-align:left">6.58%</td>
+<td style="text-align:left">3.91%</td>
+<td style="text-align:left">57.67%</td>
+<td style="text-align:left">8.42%</td>
+<td style="text-align:left">4.05%</td>
+</tr>
+<tr>
+<td style="text-align:left">VCG27_8</td>
+<td style="text-align:left">76.06%</td>
+<td style="text-align:left">11.48%</td>
+<td style="text-align:left">6.88%</td>
+<td style="text-align:left"><strong>35.22%</strong></td>
+<td style="text-align:left"><strong>5.53%</strong></td>
+<td style="text-align:left"><strong>2.46%</strong></td>
+<td style="text-align:left">62.03%</td>
+<td style="text-align:left">6.21%</td>
+<td style="text-align:left">3.93%</td>
+<td style="text-align:left">50.94%</td>
+<td style="text-align:left">8.93%</td>
+<td style="text-align:left">5.23%</td>
+</tr>
+<tr>
+<td style="text-align:left">鸣潮   1_9_2025 3_59_18 PM</td>
+<td style="text-align:left">64.64%</td>
+<td style="text-align:left">5.53%</td>
+<td style="text-align:left">2.84%</td>
+<td style="text-align:left"><strong>31.91%</strong></td>
+<td style="text-align:left"><strong>4.35%</strong></td>
+<td style="text-align:left"><strong>1.31%</strong></td>
+<td style="text-align:left">70.65%</td>
+<td style="text-align:left">3.54%</td>
+<td style="text-align:left">1.85%</td>
+<td style="text-align:left">66.34%</td>
+<td style="text-align:left">4.02%</td>
+<td style="text-align:left">1.89%</td>
+</tr>
+<tr>
+<td style="text-align:left">鸣潮   9_27_2025 10_42_08 PM</td>
+<td style="text-align:left">72.98%</td>
+<td style="text-align:left">7.79%</td>
+<td style="text-align:left">4.32%</td>
+<td style="text-align:left"><strong>37.14%</strong></td>
+<td style="text-align:left"><strong>5.48%</strong></td>
+<td style="text-align:left"><strong>2.15%</strong></td>
+<td style="text-align:left">70.09%</td>
+<td style="text-align:left">4.78%</td>
+<td style="text-align:left">2.86%</td>
+<td style="text-align:left">60.97%</td>
+<td style="text-align:left">6.30%</td>
+<td style="text-align:left">3.29%</td>
+</tr>
+</tbody>
+</table>
+<p>AVIF 格式和 JXL 格式的压缩率变化比较小（不挑图片类型），JPEG 和 WebP 格式明显对 RAW 格式大图片压缩效率优于截屏/CG 小图片。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Filename</th>
+<th style="text-align:left">JPG_100</th>
+<th style="text-align:left">JPG_80</th>
+<th style="text-align:left">AVIF_100</th>
+<th style="text-align:left">AVIF_80</th>
+<th style="text-align:left">WEBP_100</th>
+<th style="text-align:left">WEBP_80</th>
+<th style="text-align:left">JXL_100</th>
+<th style="text-align:left">JXL_80</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">021_ev104_5</td>
+<td style="text-align:left"><strong>86.99%</strong></td>
+<td style="text-align:left"><strong>11.08%</strong></td>
+<td style="text-align:left">41.10%</td>
+<td style="text-align:left">7.20%</td>
+<td style="text-align:left"><strong>76.94%</strong></td>
+<td style="text-align:left"><strong>6.76%</strong></td>
+<td style="text-align:left">68.27%</td>
+<td style="text-align:left">9.37%</td>
+</tr>
+<tr>
+<td style="text-align:left">Apex Legends 6_29_2024 4_15_55 PM</td>
+<td style="text-align:left"><strong>70.75%</strong></td>
+<td style="text-align:left"><strong>10.26%</strong></td>
+<td style="text-align:left">38.41%</td>
+<td style="text-align:left">8.06%</td>
+<td style="text-align:left"><strong>66.14%</strong></td>
+<td style="text-align:left"><strong>6.58%</strong></td>
+<td style="text-align:left">57.67%</td>
+<td style="text-align:left">8.42%</td>
+</tr>
+<tr>
+<td style="text-align:left">P1000025</td>
+<td style="text-align:left">19.65%</td>
+<td style="text-align:left">0.78%</td>
+<td style="text-align:left">27.27%</td>
+<td style="text-align:left">0.15%</td>
+<td style="text-align:left">22.02%</td>
+<td style="text-align:left">0.21%</td>
+<td style="text-align:left">76.03%</td>
+<td style="text-align:left">0.47%</td>
+</tr>
+<tr>
+<td style="text-align:left">P1000042</td>
+<td style="text-align:left">24.56%</td>
+<td style="text-align:left">1.32%</td>
+<td style="text-align:left">30.97%</td>
+<td style="text-align:left">0.79%</td>
+<td style="text-align:left">23.12%</td>
+<td style="text-align:left">0.54%</td>
+<td style="text-align:left">67.10%</td>
+<td style="text-align:left">0.64%</td>
+</tr>
+<tr>
+<td style="text-align:left">P1000122</td>
+<td style="text-align:left">24.13%</td>
+<td style="text-align:left">1.98%</td>
+<td style="text-align:left">32.22%</td>
+<td style="text-align:left">1.66%</td>
+<td style="text-align:left">25.93%</td>
+<td style="text-align:left">1.00%</td>
+<td style="text-align:left">81.33%</td>
+<td style="text-align:left">1.30%</td>
+</tr>
+<tr>
+<td style="text-align:left">P1000200</td>
+<td style="text-align:left">26.54%</td>
+<td style="text-align:left">2.18%</td>
+<td style="text-align:left">34.47%</td>
+<td style="text-align:left">2.47%</td>
+<td style="text-align:left">27.75%</td>
+<td style="text-align:left">1.17%</td>
+<td style="text-align:left">79.89%</td>
+<td style="text-align:left">1.38%</td>
+</tr>
+<tr>
+<td style="text-align:left">VCG27_8</td>
+<td style="text-align:left"><strong>76.06%</strong></td>
+<td style="text-align:left"><strong>11.48%</strong></td>
+<td style="text-align:left">35.22%</td>
+<td style="text-align:left">5.53%</td>
+<td style="text-align:left"><strong>62.03%</strong></td>
+<td style="text-align:left"><strong>6.21%</strong></td>
+<td style="text-align:left">50.94%</td>
+<td style="text-align:left">8.93%</td>
+</tr>
+<tr>
+<td style="text-align:left">鸣潮   1_9_2025 3_59_18 PM</td>
+<td style="text-align:left"><strong>64.64%</strong></td>
+<td style="text-align:left"><strong>5.53%</strong></td>
+<td style="text-align:left">31.91%</td>
+<td style="text-align:left">4.35%</td>
+<td style="text-align:left"><strong>70.65%</strong></td>
+<td style="text-align:left"><strong>3.54%</strong></td>
+<td style="text-align:left">66.34%</td>
+<td style="text-align:left">4.02%</td>
+</tr>
+<tr>
+<td style="text-align:left">鸣潮   9_27_2025 10_42_08 PM</td>
+<td style="text-align:left"><strong>72.98%</strong></td>
+<td style="text-align:left"><strong>7.79%</strong></td>
+<td style="text-align:left">37.14%</td>
+<td style="text-align:left">5.48%</td>
+<td style="text-align:left"><strong>70.09%</strong></td>
+<td style="text-align:left"><strong>4.78%</strong></td>
+<td style="text-align:left">60.97%</td>
+<td style="text-align:left">6.30%</td>
+</tr>
+</tbody>
+</table>
+<p>**在 80 质量有损压缩挡位上，各种压缩格式的差距并不大，JPEG 稍微差一点。**并且由于具体图片不同会产生不小的波动，所以中等质量图片传输可以不那么在意格式导致的图片大小区别，应该更关注实际的图片表现（后面会写）和客户端的兼容性情况（好像还没有浏览器兼容 JXL 格式，而 JPEG 的兼容性是最好的）。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">格式</th>
+<th style="text-align:right">Avg Size (KB)</th>
+<th style="text-align:left">Avg Ratio</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">AVIF_50</td>
+<td style="text-align:right">126.489</td>
+<td style="text-align:left">1.42%</td>
+</tr>
+<tr>
+<td style="text-align:left">WEBP_50</td>
+<td style="text-align:right">210.896</td>
+<td style="text-align:left">2.02%</td>
+</tr>
+<tr>
+<td style="text-align:left">JXL_50</td>
+<td style="text-align:right">226.78</td>
+<td style="text-align:left">2.34%</td>
+</tr>
+<tr>
+<td style="text-align:left">JPG_50</td>
+<td style="text-align:right">385.059</td>
+<td style="text-align:left">3.23%</td>
+</tr>
+<tr>
+<td style="text-align:left">WEBP_80</td>
+<td style="text-align:right">429.632</td>
+<td style="text-align:left">3.42%</td>
+</tr>
+<tr>
+<td style="text-align:left">AVIF_80</td>
+<td style="text-align:right">678.127</td>
+<td style="text-align:left">3.96%</td>
+</tr>
+<tr>
+<td style="text-align:left">JXL_80</td>
+<td style="text-align:right">557.173</td>
+<td style="text-align:left">4.54%</td>
+</tr>
+<tr>
+<td style="text-align:left">JPG_80</td>
+<td style="text-align:right">852.982</td>
+<td style="text-align:left">5.82%</td>
+</tr>
+</tbody>
+</table>
+<p>低质量下 AVIF 的图片大小最小，做缩略图比较合适。</p>
+<p><strong>需要尤其注意的是，每种压缩算法都不一样，质量参数相同不代表实际观感相同</strong>，各种算法的侧重点肯定也有区别。比如 AVIF 可能会使用 YUV 4:2:0 的色度采样，对色彩会产生影响，甚至出现明显色彩断层。<s>所以接下来还会展示几个压缩后的图片，可以根据自己的实际观感感受一下图片压缩质量</s>。图床不让上传 AVIF，想要对比下后面的压缩包或者自己看吧，这里的 AVIF 都是截屏之后又转成 WebP 的。</p>
+<p>（ jxl 格式浏览器都不支持，现阶段我也建议只用来存档）</p>
+<p><strong>AVIF 格式压缩会有明显的色彩变化和动态范围压缩</strong>，即使是 100 也会存在色彩变化问题，在二次元图片里尤其明显（但是二次元图片的压缩率确实是高，需要自己权衡）。</p>
+<p>这一张红色和脸上的颜色明显有区别。</p>
+<p><img src="https://cdn.nodeimage.com/i/GZrC3xXEllmXCYIXCou5dBvH0g2gtYRc.webp" alt="上方是 AVIF_100，下方是 PNG 原图" /></p>
+<p>这一张高亮部分也有可见的区别。</p>
+<p><img src="https://cdn.nodeimage.com/i/l6olZBKuWPAHnsMP3ErdSjUhsCXGit0y.webp" alt="下方是 AVIF_100，上方是 PNG 原图" /></p>
+<p>低质量参数下 AVIF 的噪点表现远好于其他压缩方式（甚至似乎还有莫名奇妙的降噪效果），最终的辨识度其实差不多。</p>
+<p><img src="https://cdn.nodeimage.com/i/OCEqOfiYnkO53srw0bwAjdO6rQxQX5sM.webp" alt="中间是 AVIF，上方是 JPEG，下方是 JXL" /></p>
+<p>对于 CG 和游戏截图，不放大看，50 质量也基本上没什么区别（除了 AVIF 的色彩）</p>
+<p><img src="https://cdn.nodeimage.com/i/lWKEm9zRRzLlBR1zApiEqbk5bVRYR6xB.webp" alt="上图 AVIF，下图 PNG 原图" /></p>
+<p>更多直观测试可以自己看一下</p>
+<p>PNG 原图，2.49MB</p>
+<p><img src="https://cdn.nodeimage.com/i/Tmey2XJogbzTkVbYCGsR3wppftvSLdxj.png" alt="PNG 原图" /></p>
+<p>AVIF 质量 80，141KB</p>
+<p><img src="https://cdn.nodeimage.com/i/fwTFoZkgWXs2N5c7ZScD6Xzmvj7zkh0O.avif" alt="AVIF 质量 80" /></p>
+<p>JPG 质量 80，293KB</p>
+<p><img src="https://cdn.nodeimage.com/i/CdfsarVhwtTSYLZhEF1IWIVpF7LtSS6w.jpg" alt="CdfsarVhwtTSYLZhEF1IWIVpF7LtSS6w.jpg" /></p>
+<p>WebP 质量 80，1.42MB</p>
+<p><img src="https://cdn.nodeimage.com/i/cXsyFzI1wu5XtmFsvMc9kPZrMJ877YMA.webp" alt="WebP 质量 80" /></p>
+<p>AVIF 质量 50， 62KB</p>
+<p><img src="https://cdn.nodeimage.com/i/tnzLv93xHWv3h3Ak2ksXmNIVZJZ0ZBaR.avif" alt="AVIF 质量 50" /></p>
+<p>JPG 质量 50，175KB</p>
+<p><img src="https://cdn.nodeimage.com/i/RxtuNDLLSEKLoX4JG4gzSFmp7cP88XhG.jpg" alt="JPG 质量 50" /></p>
+<p>PNG 原图，97MB，太大图床不允许上传</p>
+<p>JPG 质量 80，2.12MB</p>
+<p><img src="https://cdn.nodeimage.com/i/crcgasHhnksWTuWQUDE6OtW7du0GDY3f.jpg" alt="JPG 质量 80" /></p>
+<p>AVIF 质量 80，2.41MB</p>
+<p><img src="https://cdn.nodeimage.com/i/2XZAiD1VDhGMdVEmhzMbVPLAxXLoIoYe.avif" alt="AVIF 质量 80" /></p>
+<p>AVIF 质量 50，277KB</p>
+<p><img src="https://cdn.nodeimage.com/i/lX8pbawT9W9aIuPMh2R8GTz0BBRTFsnN.avif" alt="AVIF 质量 50" /></p>
+<h2 id="测试环境"><a class="markdownIt-Anchor" href="#测试环境"></a> 测试环境</h2>
+<p>测试均使用 <a target="_blank" rel="noopener" href="https://imagemagick.org/">ImageMagick</a> 在 Windows 平台进行转换，借助 PowerShell 批量转换，你可以使用以下命令复现测试</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Get-ChildItem *.png, *.RW2 | ForEach-Object &#123;</span><br><span class="line">     magick $_.FullName &quot;$($_.BaseName).png&quot;;</span><br><span class="line">     foreach ($q in 100, 80, 50) &#123;</span><br><span class="line">         magick $_.FullName -quality $q &quot;$($_.BaseName)_$q.jpg&quot;;</span><br><span class="line">         magick $_.FullName -quality $q -define avif:lossless=true &quot;$($_.BaseName)_$q.avif&quot;;</span><br><span class="line">         magick $_.FullName -quality $q &quot;$($_.BaseName)_$q.webp&quot;;</span><br><span class="line">         magick $_.FullName -quality $q &quot;$($_.BaseName)_$q.jxl&quot;</span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用的 ImageMagick 版本信息</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Version: ImageMagick 7.1.2-8 Q16-HDRI x64 a3b13d1:20251026 https://imagemagick.org</span><br><span class="line">Copyright: (C) 1999 ImageMagick Studio LLC</span><br><span class="line">License: https://imagemagick.org/script/license.php</span><br><span class="line">Features: Channel-masks(64-bit) Cipher DPC HDRI OpenCL OpenMP(2.0)</span><br><span class="line">Delegates (built-in): bzlib cairo freetype gslib heic jng jp2 jpeg jxl lcms lqr lzma openexr pangocairo png ps raqm raw rsvg tiff webp xml zip zlib</span><br><span class="line">Compiler: Visual Studio 2022 (194435219)</span><br></pre></td></tr></table></figure>
+<h2 id="测试结果"><a class="markdownIt-Anchor" href="#测试结果"></a> 测试结果</h2>
+<p>图片结果太大，占用图床资源也没啥用，后面也只选几组有代表性的进行比较。你可以用自己的照片复现测试，实在想要下载可以用这个 115 下载链接：<a target="_blank" rel="noopener" href="https://115cdn.com/s/swfne2c3387?password=yfa9#">https://115cdn.com/s/swfne2c3387?password=yfa9#</a></p>
+<h3 id="1-实际文件大小-kb"><a class="markdownIt-Anchor" href="#1-实际文件大小-kb"></a> 1. 实际文件大小 (KB)</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Filename</th>
+<th style="text-align:right">PNG (Base)</th>
+<th style="text-align:right">JPG_100</th>
+<th style="text-align:right">JPG_80</th>
+<th style="text-align:right">JPG_50</th>
+<th style="text-align:right">AVIF_100</th>
+<th style="text-align:right">AVIF_80</th>
+<th style="text-align:right">AVIF_50</th>
+<th style="text-align:right">WEBP_100</th>
+<th style="text-align:right">WEBP_80</th>
+<th style="text-align:right">WEBP_50</th>
+<th style="text-align:right">JXL_100</th>
+<th style="text-align:right">JXL_80</th>
+<th style="text-align:right">JXL_50</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">021_ev104_5</td>
+<td style="text-align:right">2217.38</td>
+<td style="text-align:right">1928.85</td>
+<td style="text-align:right">245.79</td>
+<td style="text-align:right">145.94</td>
+<td style="text-align:right">911.45</td>
+<td style="text-align:right">159.7</td>
+<td style="text-align:right">69.57</td>
+<td style="text-align:right">1706.02</td>
+<td style="text-align:right">149.89</td>
+<td style="text-align:right">94.84</td>
+<td style="text-align:right">1513.74</td>
+<td style="text-align:right">207.67</td>
+<td style="text-align:right">116.23</td>
+</tr>
+<tr>
+<td style="text-align:left">Apex Legends 6_29_2024 4_15_55 PM</td>
+<td style="text-align:right">5176.54</td>
+<td style="text-align:right">3662.58</td>
+<td style="text-align:right">531.08</td>
+<td style="text-align:right">303.22</td>
+<td style="text-align:right">1988.55</td>
+<td style="text-align:right">417.22</td>
+<td style="text-align:right">158.36</td>
+<td style="text-align:right">3423.81</td>
+<td style="text-align:right">340.64</td>
+<td style="text-align:right">202.65</td>
+<td style="text-align:right">2985.47</td>
+<td style="text-align:right">435.84</td>
+<td style="text-align:right">209.72</td>
+</tr>
+<tr>
+<td style="text-align:left">P1000025</td>
+<td style="text-align:right">93176.8</td>
+<td style="text-align:right">18310.9</td>
+<td style="text-align:right">727.37</td>
+<td style="text-align:right">264.12</td>
+<td style="text-align:right">25404.7</td>
+<td style="text-align:right">142.21</td>
+<td style="text-align:right">40.54</td>
+<td style="text-align:right">20521.5</td>
+<td style="text-align:right">191.32</td>
+<td style="text-align:right">116.39</td>
+<td style="text-align:right">70845.2</td>
+<td style="text-align:right">437.34</td>
+<td style="text-align:right">160.2</td>
+</tr>
+<tr>
+<td style="text-align:left">P1000042</td>
+<td style="text-align:right">81224.4</td>
+<td style="text-align:right">19951.8</td>
+<td style="text-align:right">1070.7</td>
+<td style="text-align:right">432.42</td>
+<td style="text-align:right">25154.2</td>
+<td style="text-align:right">639.46</td>
+<td style="text-align:right">85.86</td>
+<td style="text-align:right">18777.5</td>
+<td style="text-align:right">440.98</td>
+<td style="text-align:right">201.27</td>
+<td style="text-align:right">54505.5</td>
+<td style="text-align:right">516.84</td>
+<td style="text-align:right">202.14</td>
+</tr>
+<tr>
+<td style="text-align:left">P1000122</td>
+<td style="text-align:right">98079.9</td>
+<td style="text-align:right">23665</td>
+<td style="text-align:right">1943.19</td>
+<td style="text-align:right">870.69</td>
+<td style="text-align:right">31603.4</td>
+<td style="text-align:right">1623.37</td>
+<td style="text-align:right">266.58</td>
+<td style="text-align:right">25427.3</td>
+<td style="text-align:right">980.51</td>
+<td style="text-align:right">454.63</td>
+<td style="text-align:right">79772.3</td>
+<td style="text-align:right">1276.05</td>
+<td style="text-align:right">495.61</td>
+</tr>
+<tr>
+<td style="text-align:left">P1000200</td>
+<td style="text-align:right">99956.2</td>
+<td style="text-align:right">26524.4</td>
+<td style="text-align:right">2174.47</td>
+<td style="text-align:right">904.27</td>
+<td style="text-align:right">34457.7</td>
+<td style="text-align:right">2465.71</td>
+<td style="text-align:right">277.42</td>
+<td style="text-align:right">27742.3</td>
+<td style="text-align:right">1171.4</td>
+<td style="text-align:right">485.42</td>
+<td style="text-align:right">79852.3</td>
+<td style="text-align:right">1381.97</td>
+<td style="text-align:right">459.29</td>
+</tr>
+<tr>
+<td style="text-align:left">VCG27_8</td>
+<td style="text-align:right">2552.74</td>
+<td style="text-align:right">1941.64</td>
+<td style="text-align:right">293.15</td>
+<td style="text-align:right">175.68</td>
+<td style="text-align:right">899.12</td>
+<td style="text-align:right">141.08</td>
+<td style="text-align:right">62.71</td>
+<td style="text-align:right">1583.48</td>
+<td style="text-align:right">158.55</td>
+<td style="text-align:right">100.33</td>
+<td style="text-align:right">1300.3</td>
+<td style="text-align:right">227.86</td>
+<td style="text-align:right">133.61</td>
+</tr>
+<tr>
+<td style="text-align:left">鸣潮   1_9_2025 3_59_18 PM</td>
+<td style="text-align:right">6167.79</td>
+<td style="text-align:right">3986.98</td>
+<td style="text-align:right">340.98</td>
+<td style="text-align:right">175.25</td>
+<td style="text-align:right">1968.3</td>
+<td style="text-align:right">268.23</td>
+<td style="text-align:right">80.85</td>
+<td style="text-align:right">4357.46</td>
+<td style="text-align:right">218.52</td>
+<td style="text-align:right">113.87</td>
+<td style="text-align:right">4091.47</td>
+<td style="text-align:right">248.01</td>
+<td style="text-align:right">116.41</td>
+</tr>
+<tr>
+<td style="text-align:left">鸣潮   9_27_2025 10_42_08 PM</td>
+<td style="text-align:right">4494.02</td>
+<td style="text-align:right">3279.95</td>
+<td style="text-align:right">350.11</td>
+<td style="text-align:right">193.94</td>
+<td style="text-align:right">1668.86</td>
+<td style="text-align:right">246.16</td>
+<td style="text-align:right">96.51</td>
+<td style="text-align:right">3149.74</td>
+<td style="text-align:right">214.88</td>
+<td style="text-align:right">128.66</td>
+<td style="text-align:right">2739.86</td>
+<td style="text-align:right">282.98</td>
+<td style="text-align:right">147.81</td>
+</tr>
+</tbody>
+</table>
+<h3 id="2-压缩比例-相对于-png-的百分比"><a class="markdownIt-Anchor" href="#2-压缩比例-相对于-png-的百分比"></a> 2. 压缩比例 (相对于 PNG 的百分比)</h3>
+<blockquote>
+<p>数值越小代表体积越小</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Filename</th>
+<th style="text-align:left">PNG (Base)</th>
+<th style="text-align:left">JPG_100</th>
+<th style="text-align:left">JPG_80</th>
+<th style="text-align:left">JPG_50</th>
+<th style="text-align:left">AVIF_100</th>
+<th style="text-align:left">AVIF_80</th>
+<th style="text-align:left">AVIF_50</th>
+<th style="text-align:left">WEBP_100</th>
+<th style="text-align:left">WEBP_80</th>
+<th style="text-align:left">WEBP_50</th>
+<th style="text-align:left">JXL_100</th>
+<th style="text-align:left">JXL_80</th>
+<th style="text-align:left">JXL_50</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">021_ev104_5</td>
+<td style="text-align:left">100%</td>
+<td style="text-align:left">86.99%</td>
+<td style="text-align:left">11.08%</td>
+<td style="text-align:left">6.58%</td>
+<td style="text-align:left">41.10%</td>
+<td style="text-align:left">7.20%</td>
+<td style="text-align:left">3.14%</td>
+<td style="text-align:left">76.94%</td>
+<td style="text-align:left">6.76%</td>
+<td style="text-align:left">4.28%</td>
+<td style="text-align:left">68.27%</td>
+<td style="text-align:left">9.37%</td>
+<td style="text-align:left">5.24%</td>
+</tr>
+<tr>
+<td style="text-align:left">Apex Legends 6_29_2024 4_15_55 PM</td>
+<td style="text-align:left">100%</td>
+<td style="text-align:left">70.75%</td>
+<td style="text-align:left">10.26%</td>
+<td style="text-align:left">5.86%</td>
+<td style="text-align:left">38.41%</td>
+<td style="text-align:left">8.06%</td>
+<td style="text-align:left">3.06%</td>
+<td style="text-align:left">66.14%</td>
+<td style="text-align:left">6.58%</td>
+<td style="text-align:left">3.91%</td>
+<td style="text-align:left">57.67%</td>
+<td style="text-align:left">8.42%</td>
+<td style="text-align:left">4.05%</td>
+</tr>
+<tr>
+<td style="text-align:left">P1000025</td>
+<td style="text-align:left">100%</td>
+<td style="text-align:left">19.65%</td>
+<td style="text-align:left">0.78%</td>
+<td style="text-align:left">0.28%</td>
+<td style="text-align:left">27.27%</td>
+<td style="text-align:left">0.15%</td>
+<td style="text-align:left">0.04%</td>
+<td style="text-align:left">22.02%</td>
+<td style="text-align:left">0.21%</td>
+<td style="text-align:left">0.12%</td>
+<td style="text-align:left">76.03%</td>
+<td style="text-align:left">0.47%</td>
+<td style="text-align:left">0.17%</td>
+</tr>
+<tr>
+<td style="text-align:left">P1000042</td>
+<td style="text-align:left">100%</td>
+<td style="text-align:left">24.56%</td>
+<td style="text-align:left">1.32%</td>
+<td style="text-align:left">0.53%</td>
+<td style="text-align:left">30.97%</td>
+<td style="text-align:left">0.79%</td>
+<td style="text-align:left">0.11%</td>
+<td style="text-align:left">23.12%</td>
+<td style="text-align:left">0.54%</td>
+<td style="text-align:left">0.25%</td>
+<td style="text-align:left">67.10%</td>
+<td style="text-align:left">0.64%</td>
+<td style="text-align:left">0.25%</td>
+</tr>
+<tr>
+<td style="text-align:left">P1000122</td>
+<td style="text-align:left">100%</td>
+<td style="text-align:left">24.13%</td>
+<td style="text-align:left">1.98%</td>
+<td style="text-align:left">0.89%</td>
+<td style="text-align:left">32.22%</td>
+<td style="text-align:left">1.66%</td>
+<td style="text-align:left">0.27%</td>
+<td style="text-align:left">25.93%</td>
+<td style="text-align:left">1.00%</td>
+<td style="text-align:left">0.46%</td>
+<td style="text-align:left">81.33%</td>
+<td style="text-align:left">1.30%</td>
+<td style="text-align:left">0.51%</td>
+</tr>
+<tr>
+<td style="text-align:left">P1000200</td>
+<td style="text-align:left">100%</td>
+<td style="text-align:left">26.54%</td>
+<td style="text-align:left">2.18%</td>
+<td style="text-align:left">0.90%</td>
+<td style="text-align:left">34.47%</td>
+<td style="text-align:left">2.47%</td>
+<td style="text-align:left">0.28%</td>
+<td style="text-align:left">27.75%</td>
+<td style="text-align:left">1.17%</td>
+<td style="text-align:left">0.49%</td>
+<td style="text-align:left">79.89%</td>
+<td style="text-align:left">1.38%</td>
+<td style="text-align:left">0.46%</td>
+</tr>
+<tr>
+<td style="text-align:left">VCG27_8</td>
+<td style="text-align:left">100%</td>
+<td style="text-align:left">76.06%</td>
+<td style="text-align:left">11.48%</td>
+<td style="text-align:left">6.88%</td>
+<td style="text-align:left">35.22%</td>
+<td style="text-align:left">5.53%</td>
+<td style="text-align:left">2.46%</td>
+<td style="text-align:left">62.03%</td>
+<td style="text-align:left">6.21%</td>
+<td style="text-align:left">3.93%</td>
+<td style="text-align:left">50.94%</td>
+<td style="text-align:left">8.93%</td>
+<td style="text-align:left">5.23%</td>
+</tr>
+<tr>
+<td style="text-align:left">鸣潮   1_9_2025 3_59_18 PM</td>
+<td style="text-align:left">100%</td>
+<td style="text-align:left">64.64%</td>
+<td style="text-align:left">5.53%</td>
+<td style="text-align:left">2.84%</td>
+<td style="text-align:left">31.91%</td>
+<td style="text-align:left">4.35%</td>
+<td style="text-align:left">1.31%</td>
+<td style="text-align:left">70.65%</td>
+<td style="text-align:left">3.54%</td>
+<td style="text-align:left">1.85%</td>
+<td style="text-align:left">66.34%</td>
+<td style="text-align:left">4.02%</td>
+<td style="text-align:left">1.89%</td>
+</tr>
+<tr>
+<td style="text-align:left">鸣潮   9_27_2025 10_42_08 PM</td>
+<td style="text-align:left">100%</td>
+<td style="text-align:left">72.98%</td>
+<td style="text-align:left">7.79%</td>
+<td style="text-align:left">4.32%</td>
+<td style="text-align:left">37.14%</td>
+<td style="text-align:left">5.48%</td>
+<td style="text-align:left">2.15%</td>
+<td style="text-align:left">70.09%</td>
+<td style="text-align:left">4.78%</td>
+<td style="text-align:left">2.86%</td>
+<td style="text-align:left">60.97%</td>
+<td style="text-align:left">6.30%</td>
+<td style="text-align:left">3.29%</td>
+</tr>
+</tbody>
+</table>
+<h3 id="3-格式平均表现排名-越小越好"><a class="markdownIt-Anchor" href="#3-格式平均表现排名-越小越好"></a> 3. 格式平均表现排名 (越小越好)</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">格式</th>
+<th style="text-align:right">Avg Size (KB)</th>
+<th style="text-align:left">Avg Ratio</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">AVIF_50</td>
+<td style="text-align:right">126.489</td>
+<td style="text-align:left">1.42%</td>
+</tr>
+<tr>
+<td style="text-align:left">WEBP_50</td>
+<td style="text-align:right">210.896</td>
+<td style="text-align:left">2.02%</td>
+</tr>
+<tr>
+<td style="text-align:left">JXL_50</td>
+<td style="text-align:right">226.78</td>
+<td style="text-align:left">2.34%</td>
+</tr>
+<tr>
+<td style="text-align:left">JPG_50</td>
+<td style="text-align:right">385.059</td>
+<td style="text-align:left">3.23%</td>
+</tr>
+<tr>
+<td style="text-align:left">WEBP_80</td>
+<td style="text-align:right">429.632</td>
+<td style="text-align:left">3.42%</td>
+</tr>
+<tr>
+<td style="text-align:left">AVIF_80</td>
+<td style="text-align:right">678.127</td>
+<td style="text-align:left">3.96%</td>
+</tr>
+<tr>
+<td style="text-align:left">JXL_80</td>
+<td style="text-align:right">557.173</td>
+<td style="text-align:left">4.54%</td>
+</tr>
+<tr>
+<td style="text-align:left">JPG_80</td>
+<td style="text-align:right">852.982</td>
+<td style="text-align:left">5.82%</td>
+</tr>
+<tr>
+<td style="text-align:left">AVIF_100</td>
+<td style="text-align:right">13784</td>
+<td style="text-align:left">34.3%</td>
+</tr>
+<tr>
+<td style="text-align:left">WEBP_100</td>
+<td style="text-align:right">11854.3</td>
+<td style="text-align:left">49.41%</td>
+</tr>
+<tr>
+<td style="text-align:left">JPG_100</td>
+<td style="text-align:right">11472.5</td>
+<td style="text-align:left">51.81%</td>
+</tr>
+<tr>
+<td style="text-align:left">JXL_100 (Lossless)</td>
+<td style="text-align:right">33067.3</td>
+<td style="text-align:left">67.62%</td>
+</tr>
+<tr>
+<td style="text-align:left">PNG (Lossless)</td>
+<td style="text-align:right">43671.7</td>
+<td style="text-align:left">100.0%</td>
+</tr>
+</tbody>
+</table>
+</div>          
+          <nav class="post-nav">
+    
+    
+    <a class="post-nav-item post-nav-next" href="/archives/2025/Life/toy-photography-starter.html">
+      <div class="nav-arrow">OLDER&nbsp;&gt;</div>
+      <span class="post-title">开始手办摄影！- POP UP PARADE 百鬼あやめ</span>
+    </a>
+    
+  </nav>
+          <div class="dis">
+    
+        
+    <script src='//cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js'></script>
+    <div id="waline" class="glass-wrapper waline-container"></div>
+    <script>
+        window.onload = function () {
+            new Waline({
+                el: '#waline',
+                path: location.pathname,
+                avatarCDN: 'https://sdn.geekzu.org/avatar/',
+                serverURL: 'https://comments-blog.illlights.com/',
+                avatar: 'monsterid',
+                placeholder: "封闭的文字无法成长。"
+            });
+        };
+    </script>
+
+
+    
+</div>
+    </div>
+   </main>
+</div>
+
+  <footer class="footer">
+    <small class="footer_copyright">
+      <div id="bottom-inner">
+        © Site by illlights<br>
+        <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a> &
+        <a target="_blank" rel="noopener" href="https://github.com/RichardTang2003/hexo-theme-Klise-glassy">Klise-glassy</a>
+        <br>
+        始于2021.
+        
+      </div>
+    </small>
+  </footer>
+  
+  
+
+    
+      <script src="/js/main.js"></script>
+    
+  
+  <script>
+    window.FPConfig = {
+      delay: 0,
+      ignoreKeywords: [],
+      maxRPS: 3,
+      hoverDelay: 50,
+    };
+  </script>
+  <!-- <script defer src="https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script> -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // 当 DOM 内容加载完成后，延后 1-2 帧再加 'loaded'，确保过渡能触发
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => document.body.classList.add('loaded'));
+      });
+    });
+  </script>
+</body>
+</html>

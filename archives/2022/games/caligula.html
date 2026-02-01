@@ -1,0 +1,516 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <script>
+    (function() {
+      try {
+        document.documentElement.classList.add('js');
+
+        var saved = localStorage.getItem('theme');
+        var mode = (saved === 'light' || saved === 'dark' || saved === 'auto') ? saved : 'auto';
+
+        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var effective = (mode === 'auto') ? (prefersDark ? 'dark' : 'light') : mode;
+
+        document.documentElement.setAttribute('data-theme-mode', mode);
+        if (effective === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+        else document.documentElement.removeAttribute('data-theme');
+      } catch (e) {
+        // 如果发生错误，则不执行任何操作，让主脚本来处理
+      }
+    })();
+  </script>
+  
+  <!-- 提示浏览器颜色的 meta 标签 -->
+  <meta name="color-scheme" content="light dark">
+  <!-- Mastodon 验证 -->
+  <meta name="fediverse:creator" content="@illlights@anisaga.life">
+  
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>《卡利古拉》与《冥契》 [ 喑光絮语 ]</title>
+
+  <link rel="icon" href="/img/favicon.ico">
+
+
+    <meta name="author" content="illlights">
+
+
+    <meta name="subtitle" content="illlights blog">
+
+
+    <meta name="Description" content="刚刚脱离高级趣味，所以博客不想太复杂了">
+
+
+    <meta name="keywords" content=",blog, comments, entertainment">
+
+
+  <link rel="alternate" href="/atom.xml " title="喑光絮语" type="application/atom+xml">
+
+
+  
+    <link rel="stylesheet" href="/css/main.css">
+  
+
+<!-- hexo injector head_end start --><style>/* 布局样式 */
+.hexo-tips-layout {
+    margin: 0.5rem 0;
+    padding: 0.5rem 1.5rem;
+    border-radius: 8px;
+    border: 1px solid;
+    border-left-width: 6px;
+    display: flex;
+    align-items: center;
+    transition: transform 0.3s ease;
+    min-width: 2rem;
+    height:auto;
+    overflow-x: auto; 
+    overflow-y: hidden; 
+}
+
+.hexo-tips-layout:hover {
+    transform: translateX(5px);
+}
+
+.hexo-tips-layout .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    font-size: clamp(2em, 2vw, 3em);
+    min-width: 2rem;
+    scale:1.5;
+    transition: transform 0.3s ease;
+}
+
+.hexo-tips-layout:hover .icon {
+    transform: scale(1.3);
+}
+
+.hexo-tips-layout .content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+.hexo-tips-layout:hover .content {
+    transform: translateX(3px);
+}
+
+/* 响应式调整 */
+@media screen and (max-width: 768px) {
+    .hexo-tips-layout {
+        padding: 1rem;
+    }
+}
+
+/* 为每种类型的提示框添加主题样式 */
+[class^="tips-style-"] {
+    --tips-light-bg: #fff; /* 默认值 */
+    --tips-dark-bg: #333;  /* 默认值 */
+    --tips-border: #000;   /* 默认值 */
+}
+
+/* 主题样式规则 */
+[class^="hexo-tips-"] {
+    border-color: var(--tips-border);
+}
+
+[class^="hexo-tips-"] .icon {
+    color: var(--tips-border);
+}
+
+/* 1. 手动暗色模式优先 */
+html.dark [class^="hexo-tips-"] {
+    background-color: var(--tips-dark-bg);
+}
+
+/* 2. 系统暗色模式其次 */
+@media (prefers-color-scheme: dark) {
+    html:not(.light) [class^="hexo-tips-"] {
+        background-color: var(--tips-dark-bg);
+    }
+}
+
+/* 3. 亮色模式最后 */
+html:not(.dark) [class^="hexo-tips-"],
+html.light [class^="hexo-tips-"] {
+    background-color: var(--tips-light-bg);
+}</style><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+<body class="notransition">
+  <!-- 固定背景层 - 解决 iOS Safari 不支持 background-attachment: fixed 的问题 -->
+  <div id="fixed-bg"></div>
+  <!-- <script defer>
+    // 延迟移除 notransition 类，确保初始主题设置完成
+    setTimeout(() => document.body.classList.remove("notransition"), 75);
+  </script> -->
+  <div class="navbar" role="navigation">
+    <nav class="menu">
+      <input type="checkbox" id="menu-trigger" class="menu-trigger" />
+      <label for="menu-trigger">
+        <span class="menu-icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 512 512"
+          >
+            <path
+              d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z"
+            />
+          </svg>
+        </span>
+      </label>
+      <a id="mode" role="button" aria-label="Theme">
+        <svg
+          class="mode-sunny"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>LIGHT</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+        <svg
+          class="mode-moon"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>DARK</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+        <span class="mode-auto" aria-hidden="true">A</span>
+      </a>
+      <div class="trigger">
+        <div class="trigger-container">
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/"> 主页</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/moments/"> 动态</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/archives/"> 文章</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/friends/"> 友链</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " target="_blank" rel="noopener" href="https://www.illlights.com"> 关于</a>
+          
+        </div>
+      </div>
+    </nav>
+  </div>
+
+  <button id="toTopBtn"><i class="fa-solid fa-hand-point-up " ></i></button>
+<!-- <button id="toggleButton"><i class="fa-solid fa-chart-bar " ></i></button> -->
+<div id="overlay" class="overlay glass-wrapper overlay-bg">
+  <div class="content">
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A0%E7%BC%AA%E4%B8%8E%E8%8D%92%E8%AF%9E%E5%93%B2%E5%AD%A6"><span class="toc-text">加缪与荒诞哲学</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E3%80%8A%E5%86%A5%E5%A5%91%E3%80%8B%E4%B8%AD%E7%9A%84%E3%80%8A%E5%8D%A1%E5%88%A9%E5%8F%A4%E6%8B%89%E3%80%8B"><span class="toc-text">《冥契》中的《卡利古拉》</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%9C%88%E4%BA%AE"><span class="toc-text">1.月亮</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E7%88%B1%E6%83%85"><span class="toc-text">2.爱情</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E7%BB%93%E5%B1%80"><span class="toc-text">3.结局</span></a></li></ol></li></ol>
+    <button id="closeButton"><i class="fa-solid fa-circle-xmark"></i></button>
+  </div>
+</div>
+<div class="wrapper post">
+  <head>
+    <!-- 引入 Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  </head>
+
+
+
+  <main class="page-content" aria-label="Content">
+    <div class="glass-wrapper main-content">
+      <header class="header">
+        
+          <div class="tags">
+            <a href="/tags/%E6%97%A5%E6%9C%AC/" class="tag"># 日本</a><a href="/tags/galgame/" class="tag"># galgame</a>
+          </div>
+        
+          <h1 class="header-title" itemprop="headline">《卡利古拉》与《冥契》</h1>
+          <div class="post-meta">
+            最后更新: <time>Feb 18, 2025</time>
+            作者: <span itemprop="author">
+              <span itemprop="name">illlights</span>
+            </span>
+            字数: <span class="post-count">1.9k</span>
+            预计阅读时间: <span class="post-count">6min</span> 
+          </div>       
+      </header>
+          <div class="page-content"><p>拜《冥契的牧神节》所赐，我不仅<a href="https://blog.illlights.com/archives/2022/life/drama.html">去看了场舞台剧</a>，在新华书店不小心看到《卡利古拉》的时候还决定买了下来。（新华书店可基本上是按标价卖的啊~）</p>
+<p>加缪这位作家其实我比较熟悉，至于为什么我没有玩完冥契第一时间买《卡利古拉》？因为根据我对加缪的了解，《冥契》和加缪的作品完全没有关系，《卡利古拉》基本上只是游戏的一个引子，就和戏剧这个设定一样。</p>
+<p>撇开游戏不谈，《卡利古拉》作为剧本本身也很不错，不过我自己也并非研究加缪的专家，大可不必在这里对原作高谈阔论，也就简单介绍介绍加缪和这部游戏引用《卡利古拉》的部分吧。</p>
+<h2 id="加缪与荒诞哲学"><a href="#加缪与荒诞哲学" class="headerlink" title="加缪与荒诞哲学"></a>加缪与荒诞哲学</h2><p>先简单介绍一下加缪吧。加缪的作品并不属于非常文学一类，他更注重在作品中传达哲学思想——荒诞哲学。</p>
+<blockquote>
+<p>加缪显然不是为消遣与娱乐这一层次的需要服务的作家，他甚至不追求有趣与引人人胜，似乎他并不希求成为一个具有艺术魔力的学家，而一心追求思想家的境界。他总致力于表现一种哲理，这是他主要的压倒一切的目的。于是，他就形成了一种独特的风格，一种不事工巧、不重词章、不披挂任何华丽的外表、不涂抹任何夺自的色彩而一任思想的火星在冷峻的文体里闪现的风格，就像一块阴沉单调的色布，上面闪烁着无数的光点，构成一片发出某种信息、启示着人们思想的灵光。他是没有什么艺术性的，但善于穿着的人不正是穿着得最不引人注意的人吗？</p>
+</blockquote>
+<p>也就是说，加缪后期的作品大多是都在阐明他的荒诞哲学。</p>
+<p>在《西绪福斯神话》中，他阐明荒诞的本质——人对幸福的呼唤与世界无理性的沉默之间的冲突，“人与其生活之间的脱节”。它并不完全在于世界，但也不完全在于人，而是两者之间不协调、不合理的对立关系所造成。</p>
+<p>而对于解决办法，答案就在这本书的书名——西绪福斯身上。西绪福斯在希腊神话中被某位神（对不起我也不很了解希腊神话）罚做苦役，筋疲力尽地把巨石推上山顶，但巨石又会在重力下滚落，此时西绪福斯又得重新推动巨石……</p>
+<p>作者想以巨石之无常滚落和西绪福斯将其推上山顶之间的冲突比拟人间的荒诞，而西绪福斯的态度是什么样的呢？</p>
+<blockquote>
+<p>他对自己苦难的处境有清醒的意识，他了解自己悲惨命运的全部内容也为此感到痛苦与烦恼，然而，他却以极大的坚毅仍不断地把石块推上山顶。“爬上山顶所要做出的艰苦努力，就足以使一个人的心里感到充实”，从这里西绪福斯又感到了幸福。于是，西绪福斯既是一个背负着命运重担的形象，又是一个永远没有被这重担压倒的形象，他正视荒诞的命运而又对荒诞的命运表示了藐视。</p>
+</blockquote>
+<p>“是的，事情就是如此；是的，世界是荒诞的，但是，不要对神有任何期望。面对着这无情的命运，重要的是要有清醒的意识，要对它表示藐视。“这就是加缪借西绪福斯提出的解决办法。</p>
+<h2 id="《冥契》中的《卡利古拉》"><a href="#《冥契》中的《卡利古拉》" class="headerlink" title="《冥契》中的《卡利古拉》"></a>《冥契》中的《卡利古拉》</h2><p>正如开头所说的那样，冥契完全不是加缪想表达的那一类作品。一定要牵强附会，只能说是”兄妹结合的愿望与戏剧才能差距、戏剧决定人生世界“之间的冲突。</p>
+<p>看完《卡利古拉》甚至觉得脚本家只看了开头结尾。</p>
+<h3 id="1-月亮"><a href="#1-月亮" class="headerlink" title="1.月亮"></a>1.月亮</h3><blockquote>
+<p>埃利孔：看样子你很累吧？<br>卡利古拉：我走了很长的路。<br>埃利孔：对，你出去了很久。<br>卡利古拉：要得到实在难哪。<br>埃利孔：得到什么呀？<br>卡利古拉：我想要的东西。<br>埃利孔：你想要什么？<br>卡利古拉：（始终自然的）月亮。<br>埃利孔：什么？<br>卡利古拉：是的，当时我想要月亮。</p>
+<p>——加缪《卡利古拉》（第一幕第四场）</p>
+</blockquote>
+<p>在《卡利古拉》中，月亮是卡利古拉对美好&#x2F;自由的指代，相应的存在一个”黑夜“的设定——那就是荒诞的世界。</p>
+<p>而《冥契》中月亮在代禁忌爱情和幸福，从某种程度上来说还是有点相似之处。</p>
+<h3 id="2-爱情"><a href="#2-爱情" class="headerlink" title="2.爱情"></a>2.爱情</h3><p>《卡利古拉》中的确存在兄妹之间的爱情。</p>
+<blockquote>
+<p>贵族甲：暖！你们到底怎么啦？为什么发出这种哀叹呢？什么也妨碍不了他保持原状啊。他爱德鲁西娅，这是毫无疑问的。但话又说的了。因为她死了，就把罗马搞得天翻地覆，这可就太过分了。但话又说回来，那毕竟是他妹妹呀。和自己的妹妹同床共枕，这已经够瞧的了。因为她死了，就把罗马搞得天翻地覆，这可就太过分了。</p>
+<p>——加缪《卡利古拉》（第一幕第一场）</p>
+</blockquote>
+<p>但是后面卡利古拉的言行告诉我们，失去妹妹只是他认识到荒诞的”最后一根稻草“，而认识到荒诞这件事才是他决定变为暴君的关键。这位贵族只看到虚假的表面。</p>
+<blockquote>
+<p>卡利古拉：…其实，爱情又怎么样呢？微不足道嘛。我向你发誓，她死了无所谓；她的死不过是一种真理的标志。这个真理让我想到，月亮是必不可少的。</p>
+<p>——加缪《卡利古拉》（第一幕第四场）</p>
+</blockquote>
+<p>当然，能找到这样一个包含兄妹恋的文学作品来做引子，《冥契》已经很不错了~</p>
+<h3 id="3-结局"><a href="#3-结局" class="headerlink" title="3.结局"></a>3.结局</h3><blockquote>
+<p>卡利古拉：历史上见！卡利古拉，历史上见！</p>
+<p><em>【镜子破碎，与此同时，手持兵器的谋反者从四面八方拥入。卡利古拉对他们一阵狂笑。老贵族刺中他的后背，舍雷亚击中他的脸。卡利古拉由笑转为抽噎。众人一齐上手打击。卡利古拉笑着，捯着气儿，咽气时狂吼一声：</em></p>
+<p>​			我还活着！</p>
+<p>——加缪《卡利古拉》（第四幕第十四场）</p>
+</blockquote>
+<p>这是剧本的结尾，在《冥契》中妹妹自杀时表演的就是这段。</p>
+<p>但是，这里卡利古拉说”我还活着“有一层意思是”我象征着荒诞，荒诞不会被杀死，荒诞仍然存在于世间“。这里卡利古拉其实是一个荒诞的反抗者，他清楚的认识到了荒诞，以自己成为荒诞的形式蔑视荒诞，同时也让众多角色也认识到世界本质性的荒诞。</p>
+<p>在《卡利古拉》中主角的死是于荒诞抗争胜利的死亡，而《冥契》中女主的自杀则是无法承受世间荒诞而选择的自暴自弃之死——是加缪在《西绪福斯神话》一开头就否定掉的解决办法。</p>
+</div>          
+          <nav class="post-nav">
+    
+    <a class="post-nav-item post-nav-prev" href="/archives/2023/tech/ai-contents.html">
+      <div class="nav-arrow">&lt;&nbsp;NEWER</div>
+      <span class="post-title">AI正在降低互联网的信息密度</span>
+    </a>
+    
+    
+    <a class="post-nav-item post-nav-next" href="/archives/2022/games/new-cyberpunk-edgerunners.html">
+      <div class="nav-arrow">OLDER&nbsp;&gt;</div>
+      <span class="post-title">Cyberpunk: Edgerunners | 如果我们一无所有</span>
+    </a>
+    
+  </nav>
+          <div class="dis">
+    
+        
+    <script src='//cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js'></script>
+    <div id="waline" class="glass-wrapper waline-container"></div>
+    <script>
+        window.onload = function () {
+            new Waline({
+                el: '#waline',
+                path: location.pathname,
+                avatarCDN: 'https://sdn.geekzu.org/avatar/',
+                serverURL: 'https://comments-blog.illlights.com/',
+                avatar: 'monsterid',
+                placeholder: "封闭的文字无法成长。"
+            });
+        };
+    </script>
+
+
+    
+</div>
+    </div>
+   </main>
+</div>
+
+  <footer class="footer">
+    <small class="footer_copyright">
+      <div id="bottom-inner">
+        © Site by illlights<br>
+        <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a> &
+        <a target="_blank" rel="noopener" href="https://github.com/RichardTang2003/hexo-theme-Klise-glassy">Klise-glassy</a>
+        <br>
+        始于2021.
+        
+      </div>
+    </small>
+  </footer>
+  
+  
+
+    
+      <script src="/js/main.js"></script>
+    
+  
+  <script>
+    window.FPConfig = {
+      delay: 0,
+      ignoreKeywords: [],
+      maxRPS: 3,
+      hoverDelay: 50,
+    };
+  </script>
+  <!-- <script defer src="https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script> -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // 当 DOM 内容加载完成后，延后 1-2 帧再加 'loaded'，确保过渡能触发
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => document.body.classList.add('loaded'));
+      });
+    });
+  </script>
+</body>
+</html>
